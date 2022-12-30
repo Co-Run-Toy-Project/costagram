@@ -1,4 +1,4 @@
-import logo from '../assets/costagramLogo.png';
+// import logo from '../assets/costagramLogo.png';
 import HomeIcon from '../assets/HomeIcon';
 
 const Navbar = () => {
@@ -10,7 +10,7 @@ const Navbar = () => {
         <div className="w-12 h-12">costagram</div>
 
         {/* 검색 인풋 */}
-        <div className="flex items-center px-2 py-1 w-40 h-8 bg-inputGray rounded-md tablet:w-72 desktop:w-80">
+        <div className="flex items-center w-40 h-8 px-2 py-1 rounded-md bg-inputGray tablet:w-72 desktop:w-80">
           {/* 돋보기 아이콘 */}
           <div className="pr-2">
             <svg
@@ -31,7 +31,7 @@ const Navbar = () => {
         </div>
 
         {/* 우측 아이콘들 */}
-        <div className="flex justify-between items-center space-x-2 tablet:space-x-5">
+        <div className="flex items-center justify-between space-x-2 tablet:space-x-5">
           <button>
             <HomeIcon />
           </button>
