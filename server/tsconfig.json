@@ -1,0 +1,17 @@
+{
+  "include": ["src/**/*", "app.ts", "config", "db"],
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "downlevelIteration": true,
+    "strict": true,
+    "noImplicitAny": true,
+    "moduleResolution": "node",
+    "baseUrl": ".",
+    "outDir": "dist",
+    "paths": {
+      "*": ["src/*"]
+    },
+    "esModuleInterop": true
+  }
+}
