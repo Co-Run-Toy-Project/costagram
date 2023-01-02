@@ -34,9 +34,15 @@ app.use(bodyParser.json());
 // dev - 개발 / combined - 배포
 app.use(morgan('dev'));
 
+// 라우팅 설정
 app.get('/', (req, res) => {
   res.send('오셨습니까 형님!');
 });
+
+const postRouter = require('./routes/post');
+app.use('/post', postRouter);
+const commentRouter = require('./routes/comment');
+app.use('/comment', postRouter);
 
 const port = 8080;
 app.listen(port, () => {
