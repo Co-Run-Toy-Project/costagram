@@ -5,5 +5,4 @@ router.post('/:postId', (req, res) => {
   console.log(req.params.postId);
 });
 
-
 module.exports = router;
