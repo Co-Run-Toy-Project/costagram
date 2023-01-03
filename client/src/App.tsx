@@ -1,7 +1,15 @@
 import React from 'react';
+import Router from './router/Router';
+import { RecoilRoot } from 'recoil';
 
-function App() {
-  return <div className="App"></div>;
-}
+const App: React.FC = () => {
+  return (
+    <div>
+      <RecoilRoot>
+        <Router />
+      </RecoilRoot>
+    </div>
+  );
+};
 
 export default App;

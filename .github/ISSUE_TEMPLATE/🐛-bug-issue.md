@@ -1,7 +1,7 @@
 ---
 name: "\U0001F41B Bug Issue"
 about: '버그 관련 상황을 자세하게 작성합니다. '
-title: "[Bug] "
+title: "\U0001F41B [Bug] 오류메세지"
 labels: ''
 assignees: ''
 
