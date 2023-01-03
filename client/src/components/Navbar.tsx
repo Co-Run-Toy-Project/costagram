@@ -1,7 +1,20 @@
 // import logo from '../assets/costagramLogo.png';
+import { useRecoilState } from 'recoil';
 import HomeIcon from '../assets/HomeIcon';
+import { postModalState } from '../recoil/modalAtom';
 
 const Navbar = () => {
+  const [isModalOpen, setIsModalOpen] = useRecoilState(postModalState);
+  // const setModalState = useSetRecoilState(ModalState);
+
+  const handlePostModal = () => {
+    // console.log('clicked');
+    // console.log(Modal);
+    setIsModalOpen(!isModalOpen);
+  };
+
+  // console.log(Modal);
+
   return (
     <>
       <nav className="flex justify-between items-center w-screen h-14 px-3 bg-white border-b-[1px] border-b-underbarGray tablet:px-6 desktop:px-12">
@@ -31,12 +44,17 @@ const Navbar = () => {
         </div>
 
         {/* 우측 아이콘들 */}
+        {/* Home Button */}
         <div className="flex items-center justify-between space-x-2 tablet:space-x-5">
           <button>
             <HomeIcon />
           </button>
 
-          <button className="border-2 border-[#000] rounded w-6 h-6">
+          {/* Post Button */}
+          <button
+            onClick={() => handlePostModal()}
+            className="border-2 border-[#000] rounded w-6 h-6"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -51,6 +69,7 @@ const Navbar = () => {
             </svg>
           </button>
 
+          {/* User Profile */}
           {/* 프로필이미지 클릭 시 마이페이지 컴포넌트로 변경 */}
           <button>
             <svg
