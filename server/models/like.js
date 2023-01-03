@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 // 좋아요 스키마
-// 아이디, 이름, 비밀번호, 토큰
+// 유저 아이디, 좋아요 여부, 좋아요 개수
 const likeSchema = new mongoose.Schema(
   {
     userId: {
@@ -22,7 +22,7 @@ const likeSchema = new mongoose.Schema(
   },
 );
 
-// 게시물 모델 생성
+// 좋아요 모델 생성
 const like = mongoose.model('like', likeSchema);
 
 export default like;

@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import { UserInfo } from 'interface/user.info';
 
 // 유저 스키마
-// 아이디, 이름, 비밀번호, 토큰
+// 유저 아이디, 이름, 프로필 사진, 소개글, 유저 게시물, 유저 게시물 개수
 const userSchema = new mongoose.Schema(
   {
     userId: {
