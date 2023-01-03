@@ -10,12 +10,25 @@ const userSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
-    name: {
+    userName: {
       type: String,
       required: true,
     },
-    password: {
+    profileImage: {
       type: String,
+      required: true,
+    },
+    introduce: {
+      type: String,
+      required: true,
+      default: '',
+    },
+    userPosts: {
+      type: Array,
+      required: true,
+    },
+    userPostsCount: {
+      type: Number,
       required: true,
     },
   },
