@@ -6,7 +6,7 @@ router.get('/', (req, res) => {
   res.status(200).json({
     userId: 1,
     userName: 'oheun',
-    userProfile:
+    profileImage:
       'https://images.unsplash.com/photo-1470093851219-69951fcbb533?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
     introduce: 'api 문서 만드는 중',
     userPosts: [
