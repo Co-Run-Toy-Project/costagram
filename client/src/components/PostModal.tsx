@@ -18,13 +18,12 @@ const PostModal = () => {
       <div
         className={`${
           isModalOpen ? 'flex' : 'hidden'
-        } fixed top-0 left-0 items-center justify-center w-full h-full z-50 bg-[rgba(0,0,0,0.6)]`}
+        } fixed top-0 left-0 z-50 h-full w-full items-center justify-center bg-[rgba(0,0,0,0.6)]`}
       >
         <CancelModal />
-        {/* min-h-[400px] */}
-        <form className="flex flex-col top-1/4 w-[80%] tablet:w-[70%] h-[60%] bg-white tablet:flex-row">
+        <form className="tablet:min-w-mobile top-1/4 flex h-[60%] w-[80%] flex-col bg-white tablet:flex-row">
           {/* 이미지 첨부 부분 */}
-          <div className="p-2 h-1/2 tablet:w-1/2 tablet:h-full tablet:p-4 bg-likesGray">
+          <div className="p-2 h-1/2 bg-likesGray tablet:h-full tablet:w-1/2 tablet:p-4">
             {/* 뒤로가기(취소) 버튼 */}
             <button type="button" onClick={handleBackPost}>
               <svg
@@ -41,7 +40,7 @@ const PostModal = () => {
               </svg>
             </button>
 
-            <div className="flex flex-row items-center justify-center w-full h-full mt-[-2rem]">
+            <div className="mt-[-2rem] flex h-full w-full flex-row items-center justify-center">
               <input
                 className="hidden"
                 id="file"
@@ -59,7 +58,7 @@ const PostModal = () => {
           </div>
 
           {/* 게시글 작성 부분 */}
-          <div className="flex flex-col p-3 space-y-3 tablet:w-1/2 h-1/2 tablet:h-full">
+          <div className="flex flex-col p-3 space-y-3 h-1/2 tablet:h-full tablet:w-1/2">
             {/* simple user info */}
             <div className="flex flex-row items-center">
               {/* user profile 임시icon 지정 */}
