@@ -1,6 +1,6 @@
 import React from 'react';
-import Router from './router/Router';
 import { RecoilRoot } from 'recoil';
+import Router from './router/Router';
 
 const App: React.FC = () => {
   return (
