@@ -4,6 +4,7 @@ module.exports = {
     'eslint:recommended',
     'airbnb-typescript',
     'plugin:prettier/recommended',
+    'plugin:tailwindcss/recommended'
   ],
   parserOptions: {
     project: ['./tsconfig.json'],
@@ -19,4 +20,5 @@ module.exports = {
     ],
     'react/react-in-jsx-scope': 'off',
   },
-};
+  'plugins': ['tailwindcss']
+}

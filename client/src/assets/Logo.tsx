@@ -7,7 +7,7 @@ const Logo = () => {
       x="0px"
       y="0px"
       viewBox="0 0 453.47 172.49"
-      className="h-20"
+      className="h-12"
     >
       <g>
         <path
