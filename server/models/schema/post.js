@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 // 게시물 스키마
 // ref로 가져오는 걸로 변경하기
 const postSchema = new mongoose.Schema(
@@ -48,4 +48,4 @@ const postSchema = new mongoose.Schema(
 // 게시물 모델 생성
 const Post = mongoose.model('Post', postSchema);
 
-export default Post;
+module.exports = Post;
