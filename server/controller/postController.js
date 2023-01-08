@@ -6,7 +6,7 @@ const createPost = async (req, res) => {
   await newPost
     .save()
     .then(() => {
-      res.status(200).json({ message: '게시글 등록 success' });
+      res.status(200).json({ message: '게시글 등록 success', data: newPost });
     })
     .catch(err => {
       console.log('게시물 등록이 실패했습니다');
