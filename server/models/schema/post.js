@@ -4,13 +4,11 @@ const mongoose = require('mongoose');
 const postSchema = new mongoose.Schema(
   {
     postId: {
-      type: Number,
-      required: true,
+      type: mongoose.Schema.Types.ObjectId,
       unique: true,
     },
     name: {
       type: String,
-      required: true,
     },
     postContent: {
       type: Array,
@@ -18,7 +16,7 @@ const postSchema = new mongoose.Schema(
       default: [],
     },
     location: {
-      type: String,
+      type: mongoose.Schema.Types.Mixed,
       required: true,
     },
     like: {
