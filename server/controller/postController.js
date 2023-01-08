@@ -25,9 +25,7 @@ const getAllPost = async (req, res, next) => {
     })
     .catch(err => {
       // 실패 시 에러 전달
-      console.error(err);
-      next(err);
-      // res.status(500).send(err);
+      res.status(500).send(err);
     });
 };
 
