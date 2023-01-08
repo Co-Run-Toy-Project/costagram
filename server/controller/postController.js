@@ -1,76 +1,35 @@
 const Post = require('../models/schema/post');
 
-const getAllPost = async (req, res) => {
-  // try {
-  //   const posts = Post.find({}).sort({ createdAt: 'descending' });
-  // } catch (err) {
-  //   res.status(500).send(err);
-  // }
+const createPost = async (req, res) => {
+  // const newPost = await new Post(req.body);
+  const newPost = await new Post(req.body);
+  await newPost
+    .save()
+    .then(() => {
+      res.status(200).json({ message: '게시글 등록 success' });
+    })
+    .catch(err => {
+      console.log('게시물 등록이 실패했습니다');
+      res.status(500).send(err);
+    });
+};
 
-  res.status(200).json([
-    {
-      postId: 1,
-      userId: 1,
-      userName: 'yw1010',
-      postContent: '내용',
-      location: {
-        lat: 37.555946,
-        lng: 126.972317,
-      },
-      imagePath: [
-        'https://images.unsplash.com/photo-1506477331477-33d5d8b3dc85?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=734&q=80',
-        'https://images.unsplash.com/photo-1545229765-7ff613f80127?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80',
-        'https://images.unsplash.com/photo-1564419320603-628d868a193f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=698&q=80',
-      ],
-      createdAt: '2022-02-26T16:37:48.244Z',
-      like: false,
-      likeCount: 3,
-      commentCount: 2,
-      comment: [
-        {
-          commentId: 1,
-          commentContent: '첫번째입니다',
-          createdAt: '2022-12-26T16:37:48.244Z',
-        },
-        {
-          commentId: 2,
-          commentContent: '두번째입니다',
-          createdAt: '2022-12-26T16:37:48.244Z',
-        },
-      ],
-    },
-    {
-      postId: 2,
-      userId: 2,
-      userName: 'adfafsd0',
-      postContent: '내용',
-      location: {
-        lat: 37.555946,
-        lng: 126.972317,
-      },
-      imagePath: [
-        'https://images.unsplash.com/photo-1506477331477-33d5d8b3dc85?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=734&q=80',
-        'https://images.unsplash.com/photo-1545229765-7ff613f80127?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80',
-        'https://images.unsplash.com/photo-1564419320603-628d868a193f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=698&q=80',
-      ],
-      createdAt: '2022-02-26T16:37:48.244Z',
-      like: false,
-      likeCount: 3,
-      commentCount: 2,
-      comment: [
-        {
-          commentId: 1,
-          commentContent: '첫번째입니다',
-          createdAt: '2022-12-26T16:37:48.244Z',
-        },
-        {
-          commentId: 2,
-          commentContent: '두번째입니다',
-          createdAt: '2022-12-26T16:37:48.244Z',
-        },
-      ],
-    },
-  ]);
+const getAllPost = async (req, res, next) => {
+  // find가 없으면 모든 데이터 조회
+  Post.find({})
+    // 👇 각 product 데이터에 저장된 postId에 맞게 해당  정보 연동
+    .populate('postId')
+    .then(posts => {
+      // 모든 데이터 찾아 클라이언트로 전송
+      res.status(200).json(posts);
+    })
+    .catch(err => {
+      // 실패 시 에러 전달
+      console.error(err);
+      next(err);
+      // res.status(500).send(err);
+    });
 };
 
 exports.getAllPost = getAllPost;
+exports.createPost = createPost;
