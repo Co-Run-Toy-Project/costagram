@@ -12,10 +12,7 @@ const postController = require('../controller/postController');
 router.get('/', postController.getAllPost);
 
 // 게시글 등록
-router.post('/', (req, res) => {
-  // 게시물 인스턴스 생성
-  res.status(200).json({ message: '게시글 등록 success' });
-});
+router.post('/', postController.createPost);
 
 // 게시글 수정
 router.patch('/:postId', (req, res) => {
