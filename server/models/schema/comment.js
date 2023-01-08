@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 const commentSchema = new mongoose.Schema({
   userId: { ref: 'User' },
-  commetedId: { type: mongoose.Schema.Types.ObjectId },
+  commetedId: { type: mongoose.Schema.Types.ObjectId, ref: 'Post' },
   commentContent: { type: String },
   createdAt: { type: Date, default: Date.now },
 });

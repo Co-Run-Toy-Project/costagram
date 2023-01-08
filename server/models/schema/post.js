@@ -31,6 +31,11 @@ const postSchema = new mongoose.Schema(
       required: true,
       default: {},
     },
+    // 이미지 경로
+    imagePath: {
+      type: Array,
+      default: [],
+    },
     // 좋아요 여부
     like: {
       type: Boolean,
@@ -47,6 +52,7 @@ const postSchema = new mongoose.Schema(
       type: Array,
       required: true,
       default: [],
+      ref: 'Comment',
     },
     // 댓글 개수
     commentCount: {
