@@ -15,11 +15,12 @@ const createPost = async (req, res) => {
 };
 
 const updatePost = async (req, res) => {
-  // 일단 params 저장
-  const postId = req.params.postId;
-  await Post.findOne({ postId: postId })
-    .then(post => {
-      res.status(200).json(post);
+  const filter = { postId: req.params.postId };
+  const update = { postContent: req.body.postContent };
+  const message = { message: '수정이 완료되었습니다!' };
+  await Post.findOneAndUpdate(filter, update)
+    .then(() => {
+      res.status(200).json(message);
     })
     .catch(err => {
       res.status(500).send(err);
