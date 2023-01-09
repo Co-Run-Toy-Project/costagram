@@ -19,11 +19,11 @@ const postSchema = new mongoose.Schema(
       default: '',
       ref: 'User',
     },
-    // 게시물 컨텐츠
+    // 게시물 글 내용
     postContent: {
-      type: Array,
+      type: String,
       required: true,
-      default: [],
+      default: '',
     },
     // 위도, 경도
     location: {
