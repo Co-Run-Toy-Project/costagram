@@ -16,18 +16,14 @@ const createPost = async (req, res) => {
 
 const updatePost = async (req, res) => {
   // 일단 params 저장
-  // const post = await Post.findById(req.params.id);
   const postId = req.params.postId;
-  // const newPost = await new Post(req.body);
-  // await newPost
-  //   .save()
-  //   .then(() => {
-  //     res.status(200).json({ message: '게시글 등록 success', data: newPost });
-  //   })
-  //   .catch(err => {
-  //     console.log('게시물 등록이 실패했습니다');
-  //     res.status(500).send(err);
-  //   });
+  await Post.findOne({ postId: postId })
+    .then(post => {
+      res.status(200).json(post);
+    })
+    .catch(err => {
+      res.status(500).send(err);
+    });
 };
 
 const getAllPost = async (req, res, next) => {
