@@ -30,8 +30,6 @@ exports.updatePost = async (req, res) => {
 exports.getAllPost = async (req, res, next) => {
   // find가 없으면 모든 데이터 조회
   Post.find({})
-    // 👇 각 product 데이터에 저장된 postId에 맞게 해당  정보 연동
-    .populate('postId')
     .then(posts => {
       // 모든 데이터 찾아 클라이언트로 전송
       res.status(200).json(posts);
