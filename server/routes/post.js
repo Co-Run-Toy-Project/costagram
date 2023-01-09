@@ -1,10 +1,6 @@
 const express = require('express');
 const router = express.Router();
 
-// 모델 불러오기
-const User = require('../models/schema/user');
-const Post = require('../models/schema/post');
-
 // 컨트롤러 불러오기
 const postController = require('../controller/postController');
 
@@ -18,9 +14,7 @@ router.post('/', postController.createPost);
 router.patch('/:postId', postController.updatePost);
 
 // 게시글 삭제
-router.delete('/:postId', (req, res) => {
-  res.status(200).json({ message: '게시글 삭제 success' });
-});
+router.delete('/:postId', postController.deletePost);
 
 // 댓글 삭제
 router.delete('/:postId/comment/:commentId', (req, res) => {

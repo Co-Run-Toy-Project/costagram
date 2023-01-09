@@ -42,6 +42,19 @@ const getAllPost = async (req, res, next) => {
     });
 };
 
+const deletePost = async (req, res) => {
+  const filter = { postId: req.params.postId };
+  const message = { message: '게시물이 삭제되었습니다!' };
+  await Post.findOneAndDelete(filter)
+    .then(() => {
+      res.status(200).json(message);
+    })
+    .catch(err => {
+      res.status(500).send(err);
+    });
+};
+
 exports.getAllPost = getAllPost;
 exports.createPost = createPost;
 exports.updatePost = updatePost;
+exports.deletePost = deletePost;
