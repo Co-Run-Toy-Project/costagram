@@ -1,6 +1,6 @@
 const Post = require('../models/schema/post');
 
-const createPost = async (req, res) => {
+exports.createPost = async (req, res) => {
   // const newPost = await new Post(req.body);
   const newPost = await new Post(req.body);
   await newPost
@@ -14,7 +14,7 @@ const createPost = async (req, res) => {
     });
 };
 
-const updatePost = async (req, res) => {
+exports.updatePost = async (req, res) => {
   const filter = { postId: req.params.postId };
   const update = { postContent: req.body.postContent };
   const message = { message: '수정이 완료되었습니다!' };
@@ -27,7 +27,7 @@ const updatePost = async (req, res) => {
     });
 };
 
-const getAllPost = async (req, res, next) => {
+exports.getAllPost = async (req, res, next) => {
   // find가 없으면 모든 데이터 조회
   Post.find({})
     // 👇 각 product 데이터에 저장된 postId에 맞게 해당  정보 연동
@@ -42,7 +42,7 @@ const getAllPost = async (req, res, next) => {
     });
 };
 
-const deletePost = async (req, res) => {
+exports.deletePost = async (req, res) => {
   const filter = { postId: req.params.postId };
   const message = { message: '게시물이 삭제되었습니다!' };
   await Post.findOneAndDelete(filter)
@@ -53,8 +53,3 @@ const deletePost = async (req, res) => {
       res.status(500).send(err);
     });
 };
-
-exports.getAllPost = getAllPost;
-exports.createPost = createPost;
-exports.updatePost = updatePost;
-exports.deletePost = deletePost;
