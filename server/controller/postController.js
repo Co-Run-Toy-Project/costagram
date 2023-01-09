@@ -14,6 +14,22 @@ const createPost = async (req, res) => {
     });
 };
 
+const updatePost = async (req, res) => {
+  // 일단 params 저장
+  // const post = await Post.findById(req.params.id);
+  const postId = req.params.postId;
+  // const newPost = await new Post(req.body);
+  // await newPost
+  //   .save()
+  //   .then(() => {
+  //     res.status(200).json({ message: '게시글 등록 success', data: newPost });
+  //   })
+  //   .catch(err => {
+  //     console.log('게시물 등록이 실패했습니다');
+  //     res.status(500).send(err);
+  //   });
+};
+
 const getAllPost = async (req, res, next) => {
   // find가 없으면 모든 데이터 조회
   Post.find({})
@@ -31,3 +47,4 @@ const getAllPost = async (req, res, next) => {
 
 exports.getAllPost = getAllPost;
 exports.createPost = createPost;
+exports.updatePost = updatePost;

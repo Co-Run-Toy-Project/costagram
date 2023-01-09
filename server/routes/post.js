@@ -15,9 +15,7 @@ router.get('/', postController.getAllPost);
 router.post('/', postController.createPost);
 
 // 게시글 수정
-router.patch('/:postId', (req, res) => {
-  res.status(200).json({ message: '게시글 수정 success' });
-});
+router.patch('/:postId', postController.updatePost);
 
 // 게시글 삭제
 router.delete('/:postId', (req, res) => {
