@@ -1,7 +1,6 @@
 const Post = require('../models/schema/post');
 
 exports.createPost = async (req, res) => {
-  // const newPost = await new Post(req.body);
   const newPost = await new Post(req.body);
   await newPost
     .save()
