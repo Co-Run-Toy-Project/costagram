@@ -1,4 +1,7 @@
 const mongoose = require('mongoose');
+// 인덱스 자동 증가 함수
+const autoIndex = require('../../utils/autoIndex');
+
 // 게시물 스키마
 // ref로 가져오는 걸로 변경하기
 const postSchema = new mongoose.Schema(
@@ -7,6 +10,7 @@ const postSchema = new mongoose.Schema(
     postId: {
       type: Number,
       unique: true,
+      default: 0,
     },
     // 사용자 아이디
     userId: {
@@ -19,11 +23,11 @@ const postSchema = new mongoose.Schema(
       default: '',
       ref: 'User',
     },
-    // 게시물 컨텐츠
+    // 게시물 글 내용
     postContent: {
-      type: Array,
+      type: String,
       required: true,
-      default: [],
+      default: '',
     },
     // 위도, 경도
     location: {
@@ -71,6 +75,9 @@ const postSchema = new mongoose.Schema(
     timestamps: true,
   },
 );
+
+// postId 증가한다!!
+autoIndex(postSchema, mongoose, 'postId', 'postId');
 
 // 게시물 모델 생성
 const Post = mongoose.model('Post', postSchema);
