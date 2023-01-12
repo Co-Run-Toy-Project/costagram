@@ -19,6 +19,9 @@ module.exports = {
       { namedComponents: 'arrow-function' },
     ],
     'react/react-in-jsx-scope': 'off',
+    "no-unused-vars":"off",
+    "@typescript-eslint/no-unused-vars": ["error"],
+    "no-undef":"off",
   },
   'plugins': ['tailwindcss']
 }
