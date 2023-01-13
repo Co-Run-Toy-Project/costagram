@@ -14,10 +14,10 @@ exports.createPost = async (req, res) => {
 };
 
 exports.updatePost = async (req, res) => {
-  const filter = { postId: req.params.postId };
+  const { postId } = req.params;
   const update = { postContent: req.body.postContent };
   const message = { message: '수정이 완료되었습니다!' };
-  await Post.findOneAndUpdate(filter, update)
+  await Post.findOneAndUpdate({ postId }, update)
     .then(() => {
       res.status(200).json(message);
     })

@@ -3,6 +3,7 @@ const router = express.Router();
 
 // 컨트롤러 불러오기
 const postController = require('../controller/postController');
+const commentController = require('../controller/commentController');
 
 // 게시글 조회
 router.get('/', postController.getAllPost);
@@ -16,9 +17,10 @@ router.patch('/:postId', postController.updatePost);
 // 게시글 삭제
 router.delete('/:postId', postController.deletePost);
 
+// 댓글 등록
+router.post('/:postId/comment', commentController.addComment);
+
 // 댓글 삭제
-router.delete('/:postId/comment/:commentId', (req, res) => {
-  res.status(200).json({ message: '댓글 삭제 success' });
-});
+router.delete('/:postId/comment/:commentId', commentController.deleteComment);
 
 module.exports = router;
