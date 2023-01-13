@@ -14,10 +14,10 @@ exports.createPost = async (req, res) => {
 };
 
 exports.updatePost = async (req, res) => {
-  const filter = { postId: req.params.postId };
+  const { postId } = req.params;
   const update = { postContent: req.body.postContent };
   const message = { message: '수정이 완료되었습니다!' };
-  await Post.findOneAndUpdate(filter, update)
+  await Post.findOneAndUpdate({ postId }, update)
     .then(() => {
       res.status(200).json(message);
     })
@@ -29,6 +29,9 @@ exports.updatePost = async (req, res) => {
 exports.getAllPost = async (req, res, next) => {
   // find가 없으면 모든 데이터 조회
   Post.find({})
+    // 👇 comments와 연결된 댓글들 내용까지 같이 불러오기!
+    // 댓글 생성될 때 Comments의 post에 Post ObjectId를 같이 저장시켜줘야 가능함.
+    .populate('comments')
     .then(posts => {
       // 모든 데이터 찾아 클라이언트로 전송
       res.status(200).json(posts);
