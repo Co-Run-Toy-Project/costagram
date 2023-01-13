@@ -1,10 +1,11 @@
 module.exports = {
   env: { browser: true, es6: true, node: true },
   extends: [
-    'eslint:recommended',
     'airbnb-typescript',
     'plugin:prettier/recommended',
-    'plugin:tailwindcss/recommended'
+    'plugin:tailwindcss/recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:@typescript-eslint/recommended-requiring-type-checking',
   ],
   parserOptions: {
     project: ['./tsconfig.json'],
@@ -19,9 +20,9 @@ module.exports = {
       { namedComponents: 'arrow-function' },
     ],
     'react/react-in-jsx-scope': 'off',
-    "no-unused-vars":"off",
-    "@typescript-eslint/no-unused-vars": ["error"],
-    "no-undef":"off",
+    "no-unused-vars":'off',
+    "@typescript-eslint/no-unused-vars": ['error'],
+    "no-undef":'off',
   },
   'plugins': ['tailwindcss']
 }
