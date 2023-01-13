@@ -15,6 +15,7 @@ module.exports = {
       },
     },
     screens: {
+      mobile: '470px',
       tablet: '640px',
       // => @media (min-width: 640px) { ... }
 
@@ -22,4 +23,6 @@ module.exports = {
       // => @media (min-width: 1024px) { ... }
     },
   },
+  // eslint-disable-next-line global-require
+  plugins: [require('daisyui')],
 };
