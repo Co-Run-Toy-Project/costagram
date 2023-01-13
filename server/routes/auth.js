@@ -5,6 +5,6 @@ const router = express.Router();
 const authController = require('../controller/authController');
 
 // 토큰 발급
-router.get('/kakao/callback', authController.getToken);
+router.get('/kakao/callback', authController.getUserInfo);
 
 module.exports = router;
