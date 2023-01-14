@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 const autoIndex = require('../../utils/autoIndex');
 
 // 게시물 스키마
-// ref로 가져오는 걸로 변경하기
 const postSchema = new mongoose.Schema(
   {
     // 게시물 아이디
@@ -18,9 +17,10 @@ const postSchema = new mongoose.Schema(
       ref: 'User',
     },
     // 사용자 이름
+    // OAuth 이전에 기본값 추가
     userName: {
       type: String,
-      default: '',
+      default: 'User1',
       ref: 'User',
     },
     // 게시물 글 내용
@@ -51,19 +51,8 @@ const postSchema = new mongoose.Schema(
       required: true,
       default: 0,
     },
-    // 댓글 배열
-    comment: {
-      type: Array,
-      required: true,
-      default: [],
-      ref: 'Comment',
-    },
-    // 댓글 개수
-    commentCount: {
-      type: Number,
-      required: true,
-      default: 0,
-    },
+    // 댓글
+    comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
     // 생성 시간
     createdAt: {
       type: Date,
@@ -76,7 +65,7 @@ const postSchema = new mongoose.Schema(
   },
 );
 
-// postId 증가한다!!
+// postId 증가
 autoIndex(postSchema, mongoose, 'postId', 'postId');
 
 // 게시물 모델 생성
