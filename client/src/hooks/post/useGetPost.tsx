@@ -3,7 +3,7 @@ import getPosts from '../../apis/post/getPosts';
 
 const useGetPosts = () => {
   return useQuery(['get/post'], () => getPosts(), {
-    staleTime: 10000,
+    staleTime: 1000 * 60 * 5, // 5분 동안은 fetch가 되지 않음
   });
 };
 
