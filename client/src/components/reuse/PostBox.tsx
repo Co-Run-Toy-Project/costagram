@@ -1,3 +1,4 @@
+import { useRecoilState } from 'recoil';
 import SunnyIcon from '../../assets/SunnyIcon';
 // import RainIcon from '../assets/RainIcon';
 // import SnowIcon from '../assets/SnowIcon';
@@ -7,6 +8,7 @@ import DeleteIcon from '../../assets/DeleteIcon';
 import useDeletePost from '../../hooks/post/useDeletePost';
 import Carousel from '../Carousel';
 import BoardContainer from './BoardContainer';
+import { modifyModalState } from '../../recoil/modalAtom';
 
 interface Props {
   data: {
@@ -16,14 +18,15 @@ interface Props {
 }
 
 const PostBox = ({ data }: Props) => {
-  const { mutate, isSuccess: deleted } = useDeletePost();
+  const [isModalOpen, setIsModalOpen] = useRecoilState(modifyModalState);
+  const { mutate } = useDeletePost();
+
+  const handleModifyPost = () => {
+    setIsModalOpen(!isModalOpen);
+  };
 
   const handleDeletePost = (postId: number) => {
-    mutate({ postId });
-
-    if (deleted) {
-      console.log('deleteSuccessed!');
-    }
+    return mutate({ postId });
   };
 
   return (
@@ -31,9 +34,9 @@ const PostBox = ({ data }: Props) => {
       {/* 게시물 헤더 */}
       <div className="h-[56px] w-full flex justify-between">
         <div className="flex">
+          {/* 프로필 사진 이미지 */}
           <img
             alt="profile"
-            //프로필사진url
             src="https://images.unsplash.com/photo-1506477331477-33d5d8b3dc85?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=734&q=80"
             className="w-10 h-10 m-2 rounded-full"
           />
@@ -47,9 +50,12 @@ const PostBox = ({ data }: Props) => {
           </div>
         </div>
         <div className="flex items-center mr-3">
-          <button type="button">
+          {/* 수정 버튼 */}
+          <button type="button" onClick={() => handleModifyPost()}>
             <PenIcon />
           </button>
+
+          {/* 삭제 버튼 */}
           <button type="button" onClick={() => handleDeletePost(data.postId)}>
             <DeleteIcon />
           </button>
