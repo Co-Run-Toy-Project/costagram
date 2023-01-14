@@ -2,15 +2,13 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import deletePost from '../../apis/post/deletePost';
 
 const useDeletePost = () => {
-  // const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
 
-  return useMutation(deletePost);
+  return useMutation(deletePost, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(['get/post']);
+    },
+  });
 };
 
 export default useDeletePost;
-
-// {
-//   onSuccess: () => {
-//     queryClient.invalidateQueries(['get/post']);
-//   },
-// }

@@ -24,16 +24,10 @@
       {
         "labelAttributes": ["htmlFor"]
       }
-    ]
+    ],
+    "no-unused-vars":"off",
+    "no-undef": "off"
   },
-  "overrides": [
-    {
-      "files": [".ts", ".tsx", ".js", ".jsx"],
-      "rules": {
-        "no-undef": "off"
-      }
-    }
-  ],
   "settings": {
     "import/resolver": {
       "node": {
