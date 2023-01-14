@@ -1,4 +1,5 @@
 const Post = require('../models/schema/post');
+const Comment = require('../models/schema/comment');
 
 exports.createPost = async (req, res) => {
   const newPost = await new Post(req.body);
@@ -58,13 +59,9 @@ exports.getAllPost = async (req, res, next) => {
 };
 
 exports.deletePost = async (req, res) => {
-  const filter = { postId: req.params.postId };
+  const { postId } = req.params;
   const message = { message: '게시물이 삭제되었습니다!' };
-  await Post.findOneAndDelete(filter)
-    .then(() => {
-      res.status(200).json(message);
-    })
-    .catch(err => {
-      res.status(500).send(err);
-    });
+  await Post.findOneAndDelete(postId);
+  await Comment.deleteMany({ postId });
+  res.status(200).json(message);
 };
