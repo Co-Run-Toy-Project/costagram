@@ -1,4 +1,6 @@
 const Axios = require('axios');
+// 유저 모델 가져오기
+const User = require('../models/schema/user');
 
 exports.getUserInfo = async (req, res, next) => {
   // 인가 코드
@@ -23,7 +25,7 @@ exports.getUserInfo = async (req, res, next) => {
   );
 
   // Access token을 이용해 정보 가져오기
-  const authInfo = await Axios.post(
+  const userInfo = await Axios.post(
     'https://kapi.kakao.com/v2/user/me',
     {},
     {
@@ -33,7 +35,25 @@ exports.getUserInfo = async (req, res, next) => {
         Authorization: 'Bearer ' + authToken.data.access_token,
       },
     },
-  );
+  )
+    .then(result => result.data)
+    .catch(err => res.status(500).send(err.message));
+
+  // 기존 유저인지 검색한다
+  let userCheck = null;
+  userCheck = await User.findOne({
+    where: {
+      userId: userInfo.id,
+    },
+  });
+
+  if (userCheck === null) {
+    const newUser = new User({
+      userId: userInfo.id,
+      userName: userInfo.properties.nickname,
+    });
+    await newUser.save();
+  }
   // 동의항목을 설정한 사용자의 정보 보냄
-  res.status(200).json(authInfo.data);
+  res.status(200).json(userInfo);
 };
