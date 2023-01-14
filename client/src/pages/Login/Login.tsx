@@ -1,3 +1,4 @@
+/* eslint-disable */
 import LogoIcon from '../../assets/logoIcon.png';
 // import kakaoLogo from '../../assets/kakaoLogo.png';
 import Logo from '../../assets/Logo';
@@ -17,7 +18,17 @@ const Login = () => {
 
             카카오로그인
           </button> */}
-          <img src={LoginBtn} alt="카카오버튼" className="mt-5" />
+          <a
+            href={`
+            https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}&response_type=code
+          `}
+          >
+            <img
+              src={LoginBtn}
+              alt="카카오버튼"
+              className="mt-5 cursor-pointer"
+            />
+          </a>
         </div>
       </div>
       <div className="flex flex-col  justify-center items-center h-20 text-xs text-fontGray">
