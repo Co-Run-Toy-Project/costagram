@@ -1,6 +1,5 @@
 /* eslint-disable */
 import LogoIcon from '../../assets/logoIcon.png';
-// import kakaoLogo from '../../assets/kakaoLogo.png';
 import Logo from '../../assets/Logo';
 import LoginBtn from '../../assets/kakao_login_medium_narrow.png';
 
@@ -13,11 +12,6 @@ const Login = () => {
         <div className="w-[350px] h-3/6 mx-3 flex flex-col justify-center items-center border-2 border-gray-200">
           <img className="w-10 h-10 mb-3" src={LogoIcon} alt="logo" />
           <Logo />
-          {/* <div className="w-10 h-10 bg-kakaoLogo"> </div> */}
-          {/* <button className="w-5/6 h-11 mt-3 rounded-lg bg-amber-300 flex justify-center items-center">
-
-            카카오로그인
-          </button> */}
           <a
             href={`
             https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}&response_type=code
