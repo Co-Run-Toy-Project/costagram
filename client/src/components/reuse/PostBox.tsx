@@ -4,16 +4,28 @@ import SunnyIcon from '../../assets/SunnyIcon';
 // import CloudyIcon from '../assets/CloudyIcon';
 import PenIcon from '../../assets/PenIcon';
 import DeleteIcon from '../../assets/DeleteIcon';
+import useDeletePost from '../../hooks/post/useDeletePost';
 import Carousel from '../Carousel';
 import BoardContainer from './BoardContainer';
 
 interface Props {
   data: {
     userName: string;
+    postId: number;
   };
 }
 
 const PostBox = ({ data }: Props) => {
+  const { mutate, isSuccess: deleted } = useDeletePost();
+
+  const handleDeletePost = (postId: number) => {
+    mutate({ postId });
+
+    if (deleted) {
+      console.log('deleteSuccessed!');
+    }
+  };
+
   return (
     <div className="w-full max-w-[470px] min-w-[300px] tablet:w-[470px] h-full flex flex-col border-2 border-underbarGray rounded-lg">
       {/* 게시물 헤더 */}
@@ -37,7 +49,7 @@ const PostBox = ({ data }: Props) => {
           <button type="button">
             <PenIcon />
           </button>
-          <button type="button">
+          <button type="button" onClick={() => handleDeletePost(data.postId)}>
             <DeleteIcon />
           </button>
         </div>
