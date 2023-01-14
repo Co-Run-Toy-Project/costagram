@@ -29,8 +29,6 @@ app.get('/', (req, res) => {
 
 const postRouter = require('./routes/post');
 app.use('/post', postRouter);
-const commentRouter = require('./routes/comment');
-app.use('/comment', commentRouter);
 const userRouter = require('./routes/user');
 app.use('/user', userRouter);
 
