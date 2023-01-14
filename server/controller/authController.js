@@ -1,6 +1,11 @@
+// 미들웨어 가져오기
 const Axios = require('axios');
+
 // 유저 모델 가져오기
 const User = require('../models/schema/user');
+
+// 토큰 처리 함수 가져오기
+const jwt = require('../utils/jwt');
 
 exports.getUserInfo = async (req, res, next) => {
   // 인가 코드
@@ -41,6 +46,7 @@ exports.getUserInfo = async (req, res, next) => {
 
   // 기존 유저인지 검색한다
   let userCheck = null;
+  let token = null;
   userCheck = await User.findOne({
     where: {
       userId: userInfo.id,
@@ -53,7 +59,17 @@ exports.getUserInfo = async (req, res, next) => {
       userName: userInfo.properties.nickname,
     });
     await newUser.save();
+
+    token = jwt.createToken(userInfo.id);
+  } else {
+    token = jwt.createToken(userInfo.id);
   }
-  // 동의항목을 설정한 사용자의 정보 보냄
-  res.status(200).json(userInfo);
+
+  // 일단 쿠키로 보내기
+  res.cookie('jwt', token);
+  res.status(200).json({
+    userInfo,
+    message: 'token이 발급되었습니다',
+    jwt: token,
+  });
 };
