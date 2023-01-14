@@ -1,4 +1,3 @@
-//api연결 전 임시더미
 const CarouselData = [
   {
     image:
@@ -27,23 +26,21 @@ const Carousel = () => {
     <div className="carousel h-[470px] w-full">
       {CarouselData.map((slide, index) => {
         return (
-          <>
-            <div id={`slide${index}`} className="carousel-item relative w-full">
-              <img
-                src={slide.image}
-                key={index}
-                className="w-full object-cover"
-              />
-              <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
-                <a href={`#slide${index - 1}`} className="btn btn-circle">
-                  ❮
-                </a>
-                <a href={`#slide${index + 1}`} className="btn btn-circle">
-                  ❯
-                </a>
-              </div>
+          <div id={`slide${index}`} className="carousel-item relative w-full">
+            <img
+              alt="carousel-img"
+              src={slide.image}
+              className="w-full object-cover"
+            />
+            <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
+              <a href={`#slide${index - 1}`} className="btn btn-circle">
+                ❮
+              </a>
+              <a href={`#slide${index + 1}`} className="btn btn-circle">
+                ❯
+              </a>
             </div>
-          </>
+          </div>
         );
       })}
     </div>

@@ -9,7 +9,7 @@ const patchPost = async () => {
     baseURL: process.env.REACT_APP_BASE_URL,
     headers: {
       withCredentials: true,
-      Authorization: `Bearer ${localStorage.getItem('token')}`,
+      // Authorization: `Bearer ${localStorage.getItem('token')}`,
       'Content-Type': `application/json`,
     },
   });

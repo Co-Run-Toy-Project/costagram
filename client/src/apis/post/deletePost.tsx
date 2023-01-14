@@ -1,12 +1,16 @@
 import axios from 'axios';
 
-const deletePost = async () => {
-  return await axios
-    .get(`/post/:postId`, {
-      baseURL: process.env.REACT_PUBLIC_API_URL,
+type Props = {
+  postId: number;
+};
+
+const deletePost = async ({ postId }: Props) => {
+  return axios
+    .delete(`/post/${postId}`, {
+      baseURL: process.env.REACT_APP_BASE_URL,
       headers: {
         withCredentials: true,
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
+        // Authorization: `Bearer ${localStorage.getItem('token')}`,
         'Content-Type': `application/json`,
       },
     })
