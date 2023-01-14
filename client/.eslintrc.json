@@ -26,6 +26,14 @@
       }
     ]
   },
+  "overrides": [
+    {
+      "files": [".ts", ".tsx", ".js", ".jsx"],
+      "rules": {
+        "no-undef": "off"
+      }
+    }
+  ],
   "settings": {
     "import/resolver": {
       "node": {
