@@ -7,13 +7,19 @@ const RenderPosts = () => {
   useEffect(() => {
     refetch();
   }, []);
-  console.log(data);
+
   const resData = data?.data;
 
   return (
     <div>
       {resData &&
-        resData.map((el: any) => <PostBox key={el.postId} data={el} />)}
+        resData.map((el: any) => {
+          return (
+            <div key={el.postId} className="flex justify-center mt-10">
+              <PostBox key={el.postId} data={el} />
+            </div>
+          );
+        })}
     </div>
   );
 };

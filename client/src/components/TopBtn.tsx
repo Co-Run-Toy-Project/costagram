@@ -1,10 +1,13 @@
 const TopBtn = () => {
   return (
-    <>
-      <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+    <div className="fixed m-5 right-1 bottom-1">
+      <button
+        type="button"
+        className="px-4 py-2 font-bold text-white bg-blue-500 rounded-full hover:bg-blue-700"
+      >
         Top
       </button>
-    </>
+    </div>
   );
 };
 
