@@ -5,8 +5,11 @@ const router = express.Router();
 const postController = require('../controller/postController');
 const commentController = require('../controller/commentController');
 
-// 게시글 조회
+// 게시글 전체 조회
 router.get('/', postController.getAllPost);
+
+// 게시글 1개 조회
+router.get('/:postId', postController.getOnePost);
 
 // 게시글 등록
 router.post('/', postController.createPost);
