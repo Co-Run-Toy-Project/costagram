@@ -8,7 +8,6 @@ exports.addComment = async (req, res, next) => {
     commentContent,
   });
 
-  // postId가 같은 것 찾아서
   const message = { message: '댓글 등록이 완료되었습니다!' };
 
   await newComment.save();
@@ -19,13 +18,11 @@ exports.addComment = async (req, res, next) => {
     });
 };
 
+// 댓글 삭제
 exports.deleteComment = async (req, res) => {
   const { postId, commentId } = req.params;
-  const message = { message: '삭제가 완료되었습니다!' };
-  await Post.findOneAndUpdate(
-    { commentId },
-    { $pull: { commentId: commentId } },
-  )
+  const message = { message: `${commentId}번 댓글이 삭제되었습니다!` };
+  await Comment.deleteOne({ commentId })
     .then(() => res.status(200).json(message))
     .catch(err => {
       res.status(500).send(err);
