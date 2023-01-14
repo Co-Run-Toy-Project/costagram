@@ -14,6 +14,7 @@ const Login = () => {
           <Logo />
           {/* <div className="w-10 h-10 bg-kakaoLogo"> </div> */}
           {/* <button className="w-5/6 h-11 mt-3 rounded-lg bg-amber-300 flex justify-center items-center">
+          {/* <button className="w-5/6 h-11 mt-3 rounded-lg bg-amber-300 flex justify-center items-center">
             카카오로그인
           </button> */}
           <a
