@@ -1,10 +1,15 @@
 import SyncLoader from 'react-spinners/SyncLoader';
 import { useEffect } from 'react';
-const OauthRedirectHandler = () => {
-  useEffect(() => {
-    let code = new URL(window.location.href).searchParams.get('code');
+import useGetOauth from '../hooks/get/useGetOauth';
 
-    window.location.href = '/';
+const OauthRedirectHandler = () => {
+
+  let code = new URL(window.location.href).searchParams.get('code');
+  const { refetch } = useGetOauth(code);
+  useEffect(() => {
+    if (code) {
+      refetch();
+    }
   }, []);
   return (
     <>
