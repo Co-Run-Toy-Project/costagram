@@ -3,7 +3,6 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const morgan = require('morgan');
 const express = require('express');
-const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const app = express();
 
@@ -31,6 +30,8 @@ const postRouter = require('./routes/post');
 app.use('/post', postRouter);
 const userRouter = require('./routes/user');
 app.use('/user', userRouter);
+const authRouter = require('./routes/auth');
+app.use('/oauth', authRouter);
 
 const port = 8080;
 app.listen(port, () => {
