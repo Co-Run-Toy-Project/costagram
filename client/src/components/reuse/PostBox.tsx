@@ -1,4 +1,3 @@
-/* eslint-disabled */
 import SunnyIcon from '../../assets/SunnyIcon';
 // import RainIcon from '../assets/RainIcon';
 // import SnowIcon from '../assets/SnowIcon';
@@ -6,7 +5,7 @@ import SunnyIcon from '../../assets/SunnyIcon';
 import PenIcon from '../../assets/PenIcon';
 import DeleteIcon from '../../assets/DeleteIcon';
 import Carousel from '../Carousel';
-import BoardContainer from '../reuse/BoardContainer';
+import BoardContainer from './BoardContainer';
 
 interface Props {
   data: {
@@ -22,7 +21,6 @@ const PostBox = ({ data }: Props) => {
         <div className="flex">
           <img
             alt="profile"
-            //프로필사진url
             src="https://images.unsplash.com/photo-1506477331477-33d5d8b3dc85?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=734&q=80"
             className="w-10 h-10 m-2 rounded-full"
           />
