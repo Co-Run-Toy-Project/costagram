@@ -3,7 +3,7 @@ import getPosts from '../../apis/post/getPosts';
 
 const useGetPosts = () => {
   return useQuery(['get/post'], () => getPosts(), {
-    enabled: false,
+    staleTime: 10000,
   });
 };
 
