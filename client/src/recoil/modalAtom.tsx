@@ -5,6 +5,11 @@ export const postModalState = atom<boolean>({
   default: false,
 });
 
+export const modifyModalState = atom<boolean>({
+  key: 'modifyModalState',
+  default: false,
+});
+
 export const clickBackState = atom<boolean>({
   key: 'clickBackState',
   default: false,

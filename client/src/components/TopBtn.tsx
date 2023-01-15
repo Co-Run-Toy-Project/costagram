@@ -13,7 +13,7 @@ const TopBtn = () => {
     <button
       type="button"
       onClick={handleScrollUp}
-      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+      className="px-4 py-2 font-bold text-white bg-blue-500 rounded-full hover:bg-blue-700"
     >
       Top
     </button>
