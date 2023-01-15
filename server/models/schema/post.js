@@ -35,6 +35,12 @@ const postSchema = new mongoose.Schema(
       required: true,
       default: {},
     },
+    // 날씨
+    weather: {
+      type: String,
+      required: true,
+      default: '',
+    },
     // 이미지 경로
     imagePath: {
       type: Array,
