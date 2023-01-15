@@ -9,7 +9,6 @@ const Main = () => {
   return (
     <>
       <PostModal />
-      <ModifyModal />
       <Navbar />
       <RenderPosts />
       <TopBtn />

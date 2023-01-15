@@ -4,7 +4,7 @@ interface Props {
 
 const BackwardIcon = ({ onClick }: Props) => {
   return (
-    <button type="button" onClick={onClick}>
+    <button type="button" onClick={() => onClick()}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 20 20"

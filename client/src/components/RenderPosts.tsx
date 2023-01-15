@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import useGetPosts from '../hooks/post/useGetPost';
+import useGetPosts from '../hooks/posts/useGetPost';
 import PostBox from './reuse/PostBox';
 
 const RenderPosts = () => {

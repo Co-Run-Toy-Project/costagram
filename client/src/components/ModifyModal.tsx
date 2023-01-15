@@ -1,29 +1,32 @@
 import { useRecoilValue, useRecoilState } from 'recoil';
 import { modifyModalState, clickBackState } from '../recoil/modalAtom';
+import useGetPostById from '../hooks/posts/useGetPostById';
 
 import UploadPhotoIcon from '../assets/UploadPhotoIcon';
-import CancelModal from './CancelModal';
+import CancelModal from './reuse/CancelModal';
 import ModalButton from './reuse/ModalButton';
 import BackwardIcon from '../assets/BackwardIcon';
 
-const ModifyModal = () => {
-  const isModalOpen = useRecoilValue<boolean>(modifyModalState);
+interface Props {
+  selectedData: {
+    userName: string;
+    postContent: string;
+  };
+}
+
+const ModifyModal = ({ selectedData }: Props) => {
   const [isClicked, setIsClicked] = useRecoilState<boolean>(clickBackState);
 
   const handleBackPost = () => {
-    console.log(isClicked);
     setIsClicked(!isClicked);
-    console.log(isClicked);
   };
 
+  console.log(selectedData);
+
   return (
-    <div
-      className={`${
-        isModalOpen ? 'flex' : 'hidden'
-      } fixed top-0 left-0 z-50 h-full w-full items-center justify-center bg-[rgba(0,0,0,0.6)]`}
-    >
+    <div className="flex fixed top-0 left-0 z-50 h-full w-full items-center justify-center bg-[rgba(0,0,0,0.6)]">
       <CancelModal />
-      <form className="tablet:min-w-mobile top-1/4 flex h-[60%] w-[80%] flex-col bg-white tablet:flex-row">
+      <form className="top-1/4 flex h-[60%] w-[70%] flex-col bg-white tablet:flex-row tablet:min-w-mobile">
         {/* 이미지 첨부 부분 */}
         <div className="p-2 h-1/2 bg-likesGray tablet:h-full tablet:w-1/2 tablet:p-4">
           {/* 뒤로가기(취소) 버튼 */}
@@ -61,7 +64,7 @@ const ModifyModal = () => {
               </svg>
             </div>
 
-            <span className="pl-2 font-">yw1010</span>
+            <span className="pl-2 font-">{selectedData.userName}</span>
           </div>
 
           <div className="h-1/3">
@@ -69,6 +72,7 @@ const ModifyModal = () => {
               placeholder="  내용을 입력하세요"
               maxLength={2000}
               className="w-full outline-none resize-none"
+              value={selectedData.postContent}
             />
           </div>
 
