@@ -1,6 +1,10 @@
 import { useEffect, useRef } from 'react';
 import { useRecoilValue, useRecoilState } from 'recoil';
-import { postModalState, clickBackState } from '../recoil/modalAtom';
+import {
+  postModalState,
+  clickBackState,
+  postArticle,
+} from '../recoil/modalAtom';
 
 import UploadPhotoIcon from '../assets/UploadPhotoIcon';
 import CancelModal from './reuse/CancelModal';
@@ -8,9 +12,12 @@ import ModalButton from './reuse/ModalButton';
 import useGetWeather from '../hooks/weather/useGetWeather';
 import BackwardIcon from '../assets/BackwardIcon';
 
+import MakeMap from './MakeMap';
+
 const PostModal = () => {
   const isModalOpen = useRecoilValue<boolean>(postModalState);
   const [isClicked, setIsClicked] = useRecoilState<boolean>(clickBackState);
+  const [post, setPost] = useRecoilState(postArticle);
 
   // 날씨 타입
   const weatherType = useRef(null);
@@ -40,6 +47,7 @@ const PostModal = () => {
     setIsClicked(!isClicked);
   };
 
+  const { content, lat, lon } = useRecoilValue(postArticle);
   return (
     <div
       className={`${
@@ -93,11 +101,14 @@ const PostModal = () => {
               placeholder="  내용을 입력하세요"
               maxLength={2000}
               className="w-full outline-none resize-none"
+              onChange={e => setPost({ ...post, content: e.target.value })}
             />
           </div>
 
           {/* map api 위치 */}
-          <div className="h-1/2 bg-inputGray">1</div>
+          <div className="h-1/2 bg-inputGray">
+            <MakeMap />
+          </div>
 
           <ModalButton onClick={() => {}}>저장</ModalButton>
         </div>
