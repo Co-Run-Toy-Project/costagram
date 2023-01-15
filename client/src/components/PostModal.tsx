@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import { useRecoilValue, useRecoilState } from 'recoil';
 import {
   postModalState,
@@ -6,16 +7,41 @@ import {
 } from '../recoil/modalAtom';
 
 import UploadPhotoIcon from '../assets/UploadPhotoIcon';
-import CancelModal from './CancelModal';
+import CancelModal from './reuse/CancelModal';
 import ModalButton from './reuse/ModalButton';
+import useGetWeather from '../hooks/weather/useGetWeather';
+import BackwardIcon from '../assets/BackwardIcon';
 
 import MakeMap from './MakeMap';
 
 const PostModal = () => {
   const isModalOpen = useRecoilValue<boolean>(postModalState);
   const [isClicked, setIsClicked] = useRecoilState<boolean>(clickBackState);
-
   const [post, setPost] = useRecoilState(postArticle);
+
+  // 날씨 타입
+  const weatherType = useRef(null);
+
+  const {
+    data: weatherData,
+    refetch: weatherRefetch,
+    isSuccess: gotWeatherData,
+  } = useGetWeather();
+
+  const todayWeather = weatherData?.data.weather[0].main;
+
+  useEffect(() => {
+    weatherRefetch();
+  }, []);
+
+  // 현재 날씨 요청 함수
+  const handleWeather = () => {
+    weatherRefetch();
+
+    if (gotWeatherData) {
+      weatherType.current = todayWeather;
+    }
+  };
 
   const handleBackPost = () => {
     setIsClicked(!isClicked);
@@ -29,24 +55,11 @@ const PostModal = () => {
       } fixed top-0 left-0 z-50 h-full w-full items-center justify-center bg-[rgba(0,0,0,0.6)]`}
     >
       <CancelModal />
-      <form className="tablet:min-w-mobile top-1/4 flex h-[60%] w-[80%] flex-col bg-white tablet:flex-row">
+      <form className="top-1/4 flex h-[60%] w-[70%] flex-col bg-white tablet:flex-row tablet:min-w-mobile">
         {/* 이미지 첨부 부분 */}
         <div className="p-2 h-1/2 bg-likesGray tablet:h-full tablet:w-1/2 tablet:p-4">
           {/* 뒤로가기(취소) 버튼 */}
-          <button type="button" onClick={handleBackPost}>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              fill="white"
-              className="w-5 h-5"
-            >
-              <path
-                fillRule="evenodd"
-                d="M17 10a.75.75 0 01-.75.75H5.612l4.158 3.96a.75.75 0 11-1.04 1.08l-5.5-5.25a.75.75 0 010-1.08l5.5-5.25a.75.75 0 111.04 1.08L5.612 9.25H16.25A.75.75 0 0117 10z"
-                clipRule="evenodd"
-              />
-            </svg>
-          </button>
+          <BackwardIcon onClick={handleBackPost} />
 
           <div className="mt-[-2rem] flex h-full w-full flex-row items-center justify-center">
             <input className="hidden" id="file" type="file" accept="image/*" />
