@@ -5,7 +5,7 @@ interface Props {
 const HeartOn = ({ onClick }: Props) => {
   return (
     <>
-      <div className="w-fit h-fit cursor-pointer" onClick={onClick}>
+      <div className="cursor-pointer w-fit h-fit" onClick={onClick}>
         <svg
           width="20"
           height="20"

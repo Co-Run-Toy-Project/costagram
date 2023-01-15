@@ -23,4 +23,6 @@ module.exports = {
       // => @media (min-width: 1024px) { ... }
     },
   },
+  // eslint-disable-next-line global-require
+  plugins: [require('daisyui')],
 };

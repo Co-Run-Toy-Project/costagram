@@ -13,7 +13,7 @@ const SearchComp = () => {
     setIsFocus(false);
   };
   return (
-    <div className="flex flex-row p-1 w-full h-full border-t-2 mt-2 justify-between items-center">
+    <div className="flex flex-row p-1 w-full h-[50px] border-t-2 mt-2 justify-between items-center">
       <SearchIcon />
       <input
         type="text"
@@ -27,7 +27,10 @@ const SearchComp = () => {
           게시
         </button>
       ) : (
-        <button type="button" className="w-fit h-fit p-1 text-sm text-postDeepBlue">
+        <button
+          type="button"
+          className="w-fit h-fit p-1 text-sm text-postDeepBlue"
+        >
           게시
         </button>
       )}
