@@ -5,4 +5,9 @@ const permissionCode = atom<string>({
   default: '',
 });
 
-export default permissionCode;
+const loginState = atom<boolean>({
+  key: 'loginState',
+  default: false,
+});
+
+export { permissionCode, loginState };
