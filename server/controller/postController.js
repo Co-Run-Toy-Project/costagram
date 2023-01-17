@@ -16,7 +16,10 @@ exports.createPost = async (req, res) => {
 
 exports.updatePost = async (req, res) => {
   const { postId } = req.params;
-  const update = { postContent: req.body.postContent };
+  const update = {
+    postContent: req.body.postContent,
+    location: req.body.location,
+  };
   const message = { message: '수정이 완료되었습니다!' };
   await Post.findOneAndUpdate({ postId }, update)
     .then(() => {
