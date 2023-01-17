@@ -3,7 +3,6 @@ import useGetUser from '../../hooks/user/useGetUser';
 const MyProfilePic = () => {
   const { data } = useGetUser();
   const resData = data?.data;
-  console.log(resData.leng);
 
   return (
     <div className="flex flex-wrap justify-center w-full">
