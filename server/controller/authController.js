@@ -48,19 +48,18 @@ exports.getUserInfo = async (req, res, next) => {
   let userCheck = null;
   let token = null;
   userCheck = await User.findOne({
-    where: {
-      userId: userInfo.id,
-    },
+    userId: userInfo.id,
   });
 
   if (userCheck === null) {
+    token = jwt.createToken(userInfo.id);
     const newUser = new User({
       userId: userInfo.id,
       userName: userInfo.properties.nickname,
+      profileImage: userInfo.properties.thumbnail_image,
+      userToken: token,
     });
     await newUser.save();
-
-    token = jwt.createToken(userInfo.id);
   } else {
     token = jwt.createToken(userInfo.id);
   }
@@ -68,8 +67,19 @@ exports.getUserInfo = async (req, res, next) => {
   // 일단 쿠키로 보내기
   res.cookie('jwt', token);
   res.status(200).json({
-    userInfo,
+    // 기존 유저면 기존 유저, 새로운 유저면 새로운 유저 정보
+    user: userCheck || newUser,
     message: 'token이 발급되었습니다',
     jwt: token,
   });
+};
+
+// 토큰 권한 확인
+exports.isAuthorization = async (req, res, next) => {
+  const authorization = req.headers.authorization;
+  if (!authorization) {
+    return null;
+  }
+
+  return jwt.verifyToken(authorization);
 };
