@@ -31,7 +31,7 @@ const postSchema = new mongoose.Schema(
     },
     // 위도, 경도
     location: {
-      type: mongoose.Schema.Types.Mixed,
+      type: String,
       required: true,
       default: {},
     },
