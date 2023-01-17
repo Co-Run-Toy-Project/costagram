@@ -5,15 +5,10 @@ import { postModalState } from '../recoil/modalAtom';
 
 const Navbar = () => {
   const [isModalOpen, setIsModalOpen] = useRecoilState(postModalState);
-  // const setModalState = useSetRecoilState(ModalState);
 
   const handlePostModal = () => {
-    // console.log('clicked');
-    // console.log(Modal);
     setIsModalOpen(!isModalOpen);
   };
-
-  // console.log(Modal);
 
   return (
     <nav className="flex h-14 w-screen items-center justify-between border-b-[1px] border-b-underbarGray bg-white px-3 tablet:px-6 desktop:px-12">

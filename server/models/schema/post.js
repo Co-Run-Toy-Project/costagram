@@ -35,6 +35,12 @@ const postSchema = new mongoose.Schema(
       required: true,
       default: {},
     },
+    // 날씨
+    weather: {
+      type: String,
+      required: true,
+      default: '',
+    },
     // 이미지 경로
     imagePath: {
       type: Array,
@@ -53,6 +59,12 @@ const postSchema = new mongoose.Schema(
     },
     // 댓글
     comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
+    // 댓글 개수
+    commentCount: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
     // 생성 시간
     createdAt: {
       type: Date,
