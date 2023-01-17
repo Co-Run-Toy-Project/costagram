@@ -52,14 +52,14 @@ exports.getUserInfo = async (req, res, next) => {
   });
 
   if (userCheck === null) {
+    token = jwt.createToken(userInfo.id);
     const newUser = new User({
       userId: userInfo.id,
       userName: userInfo.properties.nickname,
       profileImage: userInfo.properties.thumbnail_image,
+      userToken: token,
     });
     await newUser.save();
-
-    token = jwt.createToken(userInfo.id);
   } else {
     token = jwt.createToken(userInfo.id);
   }
