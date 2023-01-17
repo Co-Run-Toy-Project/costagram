@@ -25,7 +25,6 @@ const PostBox = ({ data }: Props) => {
   const [isModifyOpen, setIsModifyOpen] =
     useRecoilState<boolean>(modifyModalState);
   const selectedId: number = data.postId;
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   // 특정 게시물 정보 요청
   const {
@@ -38,6 +37,7 @@ const PostBox = ({ data }: Props) => {
 
   const { mutate } = useDeletePost();
 
+  // 날씨 아이콘 컴포넌트 리턴 함수
   const handleCheckWeather = () => {
     const weather = data.weather.toLowerCase();
 
@@ -69,10 +69,11 @@ const PostBox = ({ data }: Props) => {
 
   const handleModifyPost = () => {
     refetchByPostId();
+    console.log(isModifyOpen);
 
     if (successedByPostId) {
       setIsModifyOpen(!isModifyOpen);
-      setIsModalOpen(!isModalOpen);
+      console.log(isModifyOpen);
     }
   };
 
@@ -82,7 +83,7 @@ const PostBox = ({ data }: Props) => {
 
   return (
     <>
-      {successedByPostId && isModalOpen ? (
+      {successedByPostId && isModifyOpen ? (
         <ModifyModal selectedData={dataByPostId} />
       ) : null}
       <div className="w-full max-w-[470px] min-w-[300px] tablet:w-[470px] h-full flex flex-col border-2 border-underbarGray rounded-lg">
@@ -106,7 +107,7 @@ const PostBox = ({ data }: Props) => {
           </div>
           <div className="flex items-center mr-3">
             {/* 수정 버튼 */}
-            <button type="button" onClick={() => handleModifyPost()}>
+            <button type="button" onClick={handleModifyPost}>
               <PenIcon />
             </button>
 
@@ -118,7 +119,7 @@ const PostBox = ({ data }: Props) => {
         </div>
         {/* 게시물 사진 */}
         <Carousel />
-        <BoardContainer />
+        {successedByPostId ? <BoardContainer postData={dataByPostId} /> : null}
       </div>
     </>
   );

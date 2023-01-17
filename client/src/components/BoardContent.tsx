@@ -1,12 +1,21 @@
-const BoardContent = () => {
+interface Props {
+  postData: {
+    userId: number;
+    postContent: string;
+  };
+}
+
+const BoardContent = ({ postData }: Props) => {
   return (
     <>
-      <div className="w-full h-full flex flex-row justify-start items-center mt-1">
-        <div className="w-fit h-fit text-fontGray text-sm">userId</div>
-        <div className="w-fit h-fit text-black text-sm pl-2">
-          안녕하세요! 이것은 게시글 본문...
+      <div className="flex flex-row items-center justify-start w-full h-full mt-1">
+        <div className="text-sm w-fit h-fit text-fontGray">
+          {postData.userId}
         </div>
-        <div className="w-fit h-fit text-fontGray text-sm pl-2 cursor-pointer">
+        <div className="pl-2 text-sm text-black w-fit h-fit">
+          {postData.postContent}
+        </div>
+        <div className="pl-2 text-sm cursor-pointer w-fit h-fit text-fontGray">
           더보기
         </div>
       </div>

@@ -4,16 +4,21 @@ import BoardContent from '../BoardContent';
 import ReviewContainer from '../ReviewContainer';
 import SearchComp from '../SearchComp';
 
-const BoardContainer = () => {
+interface Props {
+  postData: {
+    userId: number;
+    postContent: string;
+  };
+}
+
+const BoardContainer = ({ postData }: Props) => {
   return (
-    <>
-      <div className="w-full h-fit bg-white drop-shadow-lg p-2">
-        <LikeComp />
-        <BoardContent />
-        <ReviewContainer />
-        <SearchComp />
-      </div>
-    </>
+    <div className="w-full p-2 bg-white h-fit drop-shadow-lg">
+      <LikeComp />
+      <BoardContent postData={postData} />
+      <ReviewContainer />
+      <SearchComp />
+    </div>
   );
 };
 

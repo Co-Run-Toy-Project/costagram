@@ -48,6 +48,7 @@ const PostModal = () => {
   };
 
   const { content, lat, lon } = useRecoilValue(postArticle);
+
   return (
     <div
       className={`${
