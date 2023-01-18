@@ -27,39 +27,32 @@ exports.addComment = async (req, res, next) => {
   const { postId } = req.params;
   const { commentContent } = req.body;
 
+  // 복호화한 토큰으로 유저 확인
   let userCheck = await User.findOne({
-    userId: authController.isAuthorization(req),
+    userName: req.tokenInfo,
   });
 
-  // 토큰 없을 때 안되도록 막아야 함
-  if (req.header.authorization && userCheck) {
-    const message = { message: '댓글 등록이 완료되었습니다!' };
-    const post = Post.findOne({ postId });
-    // 게시물이 있는지 확인
-    if (post) {
-      const newComment = new Comment({
-        postId,
-        commentContent,
-        userName: userCheck.userName,
-        profileImage: userCheck.profileImage,
-      });
-      await newComment.save();
+  const message = { message: '댓글 등록이 완료되었습니다!' };
+  const post = Post.findOne({ postId });
+  // 게시물이 있는지 확인
+  if (post) {
+    const newComment = new Comment({
+      postId,
+      commentContent,
+      userName: userCheck.userName,
+      profileImage: userCheck.profileImage,
+    });
+    await newComment.save();
 
-      await Post.findOneAndUpdate(
-        { postId },
-        { $push: { comments: newComment } },
-      )
-        .then(() => {
-          res.status(200).json(message);
-        })
-        .catch(err => {
-          res.status(500).send(err);
-        });
-    } else {
-      res.status(500).send({ message: '게시물이 존재하지 않습니다!' });
-    }
+    await Post.findOneAndUpdate({ postId }, { $push: { comments: newComment } })
+      .then(() => {
+        res.status(200).json(message);
+      })
+      .catch(err => {
+        res.status(500).send(err);
+      });
   } else {
-    res.status(500).send('유효한 사용자가 아닙니다');
+    res.status(500).send({ message: '게시물이 존재하지 않습니다!' });
   }
 };
 
