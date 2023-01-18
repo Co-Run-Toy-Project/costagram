@@ -11,17 +11,16 @@ const postSchema = new mongoose.Schema(
       unique: true,
       default: 0,
     },
-    // 사용자 아이디
-    userId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
-    },
+
     // 사용자 이름
     // OAuth 이전에 기본값 추가
     userName: {
       type: String,
       default: 'User1',
       ref: 'User',
+    },
+    profileImage: {
+      type: String,
     },
     // 게시물 글 내용
     postContent: {

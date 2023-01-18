@@ -7,13 +7,24 @@ const userSchema = new mongoose.Schema(
     // 카카오 고유의 아이디
     userId: {
       type: Number,
-      required: true,
     },
     // 카카오 닉네임
     userName: {
       type: String,
       required: true,
     },
+    // 게시물 연결
+    posts: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Post',
+    },
+    // 댓글
+    comments: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Comment',
+      },
+    ],
     // 사진은 지금 안 오는 듯
     // 잠시 required 해제
     profileImage: {

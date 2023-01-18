@@ -1,15 +1,32 @@
+// 스키마 불러오기
 const Post = require('../models/schema/post');
 const Comment = require('../models/schema/comment');
+const User = require('../models/schema/user');
+
+// 토큰 검증 위한 컨트롤러 불러오기
+const authController = require('./authController');
 
 exports.createPost = async (req, res) => {
-  const newPost = await new Post(req.body);
+  let verifyToken = authController.isAuthorization(req);
+  let userCheck = await User.findOne({
+    userId: verifyToken,
+  });
+
+  const newPost = await new Post({
+    postContent: req.body.postContent,
+    location: req.body.location,
+    weather: req.body.weather,
+    imagePath: req.body.imagePath,
+    userName: userCheck.userName,
+    profileImage: userCheck.profileImage,
+  });
+
   await newPost
     .save()
     .then(() => {
       res.status(200).json({ message: '게시글 등록 success', data: newPost });
     })
     .catch(err => {
-      console.log('게시물 등록이 실패했습니다');
       res.status(500).send(err);
     });
 };
