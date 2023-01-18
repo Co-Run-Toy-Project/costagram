@@ -9,7 +9,6 @@ const useGetOauth = (permissionCode: string | null) => {
   return useQuery(['get/oauth'], () => getOauth(permissionCode), {
     enabled: false,
     onSuccess: res => {
-      console.log(res);
       const ACCESS_TOKEN = res.data.jwt;
       const USER_NAME = res.data.user.userName;
       const PROFILE_IMAGE = res.data.user.profileImage;
