@@ -3,6 +3,7 @@ import HomeIcon from '../assets/HomeIcon';
 import Logo from '../assets/Logo';
 import { postModalState } from '../recoil/modalAtom';
 import { loginState } from '../recoil/oauthAtom';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   const [isModalOpen, setIsModalOpen] = useRecoilState(postModalState);
@@ -70,7 +71,7 @@ const Navbar = () => {
         {/* User Profile */}
         {/* 프로필이미지 클릭 시 마이페이지 컴포넌트로 변경 */}
         {localStorage.getItem('token') ? (
-          <a href="/mypage">
+          <Link to="/mypage">
             <button type="button" className="w-7 h-7 rounded-full mt-1">
               <img
                 src={`${localStorage.getItem('profileImage')}`}
@@ -78,16 +79,16 @@ const Navbar = () => {
                 className="w-full h-full rounded-full"
               />
             </button>
-          </a>
+          </Link>
         ) : (
-          <a href="/login">
+          <Link to="/login">
             <button
               type="button"
               className="w-20 h-9 rounded-md bg-postDeepBlue text-sm text-white"
             >
               로그인
             </button>
-          </a>
+          </Link>
         )}
       </div>
       {/* <input placeholder="검색"></input> */}
