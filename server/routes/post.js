@@ -1,10 +1,12 @@
+// 미들웨어 불러오기
 const express = require('express');
 const router = express.Router();
+const JwtMiddleware = require('../utils/JwtMiddleware');
 
 // 컨트롤러 불러오기
 const postController = require('../controller/postController');
 const commentController = require('../controller/commentController');
-const JwtMiddleware = require('../utils/JwtMiddleware');
+const likeController = require('../controller/likeController');
 
 // 게시글 전체 조회
 router.get('/', postController.getAllPost);
@@ -37,5 +39,8 @@ router.delete(
   JwtMiddleware.verifyToken,
   commentController.deleteComment,
 );
+
+// 좋아요
+router.put('/:postId/like', likeController);
 
 module.exports = router;
