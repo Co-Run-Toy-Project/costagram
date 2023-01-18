@@ -25,7 +25,7 @@ exports.verifyToken = async (req, res, next) => {
   } else {
     try {
       const tokenInfo = await new Promise((resolve, reject) => {
-        jwt.verify(accessToken, config.secret, (err, decoded) => {
+        jwt.verify(accessToken, secretKey, (err, decoded) => {
           if (err) {
             reject(err);
           } else {
