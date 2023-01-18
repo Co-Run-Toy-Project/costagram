@@ -43,10 +43,15 @@ exports.updatePost = async (req, res) => {
       userName: req.tokenInfo,
     });
 
+    const length = post.comments.length;
+
     const update = {
       postContent: req.body.postContent,
       location: req.body.location,
+      weather: req.body.weather,
+      commentCount: length,
     };
+
     const message = { message: '수정이 완료되었습니다!' };
     await Post.findOneAndUpdate(
       ({ postId }, { userName: userCheck.userName }),
