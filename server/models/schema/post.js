@@ -11,12 +11,9 @@ const postSchema = new mongoose.Schema(
       unique: true,
       default: 0,
     },
-
     // 사용자 이름
-    // OAuth 이전에 기본값 추가
     userName: {
       type: String,
-      default: 'User1',
       ref: 'User',
     },
     profileImage: {
