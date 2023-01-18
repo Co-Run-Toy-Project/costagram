@@ -14,6 +14,8 @@ import BackwardIcon from '../assets/BackwardIcon';
 
 import MakeMap from './MakeMap';
 
+import MakeMap from './MakeMap';
+
 const PostModal = () => {
   const isModalOpen = useRecoilValue<boolean>(postModalState);
   const [isClicked, setIsClicked] = useRecoilState<boolean>(clickBackState);
@@ -42,6 +44,8 @@ const PostModal = () => {
       weatherType.current = todayWeather;
     }
   };
+
+  const [post, setPost] = useRecoilState(postArticle);
 
   const handleBackPost = () => {
     setIsClicked(!isClicked);
