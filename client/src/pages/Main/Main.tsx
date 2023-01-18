@@ -11,7 +11,9 @@ const Main = () => {
       <PostModal />
       <Navbar />
       <RenderPosts />
-      <TopBtn />
+      <div className="fixed m-5 right-1 bottom-1">
+        <TopBtn />
+      </div>
     </>
   );
 };
