@@ -27,14 +27,12 @@ exports.addComment = async (req, res, next) => {
   const { postId } = req.params;
   const { commentContent } = req.body;
 
-  let verifyToken = authController.isAuthorization(req);
-  let userCheck = null;
-  userCheck = await User.findOne({
-    userId: verifyToken,
+  let userCheck = await User.findOne({
+    userId: authController.isAuthorization(req),
   });
-  console.log(userCheck);
 
-  if (userCheck) {
+  // 토큰 없을 때 안되도록 막아야 함
+  if (req.header.authorization && userCheck) {
     const message = { message: '댓글 등록이 완료되었습니다!' };
     const post = Post.findOne({ postId });
     // 게시물이 있는지 확인
@@ -68,10 +66,15 @@ exports.addComment = async (req, res, next) => {
 // 댓글 삭제
 exports.deleteComment = async (req, res) => {
   const { commentId } = req.params;
+  const userId = authController.isAuthorization(req);
+  console.log(userId);
+
   const message = { message: `${commentId}번 댓글이 삭제되었습니다!` };
-  await Comment.deleteOne({ commentId })
-    .then(() => res.status(200).json(message))
-    .catch(err => {
-      res.status(500).send(err);
+  await Comment.findOneAndDelete({ commentId })
+    .then(comment => {
+      res.status(200).json(comment, message);
+    })
+    .catch(() => {
+      res.status(500).send({ message: '이미 삭제된 댓글입니다' });
     });
 };
