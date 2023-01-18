@@ -19,8 +19,10 @@ export interface Article {
   content: string;
   lat: number;
   lon: number;
-  picture: string;
-  weather: string;
+  picture: any;
+  weather: string | null;
+  // eslint-disable-next-line no-restricted-globals
+  location: string | null;
 }
 
 export const postArticle = atom<Article>({
@@ -29,7 +31,17 @@ export const postArticle = atom<Article>({
     content: '',
     lat: 33.450701,
     lon: 126.570667,
-    picture: '0,',
+    picture: '',
     weather: 'sunny',
+    // eslint-disable-next-line no-restricted-globals
+    location: null,
   },
 });
+
+export interface Form {
+  postContent: string;
+  imagePath: any;
+  // eslint-disable-next-line no-restricted-globals
+  location: string;
+  weather: string;
+}
