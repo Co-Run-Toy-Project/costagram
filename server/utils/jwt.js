@@ -15,6 +15,31 @@ exports.createToken = payload => {
   return jwt.sign(payload, secretKey);
 };
 
-exports.verifyToken = token => {
-  return jwt.verify(token, secretKey);
+exports.verifyToken = async (req, res, next) => {
+  const accessToken = req.headers.authorization;
+
+  if (accessToken == null) {
+    res
+      .status(403)
+      .json({ success: false, errormessage: 'Authentication fail' });
+  } else {
+    try {
+      const tokenInfo = await new Promise((resolve, reject) => {
+        jwt.verify(accessToken, config.secret, (err, decoded) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(decoded);
+          }
+        });
+      });
+      req.tokenInfo = tokenInfo;
+      next();
+    } catch (err) {
+      console.log(err);
+      res
+        .status(403)
+        .json({ success: false, errormessage: 'Authentication fail' });
+    }
+  }
 };
