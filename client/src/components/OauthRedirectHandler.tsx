@@ -3,7 +3,6 @@ import { useEffect } from 'react';
 import useGetOauth from '../hooks/get/useGetOauth';
 
 const OauthRedirectHandler = () => {
-
   let code = new URL(window.location.href).searchParams.get('code');
   const { refetch } = useGetOauth(code);
   useEffect(() => {
