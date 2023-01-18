@@ -10,7 +10,6 @@ const option = { expiresIn };
 
 // 토큰을 쿠키로 보내야 하나 헤더로 보내야 하나
 exports.createToken = payload => {
-  // payload가 들어오면 그 값을 토큰으로 바꿔서 돌려줌.
   // payload는 토큰이 가질 데이터
   return jwt.sign(payload, secretKey);
 };
