@@ -13,10 +13,19 @@ import { modifyModalState } from '../../recoil/modalAtom';
 import useGetPostById from '../../hooks/posts/useGetPostById';
 import ModifyModal from '../ModifyModal';
 
+interface Comment {
+  // userName: string;
+  commentContent: string;
+  createdAt: string;
+}
+
 interface Props {
   data: {
     userName: string;
     postId: number;
+    postContent: string;
+    comments: Array<Comment>;
+    commentCount: number;
     weather: string;
   };
 }
@@ -69,11 +78,9 @@ const PostBox = ({ data }: Props) => {
 
   const handleModifyPost = () => {
     refetchByPostId();
-    console.log(isModifyOpen);
 
     if (successedByPostId) {
       setIsModifyOpen(!isModifyOpen);
-      console.log(isModifyOpen);
     }
   };
 
@@ -119,7 +126,7 @@ const PostBox = ({ data }: Props) => {
         </div>
         {/* 게시물 사진 */}
         <Carousel />
-        {successedByPostId ? <BoardContainer postData={dataByPostId} /> : null}
+        {successedByPostId ? <BoardContainer postData={data} /> : null}
       </div>
     </>
   );

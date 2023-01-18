@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { clickBackState, modifyModalState } from '../recoil/modalAtom';
 
@@ -21,6 +21,10 @@ const ModifyModal = ({ selectedData }: Props) => {
   const [isModifyOpen, setIsModifyOpen] =
     useRecoilState<boolean>(modifyModalState);
   const [textContent, setTextContent] = useState(selectedData.postContent);
+
+  useEffect(() => {
+    setTextContent(selectedData.postContent);
+  }, []);
 
   const { postId } = selectedData;
 
@@ -96,10 +100,8 @@ const ModifyModal = ({ selectedData }: Props) => {
               maxLength={2000}
               className="w-full outline-none resize-none"
               value={textContent}
-              // autoFocus
               onFocus={handleClearContent}
               onChange={handleChangeContent}
-              // onKeyDown={}
             />
           </div>
 
