@@ -75,7 +75,7 @@ exports.getUserInfo = async (req, res, next) => {
 };
 
 // 토큰 권한 확인
-exports.isAuthorization = async (req, res, next) => {
+exports.isAuthorization = (req, res, next) => {
   const authorization = req.headers.authorization;
   if (!authorization) {
     return null;
