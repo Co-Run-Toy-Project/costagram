@@ -59,15 +59,25 @@ exports.addComment = async (req, res, next) => {
 // 댓글 삭제
 exports.deleteComment = async (req, res) => {
   const { commentId } = req.params;
-  const userId = authController.isAuthorization(req);
-  console.log(userId);
+
+  // 복호화한 토큰으로 유저 확인
+  let userCheck = await User.findOne({
+    userName: req.tokenInfo,
+  });
 
   const message = { message: `${commentId}번 댓글이 삭제되었습니다!` };
-  await Comment.findOneAndDelete({ commentId })
+
+  await Comment.findOneAndDelete(
+    { commentId },
+    { userName: userCheck.userName },
+  )
     .then(comment => {
-      res.status(200).json(comment, message);
+      if (!comment) {
+        return res.status(500).send({ message: '이미 삭제된 댓글입니다' });
+      }
+      return res.status(200).send(message);
     })
-    .catch(() => {
-      res.status(500).send({ message: '이미 삭제된 댓글입니다' });
+    .catch(err => {
+      res.status(500).send(err);
     });
 };

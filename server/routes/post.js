@@ -16,10 +16,10 @@ router.get('/:postId', postController.getOnePost);
 router.post('/', JwtMiddleware.verifyToken, postController.createPost);
 
 // 게시글 수정
-router.patch('/:postId', postController.updatePost);
+router.patch('/:postId', JwtMiddleware.verifyToken, postController.updatePost);
 
 // 게시글 삭제
-router.delete('/:postId', postController.deletePost);
+router.delete('/:postId', JwtMiddleware.verifyToken, postController.deletePost);
 
 // 댓글 조회
 router.get('/:postId/comment', commentController.getComment);
@@ -32,6 +32,10 @@ router.post(
 );
 
 // 댓글 삭제
-router.delete('/:postId/comment/:commentId', commentController.deleteComment);
+router.delete(
+  '/:postId/comment/:commentId',
+  JwtMiddleware.verifyToken,
+  commentController.deleteComment,
+);
 
 module.exports = router;
