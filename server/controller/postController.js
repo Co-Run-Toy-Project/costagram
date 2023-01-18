@@ -8,38 +8,33 @@ const authController = require('./authController');
 
 // 게시물 등록
 exports.createPost = async (req, res) => {
-  let verifyToken = authController.isAuthorization(req);
-
   let userCheck = await User.findOne({
-    userId: verifyToken,
+    userName: req.tokenInfo,
   });
 
-  // 토큰이 존재하면서, db에 있는 유저면서, 유저 데이터가 있을 때
-  if (req.header.authorization && verifyToken && userCheck) {
-    const newPost = await new Post({
-      postContent: req.body.postContent,
-      location: req.body.location,
-      weather: req.body.weather,
-      imagePath: req.body.imagePath,
-      userName: userCheck.userName,
-      profileImage: userCheck.profileImage,
-    });
+  const newPost = await new Post({
+    postContent: req.body.postContent,
+    location: req.body.location,
+    weather: req.body.weather,
+    imagePath: req.body.imagePath,
+    userName: userCheck.userName,
+    profileImage: userCheck.profileImage,
+  });
 
-    await newPost
-      .save()
-      .then(() => {
-        res.status(200).json({ message: '게시글 등록 success', data: newPost });
-      })
-      .catch(err => {
-        res.status(500).send(err);
-      });
-  } else {
-    res.status(401).send({ message: '토큰이 필요합니다' });
-  }
+  await newPost
+    .save()
+    .then(() => {
+      res.status(200).json({ message: '게시글 등록 success', data: newPost });
+    })
+    .catch(err => {
+      res.status(500).send(err);
+    });
 };
 
 // 게시물 수정
 exports.updatePost = async (req, res) => {
+  // 토큰에 맞는 계정
+  let userCheck = authController.isAuthorization(req);
   const { postId } = req.params;
   const update = {
     postContent: req.body.postContent,
