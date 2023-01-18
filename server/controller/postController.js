@@ -1,35 +1,74 @@
+// 스키마 불러오기
 const Post = require('../models/schema/post');
 const Comment = require('../models/schema/comment');
+const User = require('../models/schema/user');
 
+// 토큰 검증 위한 컨트롤러 불러오기
+const authController = require('./authController');
+
+// 게시물 등록
 exports.createPost = async (req, res) => {
-  const newPost = await new Post(req.body);
+  // 복호화한 토큰으로 유저 확인
+  let userCheck = await User.findOne({
+    userName: req.tokenInfo,
+  });
+
+  const newPost = await new Post({
+    postContent: req.body.postContent,
+    location: req.body.location,
+    weather: req.body.weather,
+    imagePath: req.body.imagePath,
+    userName: userCheck.userName,
+    profileImage: userCheck.profileImage,
+  });
+
   await newPost
     .save()
     .then(() => {
       res.status(200).json({ message: '게시글 등록 success', data: newPost });
     })
     .catch(err => {
-      console.log('게시물 등록이 실패했습니다');
       res.status(500).send(err);
     });
 };
 
+// 게시물 수정
 exports.updatePost = async (req, res) => {
   const { postId } = req.params;
-  const update = {
-    postContent: req.body.postContent,
-    location: req.body.location,
-  };
-  const message = { message: '수정이 완료되었습니다!' };
-  await Post.findOneAndUpdate({ postId }, update)
-    .then(() => {
-      res.status(200).json(message);
-    })
-    .catch(err => {
-      res.status(500).send(err);
+  const post = await Post.findOne({ postId }).then(po => po);
+
+  if (post) {
+    // 복호화한 토큰으로 유저 확인
+    let userCheck = await User.findOne({
+      userName: req.tokenInfo,
     });
+
+    const length = post.comments.length;
+
+    const update = {
+      postContent: req.body.postContent,
+      location: req.body.location,
+      weather: req.body.weather,
+      commentCount: length,
+    };
+
+    const message = { message: '수정이 완료되었습니다!' };
+    await Post.findOneAndUpdate(
+      ({ postId }, { userName: userCheck.userName }),
+      update,
+    )
+      .then(() => {
+        res.status(200).send(message);
+      })
+      .catch(err => {
+        res.status(500).send(err);
+      });
+  } else {
+    res.status(403).send({ message: '존재하지 않는 게시물입니다' });
+  }
 };
 
+// 게시물 개별 조회
 exports.getOnePost = async (req, res, next) => {
   const { postId } = req.params;
 
@@ -40,7 +79,7 @@ exports.getOnePost = async (req, res, next) => {
     .populate('comments')
     .then(posts => {
       // 클라이언트로 전송
-      res.status(200).json(posts);
+      res.status(200).send(posts);
     })
     .catch(err => {
       // 실패 시 에러 전달
@@ -48,6 +87,7 @@ exports.getOnePost = async (req, res, next) => {
     });
 };
 
+// 게시물 전체 조회
 exports.getAllPost = async (req, res, next) => {
   // find가 없으면 모든 데이터 조회
   Post.find({})
@@ -56,7 +96,7 @@ exports.getAllPost = async (req, res, next) => {
     .populate('comments')
     .then(posts => {
       // 모든 데이터 찾아 클라이언트로 전송
-      res.status(200).json(posts);
+      res.status(200).send(posts);
     })
     .catch(err => {
       // 실패 시 에러 전달
@@ -64,10 +104,28 @@ exports.getAllPost = async (req, res, next) => {
     });
 };
 
+// 게시물 삭제
 exports.deletePost = async (req, res) => {
   const { postId } = req.params;
   const message = { message: '게시물이 삭제되었습니다!' };
-  await Post.findOneAndDelete(postId);
-  await Comment.deleteMany({ postId });
-  res.status(200).json(message);
+  const post = await Post.findOne({ postId }).then(po => po);
+
+  if (post) {
+    // 복호화한 토큰으로 유저 확인
+    let userCheck = await User.findOne({
+      userName: req.tokenInfo,
+    });
+
+    // 게시물 작성자 본인이면 삭제 가능
+    await Post.findOneAndDelete({ postId }, { userName: userCheck.userName })
+      .then(() => {
+        Comment.deleteMany({ postId });
+        res.status(200).send(message);
+      })
+      .catch(() =>
+        res.status(500).send({ message: '본인이 아니면 삭제할 수 없습니다' }),
+      );
+  } else {
+    res.status(403).send({ message: '존재하지 않는 게시물입니다' });
+  }
 };

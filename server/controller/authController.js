@@ -5,7 +5,7 @@ const Axios = require('axios');
 const User = require('../models/schema/user');
 
 // 토큰 처리 함수 가져오기
-const jwt = require('../utils/jwt');
+const JwtMiddleware = require('../utils/JwtMiddleware');
 
 exports.getUserInfo = async (req, res, next) => {
   // 인가 코드
@@ -47,12 +47,14 @@ exports.getUserInfo = async (req, res, next) => {
   // 기존 유저인지 검색한다
   let userCheck = null;
   let token = null;
+  let newUser = null;
   userCheck = await User.findOne({
-    userId: userInfo.id,
+    userName: userInfo.properties.nickname,
   });
 
+  // 없으면 만들어서 토큰 주고 => 회원가입
   if (userCheck === null) {
-    token = jwt.createToken(userInfo.id);
+    token = JwtMiddleware.createToken(userInfo.properties.nickname);
     const newUser = new User({
       userId: userInfo.id,
       userName: userInfo.properties.nickname,
@@ -60,8 +62,6 @@ exports.getUserInfo = async (req, res, next) => {
       userToken: token,
     });
     await newUser.save();
-  } else {
-    token = jwt.createToken(userInfo.id);
   }
 
   // 일단 쿠키로 보내기
@@ -70,7 +70,8 @@ exports.getUserInfo = async (req, res, next) => {
     // 기존 유저면 기존 유저, 새로운 유저면 새로운 유저 정보
     user: userCheck || newUser,
     message: 'token이 발급되었습니다',
-    jwt: token,
+    // 있으면 있는 토큰 주고
+    jwt: token || userCheck.userToken,
   });
 };
 
@@ -81,5 +82,9 @@ exports.isAuthorization = async (req, res, next) => {
     return null;
   }
 
-  return jwt.verifyToken(authorization);
+  let userCheck = await User.findOne({
+    userName: JwtMiddleware.verifyToken(authorization),
+  });
+
+  return userCheck;
 };
