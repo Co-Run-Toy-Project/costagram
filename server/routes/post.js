@@ -41,6 +41,6 @@ router.delete(
 );
 
 // 좋아요
-router.put('/:postId/like', likeController);
+router.put('/:postId/like', JwtMiddleware.verifyToken, likeController);
 
 module.exports = router;
