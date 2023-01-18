@@ -102,8 +102,6 @@ const PostModal = () => {
 
       if (files !== undefined) {
         const arrFile = Array.from(files);
-        console.log(arrFile);
-
         mutate({
           postContent: content,
           weather: weather!,

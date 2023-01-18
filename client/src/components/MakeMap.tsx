@@ -45,7 +45,6 @@ const MakeMap = () => {
             const _arr1 = arr[0].address.region_1depth_name;
             const _arr2 = arr[0].address.region_2depth_name;
             const _arr3 = arr[0].address.region_3depth_name;
-            // console.log(_arr1, _arr2, _arr3);
             setPost({ ...post, location: `${_arr1} ${_arr2} ${_arr3}` });
           }
         };
