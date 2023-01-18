@@ -4,6 +4,7 @@ const router = express.Router();
 // 컨트롤러 불러오기
 const postController = require('../controller/postController');
 const commentController = require('../controller/commentController');
+const JwtMiddleware = require('../utils/JwtMiddleware');
 
 // 게시글 전체 조회
 router.get('/', postController.getAllPost);
@@ -12,7 +13,7 @@ router.get('/', postController.getAllPost);
 router.get('/:postId', postController.getOnePost);
 
 // 게시글 등록
-router.post('/', postController.createPost);
+router.post('/', JwtMiddleware.verifyToken, postController.createPost);
 
 // 게시글 수정
 router.patch('/:postId', postController.updatePost);
@@ -24,7 +25,11 @@ router.delete('/:postId', postController.deletePost);
 router.get('/:postId/comment', commentController.getComment);
 
 // 댓글 등록
-router.post('/:postId/comment', commentController.addComment);
+router.post(
+  '/:postId/comment',
+  JwtMiddleware.verifyToken,
+  commentController.addComment,
+);
 
 // 댓글 삭제
 router.delete('/:postId/comment/:commentId', commentController.deleteComment);
