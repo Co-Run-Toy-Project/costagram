@@ -23,26 +23,60 @@ const CarouselData = [
 
 const Carousel = () => {
   return (
-    <div className="carousel h-[470px] w-full">
-      {CarouselData.map((slide, index) => {
-        return (
-          <div id={`slide${index}`} className="carousel-item relative w-full">
+    <div>
+      {/* 이미지 배열이 하나일 경우 버튼 보이지 않게 하는 삼항연산자 */}
+      {CarouselData.length === 1 ? (
+        <div className="carousel h-[470px] w-full">
+          <div className="carousel-item relative w-full">
             <img
               alt="carousel-img"
-              src={slide.image}
+              src={CarouselData[0].image}
               className="w-full object-cover"
             />
-            <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
-              <a href={`#slide${index - 1}`} className="btn btn-circle">
-                ❮
-              </a>
-              <a href={`#slide${index + 1}`} className="btn btn-circle">
-                ❯
-              </a>
-            </div>
           </div>
-        );
-      })}
+        </div>
+      ) : (
+        <div className="carousel h-[470px] w-full ">
+          {CarouselData.map((slide, index) => {
+            return (
+              <div
+                id={`slide${index}`}
+                className="carousel-item relative w-full"
+              >
+                <img
+                  alt="carousel-img"
+                  src={slide.image}
+                  className="w-full object-cover"
+                />
+
+                <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
+                  <a
+                    href={`#slide${index - 1}`}
+                    className={` ${
+                      // 첫 번째 이미지 일 경우 좌측으로 가는 버튼 만 보이지 않게
+                      index <= 0
+                        ? 'opacity-0'
+                        : 'btn-circle inline-flex shrink-0 cursor-pointer select-none flex-wrap	items-center justify-center border-transparent text-center transition-colors	bg-white/20'
+                    }`}
+                  >
+                    ❮
+                  </a>
+                  <a
+                    href={`#slide${index + 1}`}
+                    className={` ${
+                      index === slide.image.length - 1
+                        ? 'opacity-0'
+                        : 'btn-circle inline-flex shrink-0 cursor-pointer select-none flex-wrap	items-center justify-center border-transparent text-center transition-colors	bg-white/20'
+                    }`}
+                  >
+                    ❯
+                  </a>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 };
