@@ -35,5 +35,5 @@ app.use('/oauth', authRouter);
 
 const port = 8080;
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+  console.log(`${port}번 포트로 통신 중입니다`);
 });
