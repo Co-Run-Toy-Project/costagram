@@ -26,14 +26,14 @@ const PostModal = () => {
   const { lat, lon, weather, location, content } = useRecoilValue(postArticle);
 
   const [picture, setPicture] = useState<any>([]);
+  // const [sendPic, setSendPic] = useState<any>([]);
+  const [files, setFiles] = useState<FileList | undefined>();
 
   const [communityImage, setCommunityImage] = useState<
     string | ArrayBuffer | null
   >(null);
 
   const { mutate } = useCreatePost();
-
-  let ImageFiles: any;
 
   // 날씨 타입
   const weatherType = useRef(null);
@@ -77,12 +77,13 @@ const PostModal = () => {
 
   const onChangeImg = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
+    const fileList = e.target.files;
+    if (fileList !== null) {
+      setFiles(fileList);
+    }
 
     if (e.target.files) {
       const uploadFile = e.target.files[0];
-      // setPost({ ...post, picture: uploadFile });
-
-      ImageFiles = e.target.files;
 
       const reader = new FileReader();
       reader.readAsDataURL(uploadFile);
@@ -93,17 +94,23 @@ const PostModal = () => {
     }
 
     addImage(e);
-    handleWeather();
   };
 
   const Posting = () => {
     if (picture.length > 0 && content.length > 0) {
-      mutate({
-        postContent: content,
-        weather: weather!,
-        location: location!,
-        imagePath: ImageFiles,
-      });
+      handleWeather();
+
+      if (files !== undefined) {
+        const arrFile = Array.from(files);
+        console.log(arrFile);
+
+        mutate({
+          postContent: content,
+          weather: weather!,
+          location: location!,
+          imagePath: arrFile,
+        });
+      }
     }
   };
 
