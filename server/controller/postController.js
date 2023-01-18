@@ -34,24 +34,33 @@ exports.createPost = async (req, res) => {
 
 // 게시물 수정
 exports.updatePost = async (req, res) => {
-  // 복호화한 토큰으로 유저 확인
-  let userCheck = await User.findOne({
-    userName: req.tokenInfo,
-  });
-
   const { postId } = req.params;
-  const update = {
-    postContent: req.body.postContent,
-    location: req.body.location,
-  };
-  const message = { message: '수정이 완료되었습니다!' };
-  await Post.findOneAndUpdate({ postId }, update)
-    .then(() => {
-      res.status(200).send(message);
-    })
-    .catch(err => {
-      res.status(500).send(err);
+  const post = await Post.findOne({ postId }).then(po => po);
+
+  if (post) {
+    // 복호화한 토큰으로 유저 확인
+    let userCheck = await User.findOne({
+      userName: req.tokenInfo,
     });
+
+    const update = {
+      postContent: req.body.postContent,
+      location: req.body.location,
+    };
+    const message = { message: '수정이 완료되었습니다!' };
+    await Post.findOneAndUpdate(
+      ({ postId }, { userName: userCheck.userName }),
+      update,
+    )
+      .then(() => {
+        res.status(200).send(message);
+      })
+      .catch(err => {
+        res.status(500).send(err);
+      });
+  } else {
+    res.status(403).send({ message: '존재하지 않는 게시물입니다' });
+  }
 };
 
 // 게시물 개별 조회
