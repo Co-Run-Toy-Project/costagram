@@ -8,6 +8,7 @@ const authController = require('./authController');
 
 // 게시물 등록
 exports.createPost = async (req, res) => {
+  // 복호화한 토큰으로 유저 확인
   let userCheck = await User.findOne({
     userName: req.tokenInfo,
   });
@@ -33,8 +34,11 @@ exports.createPost = async (req, res) => {
 
 // 게시물 수정
 exports.updatePost = async (req, res) => {
-  // 토큰에 맞는 계정
-  let userCheck = authController.isAuthorization(req);
+  // 복호화한 토큰으로 유저 확인
+  let userCheck = await User.findOne({
+    userName: req.tokenInfo,
+  });
+
   const { postId } = req.params;
   const update = {
     postContent: req.body.postContent,
@@ -43,7 +47,7 @@ exports.updatePost = async (req, res) => {
   const message = { message: '수정이 완료되었습니다!' };
   await Post.findOneAndUpdate({ postId }, update)
     .then(() => {
-      res.status(200).json(message);
+      res.status(200).send(message);
     })
     .catch(err => {
       res.status(500).send(err);
@@ -61,7 +65,7 @@ exports.getOnePost = async (req, res, next) => {
     .populate('comments')
     .then(posts => {
       // 클라이언트로 전송
-      res.status(200).json(posts);
+      res.status(200).send(posts);
     })
     .catch(err => {
       // 실패 시 에러 전달
@@ -78,7 +82,7 @@ exports.getAllPost = async (req, res, next) => {
     .populate('comments')
     .then(posts => {
       // 모든 데이터 찾아 클라이언트로 전송
-      res.status(200).json(posts);
+      res.status(200).send(posts);
     })
     .catch(err => {
       // 실패 시 에러 전달
@@ -90,7 +94,24 @@ exports.getAllPost = async (req, res, next) => {
 exports.deletePost = async (req, res) => {
   const { postId } = req.params;
   const message = { message: '게시물이 삭제되었습니다!' };
-  await Post.findOneAndDelete(postId);
-  await Comment.deleteMany({ postId });
-  res.status(200).json(message);
+  const post = await Post.findOne({ postId }).then(po => po);
+
+  if (post) {
+    // 복호화한 토큰으로 유저 확인
+    let userCheck = await User.findOne({
+      userName: req.tokenInfo,
+    });
+
+    // 게시물 작성자 본인이면 삭제 가능
+    await Post.findOneAndDelete({ postId }, { userName: userCheck.userName })
+      .then(() => {
+        Comment.deleteMany({ postId });
+        res.status(200).send(message);
+      })
+      .catch(() =>
+        res.status(500).send({ message: '본인이 아니면 삭제할 수 없습니다' }),
+      );
+  } else {
+    res.status(403).send({ message: '존재하지 않는 게시물입니다' });
+  }
 };
