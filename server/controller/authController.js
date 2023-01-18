@@ -52,6 +52,7 @@ exports.getUserInfo = async (req, res, next) => {
     userName: userInfo.properties.nickname,
   });
 
+  // 없으면 만들어서 토큰 주고 => 회원가입
   if (userCheck === null) {
     token = JwtMiddleware.createToken(userInfo.properties.nickname);
     const newUser = new User({
@@ -61,8 +62,6 @@ exports.getUserInfo = async (req, res, next) => {
       userToken: token,
     });
     await newUser.save();
-  } else {
-    token = JwtMiddleware.createToken(userInfo.properties.nickname);
   }
 
   // 일단 쿠키로 보내기
@@ -71,7 +70,8 @@ exports.getUserInfo = async (req, res, next) => {
     // 기존 유저면 기존 유저, 새로운 유저면 새로운 유저 정보
     user: userCheck || newUser,
     message: 'token이 발급되었습니다',
-    jwt: token,
+    // 있으면 있는 토큰 주고
+    jwt: token || userCheck.userToken,
   });
 };
 
