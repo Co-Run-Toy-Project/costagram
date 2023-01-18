@@ -6,31 +6,39 @@ const User = require('../models/schema/user');
 // 토큰 검증 위한 컨트롤러 불러오기
 const authController = require('./authController');
 
+// 게시물 등록
 exports.createPost = async (req, res) => {
   let verifyToken = authController.isAuthorization(req);
+
   let userCheck = await User.findOne({
     userId: verifyToken,
   });
 
-  const newPost = await new Post({
-    postContent: req.body.postContent,
-    location: req.body.location,
-    weather: req.body.weather,
-    imagePath: req.body.imagePath,
-    userName: userCheck.userName,
-    profileImage: userCheck.profileImage,
-  });
-
-  await newPost
-    .save()
-    .then(() => {
-      res.status(200).json({ message: '게시글 등록 success', data: newPost });
-    })
-    .catch(err => {
-      res.status(500).send(err);
+  // 토큰이 존재하면서, db에 있는 유저면서, 유저 데이터가 있을 때
+  if (req.header.authorization && verifyToken && userCheck) {
+    const newPost = await new Post({
+      postContent: req.body.postContent,
+      location: req.body.location,
+      weather: req.body.weather,
+      imagePath: req.body.imagePath,
+      userName: userCheck.userName,
+      profileImage: userCheck.profileImage,
     });
+
+    await newPost
+      .save()
+      .then(() => {
+        res.status(200).json({ message: '게시글 등록 success', data: newPost });
+      })
+      .catch(err => {
+        res.status(500).send(err);
+      });
+  } else {
+    res.status(401).send({ message: '토큰이 필요합니다' });
+  }
 };
 
+// 게시물 수정
 exports.updatePost = async (req, res) => {
   const { postId } = req.params;
   const update = {
@@ -47,6 +55,7 @@ exports.updatePost = async (req, res) => {
     });
 };
 
+// 게시물 개별 조회
 exports.getOnePost = async (req, res, next) => {
   const { postId } = req.params;
 
@@ -65,6 +74,7 @@ exports.getOnePost = async (req, res, next) => {
     });
 };
 
+// 게시물 전체 조회
 exports.getAllPost = async (req, res, next) => {
   // find가 없으면 모든 데이터 조회
   Post.find({})
@@ -81,6 +91,7 @@ exports.getAllPost = async (req, res, next) => {
     });
 };
 
+// 게시물 삭제
 exports.deletePost = async (req, res) => {
   const { postId } = req.params;
   const message = { message: '게시물이 삭제되었습니다!' };
