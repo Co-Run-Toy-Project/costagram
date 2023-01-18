@@ -46,10 +46,10 @@ const postSchema = new mongoose.Schema(
       type: Array,
       default: [],
     },
-    // 좋아요 여부
-    like: {
-      type: Boolean,
-      default: false,
+    // 좋아요한 사람 리스트
+    likes: {
+      type: Array,
+      default: [],
     },
     // 좋아요 개수
     likeCount: {
