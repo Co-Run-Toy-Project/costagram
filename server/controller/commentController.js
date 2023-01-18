@@ -1,6 +1,23 @@
 const Post = require('../models/schema/post');
 const Comment = require('../models/schema/comment');
 
+exports.getComment = async (req, res, next) => {
+  const { postId } = req.params;
+
+  // postId에 해당하는 데이터 1개 찾기
+  Comment.find({ postId })
+    // 👇 comments와 연결된 댓글들 내용까지 같이 불러오기!
+    // 댓글 생성될 때 Comments의 post에 Post ObjectId를 같이 저장시켜줘야 가능함.
+    .then(comments => {
+      // 클라이언트로 전송
+      res.status(200).json(comments);
+    })
+    .catch(err => {
+      // 실패 시 에러 전달
+      res.status(500).send(err);
+    });
+};
+
 exports.addComment = async (req, res, next) => {
   const { postId } = req.params;
   const { commentContent } = req.body;

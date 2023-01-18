@@ -35,6 +35,9 @@ exports.getOnePost = async (req, res, next) => {
 
   // postId에 해당하는 데이터 1개 찾기
   Post.findOne({ postId })
+    // 👇 comments와 연결된 댓글들 내용까지 같이 불러오기!
+    // 댓글 생성될 때 Comments의 post에 Post ObjectId를 같이 저장시켜줘야 가능함.
+    .populate('comments')
     .then(posts => {
       // 클라이언트로 전송
       res.status(200).json(posts);
