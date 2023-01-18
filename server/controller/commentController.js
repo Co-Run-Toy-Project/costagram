@@ -64,8 +64,10 @@ exports.addComment = async (req, res, next) => {
 
 // 댓글 삭제
 exports.deleteComment = async (req, res) => {
-  const { commentId } = req.params;
-  const post = await Post.findOne({ postId }).then(po => po);
+  const { postId, commentId } = req.params;
+  const post = await Post.findOne({ postId })
+    .populate('comments')
+    .then(po => po);
 
   // 게시물이 있는지 확인
   if (post) {
@@ -74,22 +76,22 @@ exports.deleteComment = async (req, res) => {
       userName: req.tokenInfo,
     });
 
-    const message = { message: `${commentId}번 댓글이 삭제되었습니다!` };
+    const length = post.comments.length;
 
-    await Comment.findOneAndDelete(
-      { commentId },
-      { userName: userCheck.userName },
+    const message = { message: `${commentId}번 댓글이 삭제되었습니다!` };
+    const deleteComment = await Comment.findOne({
+      commentId: commentId,
+      postId: postId,
+      userName: userCheck.userName,
+    }).then(co => co);
+    console.log(deleteComment);
+    await Post.findOneAndUpdate(
+      { postId },
+      // 일치하는 댓글 삭제 후 댓글 개수 줄이기
+      { $pull: { comments: deleteComment._id }, commentCount: length - 1 },
     )
-      .then(comment => {
-        if (!comment) {
-          return res.status(500).send({ message: '이미 삭제된 댓글입니다' });
-        }
-        Post.findOneAndUpdate(
-          { postId },
-          // 댓글 삭제 시 댓글 개수 감소
-          { commentCount: length - 1 },
-        );
-        return res.status(200).send(message);
+      .then(() => {
+        res.status(200).json(message);
       })
       .catch(err => {
         res.status(500).send(err);
