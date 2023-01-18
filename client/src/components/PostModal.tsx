@@ -17,7 +17,7 @@ import MakeMap from './MakeMap';
 import MakeMap from './MakeMap';
 
 const PostModal = () => {
-  const isModalOpen = useRecoilValue<boolean>(postModalState);
+  const [isModalOpen, setIsModalOpen] = useRecoilState<boolean>(postModalState);
   const [isClicked, setIsClicked] = useRecoilState<boolean>(clickBackState);
   const [post, setPost] = useRecoilState(postArticle);
 
@@ -52,6 +52,7 @@ const PostModal = () => {
   };
 
   const { content, lat, lon } = useRecoilValue(postArticle);
+
   return (
     <div
       className={`${

@@ -1,11 +1,16 @@
 import axios from 'axios';
 
-const patchPost = async () => {
-  const data = {
-    postContent: '수정할 내용',
+interface Props {
+  postId: number;
+  textContent: string;
+}
+
+const patchPost = async ({ postId, textContent }: Props) => {
+  const content = {
+    postContent: textContent,
   };
 
-  return await axios.patch(`post/:postId`, {
+  return axios.patch(`post/${postId}`, content, {
     baseURL: process.env.REACT_APP_BASE_URL,
     headers: {
       withCredentials: true,
