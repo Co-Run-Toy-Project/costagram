@@ -47,6 +47,7 @@ exports.getUserInfo = async (req, res, next) => {
   // 기존 유저인지 검색한다
   let userCheck = null;
   let token = null;
+  let newUser = null;
   userCheck = await User.findOne({
     userName: userInfo.properties.nickname,
   });
