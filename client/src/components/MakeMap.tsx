@@ -1,5 +1,4 @@
 /* eslint-disable */
-import { AnyTxtRecord } from 'dns';
 import { useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { postArticle, postModalState } from '../recoil/modalAtom';
@@ -25,6 +24,10 @@ const MakeMap = () => {
 
     const map = new kakao.maps.Map(container, options);
     //지도 생성 및 객체 리턴
+
+    // 주소-좌표 변환 객체를 생성합니다
+    var geocoder = new kakao.maps.services.Geocoder();
+
     if (navigator.geolocation) {
       // GeoLocation을 이용해서 접속 위치를 얻어옵니다
       navigator.geolocation.getCurrentPosition(function (position) {
@@ -35,8 +38,21 @@ const MakeMap = () => {
         let locPosition = new kakao.maps.LatLng(lat, lon), // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
           message = '<div style="padding:5px;">현재 위치</div>'; // 인포윈도우에 표시될 내용입니다
 
-        // 마커와 인포윈도우를 표시합니다
-        displayMarker(locPosition, message);
+        let coord = new kakao.maps.LatLng(lat, lon);
+        let callback = function (result: any, status: any) {
+          if (status === kakao.maps.services.Status.OK) {
+            const arr = { ...result };
+            const _arr1 = arr[0].address.region_1depth_name;
+            const _arr2 = arr[0].address.region_2depth_name;
+            const _arr3 = arr[0].address.region_3depth_name;
+            // console.log(_arr1, _arr2, _arr3);
+            setPost({ ...post, location: `${_arr1} ${_arr2} ${_arr3}` });
+          }
+        };
+
+        geocoder.coord2Address(coord.getLng(), coord.getLat(), callback),
+          // 마커와 인포윈도우를 표시합니다
+          displayMarker(locPosition, message);
       });
     } else {
       // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
