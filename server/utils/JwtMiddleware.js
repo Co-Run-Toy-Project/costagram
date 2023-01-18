@@ -18,10 +18,11 @@ exports.createToken = payload => {
 exports.verifyToken = async (req, res, next) => {
   const accessToken = req.headers.authorization;
 
+  // 토큰이 안 들어왔을 때
   if (accessToken == null) {
     res
       .status(403)
-      .json({ success: false, errormessage: 'Authentication fail' });
+      .json({ success: false, errormessage: '토큰이 들어오지 않았습니다' });
   } else {
     try {
       const tokenInfo = await new Promise((resolve, reject) => {
@@ -36,10 +37,10 @@ exports.verifyToken = async (req, res, next) => {
       req.tokenInfo = tokenInfo;
       next();
     } catch (err) {
-      console.log(err);
+      // 이상한 토큰 보냈을 때
       res
         .status(403)
-        .json({ success: false, errormessage: 'Authentication fail' });
+        .json({ success: false, errormessage: '유효한 토큰이 아닙니다' });
     }
   }
 };
