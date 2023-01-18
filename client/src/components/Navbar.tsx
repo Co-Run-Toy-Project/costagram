@@ -51,7 +51,7 @@ const Navbar = () => {
         {/* Post Button */}
         <button
           type="button"
-          onClick={() => handlePostModal()}
+          onClick={handlePostModal}
           className="h-6 w-6 rounded border-2 border-[#000]"
         >
           <svg

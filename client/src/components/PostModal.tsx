@@ -19,7 +19,7 @@ import useCreatePost from '../hooks/post/useCreatePost';
 import PostCarousel from './PostCarousel';
 
 const PostModal = () => {
-  const isModalOpen = useRecoilValue<boolean>(postModalState);
+  const [isModalOpen, setIsModalOpen] = useRecoilState<boolean>(postModalState);
   const [isClicked, setIsClicked] = useRecoilState<boolean>(clickBackState);
   const [post, setPost] = useRecoilState(postArticle);
 
