@@ -1,9 +1,10 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useRecoilValue, useRecoilState } from 'recoil';
 import {
   postModalState,
   clickBackState,
   postArticle,
+  Form,
 } from '../recoil/modalAtom';
 
 import UploadPhotoIcon from '../assets/UploadPhotoIcon';
@@ -13,13 +14,26 @@ import useGetWeather from '../hooks/weather/useGetWeather';
 import BackwardIcon from '../assets/BackwardIcon';
 
 import MakeMap from './MakeMap';
+import useCreatePost from '../hooks/post/useCreatePost';
 
-import MakeMap from './MakeMap';
+import PostCarousel from './PostCarousel';
 
 const PostModal = () => {
   const isModalOpen = useRecoilValue<boolean>(postModalState);
   const [isClicked, setIsClicked] = useRecoilState<boolean>(clickBackState);
   const [post, setPost] = useRecoilState(postArticle);
+
+  const { lat, lon, weather, location, content } = useRecoilValue(postArticle);
+
+  const [picture, setPicture] = useState<any>([]);
+
+  const [communityImage, setCommunityImage] = useState<
+    string | ArrayBuffer | null
+  >(null);
+
+  const { mutate } = useCreatePost();
+
+  let ImageFiles: any;
 
   // 날씨 타입
   const weatherType = useRef(null);
@@ -28,13 +42,13 @@ const PostModal = () => {
     data: weatherData,
     refetch: weatherRefetch,
     isSuccess: gotWeatherData,
-  } = useGetWeather();
+  } = useGetWeather(lat, lon);
 
   const todayWeather = weatherData?.data.weather[0].main;
 
-  useEffect(() => {
-    weatherRefetch();
-  }, []);
+  // useEffect(() => {
+  //   weatherRefetch();
+  // }, []);
 
   // 현재 날씨 요청 함수
   const handleWeather = () => {
@@ -42,16 +56,57 @@ const PostModal = () => {
 
     if (gotWeatherData) {
       weatherType.current = todayWeather;
+      setPost({ ...post, weather: weatherType.current });
     }
   };
-
-  const [post, setPost] = useRecoilState(postArticle);
 
   const handleBackPost = () => {
     setIsClicked(!isClicked);
   };
 
-  const { content, lat, lon } = useRecoilValue(postArticle);
+  const addImage = (e: any) => {
+    const nowSelect = e.target.files;
+    const nowPictures = [...picture];
+
+    for (let i = 0; i < nowSelect.length; i += 1) {
+      const nowPicUrl = URL.createObjectURL(nowSelect[i]);
+      nowPictures.push(nowPicUrl);
+    }
+    setPicture(nowPictures);
+  };
+
+  const onChangeImg = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+
+    if (e.target.files) {
+      const uploadFile = e.target.files[0];
+      // setPost({ ...post, picture: uploadFile });
+
+      ImageFiles = e.target.files;
+
+      const reader = new FileReader();
+      reader.readAsDataURL(uploadFile);
+
+      reader.onload = () => {
+        setCommunityImage(reader.result);
+      };
+    }
+
+    addImage(e);
+    handleWeather();
+  };
+
+  const Posting = () => {
+    if (picture.length > 0 && content.length > 0) {
+      mutate({
+        postContent: content,
+        weather: weather!,
+        location: location!,
+        imagePath: ImageFiles,
+      });
+    }
+  };
+
   return (
     <div
       className={`${
@@ -66,14 +121,45 @@ const PostModal = () => {
           <BackwardIcon onClick={handleBackPost} />
 
           <div className="mt-[-2rem] flex h-full w-full flex-row items-center justify-center">
-            <input className="hidden" id="file" type="file" accept="image/*" />
-            <label
-              htmlFor="file"
-              className="flex flex-col items-center pt-2 text-inputFontGray"
-            >
-              <UploadPhotoIcon />
-              클릭하여 이미지 첨부
-            </label>
+            {picture.length !== 0 ? (
+              <div className="flex flex-col w-4/6 h-3/5">
+                <PostCarousel CarouselData={[...picture]} />
+                <div>
+                  <input
+                    className="hidden"
+                    id="file"
+                    type="file"
+                    multiple
+                    accept="image/*"
+                    onChange={onChangeImg}
+                  />
+                  <label
+                    htmlFor="file"
+                    className="flex flex-col items-center pt-2 cursor-pointer text-inputFontGray"
+                  >
+                    이미지 교체하기
+                  </label>
+                </div>
+              </div>
+            ) : (
+              <div>
+                <input
+                  className="hidden"
+                  id="file"
+                  type="file"
+                  accept="image/*"
+                  onChange={onChangeImg}
+                  multiple
+                />
+                <label
+                  htmlFor="file"
+                  className="flex flex-col items-center pt-2 cursor-pointer text-inputFontGray"
+                >
+                  <UploadPhotoIcon />
+                  클릭하여 이미지 첨부
+                </label>
+              </div>
+            )}
           </div>
         </div>
 
@@ -113,8 +199,8 @@ const PostModal = () => {
           <div className="h-1/2 bg-inputGray">
             <MakeMap />
           </div>
-
-          <ModalButton onClick={() => {}}>저장</ModalButton>
+          <div>{location}</div>
+          <ModalButton onClick={Posting}>저장</ModalButton>
         </div>
       </form>
     </div>
