@@ -52,7 +52,7 @@ exports.getUserInfo = async (req, res, next) => {
   });
 
   if (userCheck === null) {
-    token = JwtMiddleware.createToken(userInfo.id);
+    token = JwtMiddleware.createToken(userInfo.nickname);
     const newUser = new User({
       userId: userInfo.id,
       userName: userInfo.properties.nickname,
@@ -61,7 +61,7 @@ exports.getUserInfo = async (req, res, next) => {
     });
     await newUser.save();
   } else {
-    token = JwtMiddleware.createToken(userInfo.id);
+    token = JwtMiddleware.createToken(userInfo.nickname);
   }
 
   // 일단 쿠키로 보내기
@@ -82,10 +82,8 @@ exports.isAuthorization = async (req, res, next) => {
   }
 
   let userCheck = await User.findOne({
-    userId: JwtMiddleware.verifyToken(authorization),
+    userName: JwtMiddleware.verifyToken(authorization),
   });
-
-  console.log(userCheck);
 
   return userCheck;
 };
