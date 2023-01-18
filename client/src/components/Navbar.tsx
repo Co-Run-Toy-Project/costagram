@@ -1,9 +1,9 @@
+import { Link } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import HomeIcon from '../assets/HomeIcon';
 import Logo from '../assets/Logo';
 import { postModalState } from '../recoil/modalAtom';
 import { loginState } from '../recoil/oauthAtom';
-import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   const [isModalOpen, setIsModalOpen] = useRecoilState(postModalState);
@@ -12,8 +12,6 @@ const Navbar = () => {
   const handlePostModal = () => {
     setIsModalOpen(!isModalOpen);
   };
-
-  console.log(login);
 
   return (
     <nav className="flex h-14 w-screen items-center justify-between border-b-[1px] border-b-underbarGray bg-white px-3 tablet:px-6 desktop:px-12">
@@ -72,7 +70,7 @@ const Navbar = () => {
         {/* 프로필이미지 클릭 시 마이페이지 컴포넌트로 변경 */}
         {localStorage.getItem('token') ? (
           <Link to="/mypage">
-            <button type="button" className="w-7 h-7 rounded-full mt-1">
+            <button type="button" className="mt-1 rounded-full w-7 h-7">
               <img
                 src={`${localStorage.getItem('profileImage')}`}
                 alt="프로필사진"
@@ -84,7 +82,7 @@ const Navbar = () => {
           <Link to="/login">
             <button
               type="button"
-              className="w-20 h-9 rounded-md bg-postDeepBlue text-sm text-white"
+              className="w-20 text-sm text-white rounded-md h-9 bg-postDeepBlue"
             >
               로그인
             </button>
