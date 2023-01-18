@@ -5,7 +5,7 @@ const Axios = require('axios');
 const User = require('../models/schema/user');
 
 // 토큰 처리 함수 가져오기
-const jwt = require('../utils/jwt');
+const JwtMiddleware = require('../utils/JwtMiddleware');
 
 exports.getUserInfo = async (req, res, next) => {
   // 인가 코드
@@ -52,7 +52,7 @@ exports.getUserInfo = async (req, res, next) => {
   });
 
   if (userCheck === null) {
-    token = jwt.createToken(userInfo.id);
+    token = JwtMiddleware.createToken(userInfo.id);
     const newUser = new User({
       userId: userInfo.id,
       userName: userInfo.properties.nickname,
@@ -61,7 +61,7 @@ exports.getUserInfo = async (req, res, next) => {
     });
     await newUser.save();
   } else {
-    token = jwt.createToken(userInfo.id);
+    token = JwtMiddleware.createToken(userInfo.id);
   }
 
   // 일단 쿠키로 보내기
@@ -75,11 +75,17 @@ exports.getUserInfo = async (req, res, next) => {
 };
 
 // 토큰 권한 확인
-exports.isAuthorization = (req, res, next) => {
+exports.isAuthorization = async (req, res, next) => {
   const authorization = req.headers.authorization;
   if (!authorization) {
     return null;
   }
 
-  return jwt.verifyToken(authorization);
+  let userCheck = await User.findOne({
+    userId: JwtMiddleware.verifyToken(authorization),
+  });
+
+  console.log(userCheck);
+
+  return userCheck;
 };
