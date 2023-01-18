@@ -48,11 +48,11 @@ exports.getUserInfo = async (req, res, next) => {
   let userCheck = null;
   let token = null;
   userCheck = await User.findOne({
-    userId: userInfo.id,
+    userName: userInfo.properties.nickname,
   });
 
   if (userCheck === null) {
-    token = JwtMiddleware.createToken(userInfo.nickname);
+    token = JwtMiddleware.createToken(userInfo.properties.nickname);
     const newUser = new User({
       userId: userInfo.id,
       userName: userInfo.properties.nickname,
@@ -61,7 +61,7 @@ exports.getUserInfo = async (req, res, next) => {
     });
     await newUser.save();
   } else {
-    token = JwtMiddleware.createToken(userInfo.nickname);
+    token = JwtMiddleware.createToken(userInfo.properties.nickname);
   }
 
   // 일단 쿠키로 보내기
