@@ -11,6 +11,10 @@ const postSchema = new mongoose.Schema(
       unique: true,
       default: 0,
     },
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+    },
     // 사용자 이름
     userName: {
       type: String,
