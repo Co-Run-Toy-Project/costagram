@@ -54,7 +54,6 @@ const postSchema = new mongoose.Schema(
     // 좋아요 개수
     likeCount: {
       type: Number,
-      required: true,
       default: 0,
     },
     // 댓글
