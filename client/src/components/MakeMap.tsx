@@ -1,13 +1,15 @@
 /* eslint-disable */
 import { AnyTxtRecord } from 'dns';
 import { useEffect } from 'react';
-import { useRecoilState } from 'recoil';
-import { postArticle } from '../recoil/modalAtom';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { postArticle, postModalState } from '../recoil/modalAtom';
 
 const { kakao } = window;
 
 const MakeMap = () => {
   const [post, setPost] = useRecoilState(postArticle);
+
+  const isModalOpen = useRecoilValue<boolean>(postModalState);
 
   useEffect(() => {
     const container = document.getElementById('map');
@@ -18,8 +20,9 @@ const MakeMap = () => {
       //지도의 중심좌표.
       level: 3,
       //지도의 레벨(확대, 축소 정도)
-      //   draggable: false,
+      // draggable: false,
     };
+
     const map = new kakao.maps.Map(container, options);
     //지도 생성 및 객체 리턴
     if (navigator.geolocation) {
@@ -67,7 +70,7 @@ const MakeMap = () => {
       // 지도 중심좌표를 접속위치로 변경합니다
       map.setCenter(locPosition);
     }
-  }, []);
+  }, [isModalOpen]);
 
   return <div id="map" className="h-full"></div>;
 };

@@ -1,27 +1,54 @@
-import { useRecoilValue, useRecoilState } from 'recoil';
-import { modifyModalState, clickBackState } from '../recoil/modalAtom';
-import useGetPostById from '../hooks/posts/useGetPostById';
+import React, { useEffect, useState } from 'react';
+import { useRecoilState } from 'recoil';
+import { clickBackState, modifyModalState } from '../recoil/modalAtom';
 
 import UploadPhotoIcon from '../assets/UploadPhotoIcon';
 import CancelModal from './reuse/CancelModal';
 import ModalButton from './reuse/ModalButton';
 import BackwardIcon from '../assets/BackwardIcon';
+import usePatchPost from '../hooks/posts/usePatchPost';
 
 interface Props {
   selectedData: {
     userName: string;
     postContent: string;
+    postId: number;
   };
 }
 
 const ModifyModal = ({ selectedData }: Props) => {
   const [isClicked, setIsClicked] = useRecoilState<boolean>(clickBackState);
+  const [isModifyOpen, setIsModifyOpen] =
+    useRecoilState<boolean>(modifyModalState);
+  const [textContent, setTextContent] = useState(selectedData.postContent);
+
+  useEffect(() => {
+    setTextContent(selectedData.postContent);
+  }, []);
+
+  const { postId } = selectedData;
+
+  const { mutate } = usePatchPost({ postId, textContent });
+
+  const handleModifyPost = () => {
+    mutate();
+    setIsModifyOpen(!isModifyOpen);
+  };
 
   const handleBackPost = () => {
     setIsClicked(!isClicked);
   };
 
-  console.log(selectedData);
+  /* eslint-disable no-param-reassign */
+  const handleClearContent = (event: React.FocusEvent<HTMLTextAreaElement>) => {
+    // const tempValue = event.target.value;
+    event.target.value = '';
+    // event.target.value = tempValue;
+  };
+
+  const handleChangeContent = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setTextContent(e.target.value);
+  };
 
   return (
     <div className="flex fixed top-0 left-0 z-50 h-full w-full items-center justify-center bg-[rgba(0,0,0,0.6)]">
@@ -72,14 +99,16 @@ const ModifyModal = ({ selectedData }: Props) => {
               placeholder="  내용을 입력하세요"
               maxLength={2000}
               className="w-full outline-none resize-none"
-              value={selectedData.postContent}
+              value={textContent}
+              onFocus={handleClearContent}
+              onChange={handleChangeContent}
             />
           </div>
 
           {/* map api 위치 */}
           <div className="h-1/2 bg-inputGray">수정 모달</div>
 
-          <ModalButton onClick={() => {}}>저장</ModalButton>
+          <ModalButton onClick={handleModifyPost}>저장</ModalButton>
         </div>
       </form>
     </div>

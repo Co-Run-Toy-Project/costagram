@@ -12,7 +12,7 @@ const MyPageProfile = () => {
             <img
               className="inset-0 object-cover w-full h-full rounded-full"
               alt="profile"
-              src={resData.userProfile}
+              src={resData.profileImage}
             />
           </div>
           <div className="pt-4 ml-8">

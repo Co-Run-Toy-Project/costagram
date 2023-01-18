@@ -15,10 +15,19 @@ import { modifyModalState } from '../../recoil/modalAtom';
 import useGetPostById from '../../hooks/posts/useGetPostById';
 import ModifyModal from '../ModifyModal';
 
+interface Comment {
+  // userName: string;
+  commentContent: string;
+  createdAt: string;
+}
+
 interface Props {
   data: {
     userName: string;
     postId: number;
+    postContent: string;
+    comments: Array<Comment>;
+    commentCount: number;
     weather: string;
   };
 }
@@ -27,7 +36,6 @@ const PostBox = ({ data }: Props) => {
   const [isModifyOpen, setIsModifyOpen] =
     useRecoilState<boolean>(modifyModalState);
   const selectedId: number = data.postId;
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   // 특정 게시물 정보 요청
   const {
@@ -40,6 +48,7 @@ const PostBox = ({ data }: Props) => {
 
   const { mutate } = useDeletePost();
 
+  // 날씨 아이콘 컴포넌트 리턴 함수
   const handleCheckWeather = () => {
     const weather = data.weather.toLowerCase();
 
@@ -74,7 +83,6 @@ const PostBox = ({ data }: Props) => {
 
     if (successedByPostId) {
       setIsModifyOpen(!isModifyOpen);
-      setIsModalOpen(!isModalOpen);
     }
   };
 
@@ -84,7 +92,7 @@ const PostBox = ({ data }: Props) => {
 
   return (
     <>
-      {successedByPostId && isModalOpen ? (
+      {successedByPostId && isModifyOpen ? (
         <ModifyModal selectedData={dataByPostId} />
       ) : null}
       <div className="w-full max-w-[470px] min-w-[300px] tablet:w-[470px] h-full flex flex-col border-2 border-underbarGray rounded-lg">
@@ -108,7 +116,7 @@ const PostBox = ({ data }: Props) => {
           </div>
           <div className="flex items-center mr-3">
             {/* 수정 버튼 */}
-            <button type="button" onClick={() => handleModifyPost()}>
+            <button type="button" onClick={handleModifyPost}>
               <PenIcon />
             </button>
 
@@ -120,7 +128,7 @@ const PostBox = ({ data }: Props) => {
         </div>
         {/* 게시물 사진 */}
         <Carousel />
-        <BoardContainer />
+        {successedByPostId ? <BoardContainer postData={data} /> : null}
       </div>
     </>
   );

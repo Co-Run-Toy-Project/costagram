@@ -20,6 +20,9 @@ router.patch('/:postId', postController.updatePost);
 // 게시글 삭제
 router.delete('/:postId', postController.deletePost);
 
+// 댓글 조회
+router.get('/:postId/comment', commentController.getComment);
+
 // 댓글 등록
 router.post('/:postId/comment', commentController.addComment);
 
