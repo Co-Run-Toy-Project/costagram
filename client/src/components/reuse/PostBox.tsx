@@ -1,9 +1,11 @@
 import { useRecoilState } from 'recoil';
 import { useState } from 'react';
-import SunnyIcon from '../../assets/SunnyIcon';
-import RainIcon from '../../assets/RainIcon';
-import SnowIcon from '../../assets/SnowIcon';
-import CloudyIcon from '../../assets/CloudyIcon';
+import {
+  CloudyIcon,
+  SunnyIcon,
+  RainIcon,
+  SnowIcon,
+} from '../../assets/WeatherIcon';
 import PenIcon from '../../assets/PenIcon';
 import DeleteIcon from '../../assets/DeleteIcon';
 import useDeletePost from '../../hooks/posts/useDeletePost';

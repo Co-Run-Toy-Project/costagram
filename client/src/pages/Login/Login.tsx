@@ -7,7 +7,6 @@ const Login = () => {
   return (
     <div className="h-screen flex flex-col">
       <div className="h-screen min-w-[300px] flex justify-center items-center ">
-
         <div className="hidden tablet:flex tablet:h-[500px] w-[380px] bg-red-200" />
         <div className="w-[350px] h-3/6 mx-3 flex flex-col justify-center items-center border-2 border-gray-200">
           <img className="w-10 h-10 mb-3" src={LogoIcon} alt="logo" />

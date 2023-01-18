@@ -2,13 +2,18 @@ import { useRecoilState } from 'recoil';
 import HomeIcon from '../assets/HomeIcon';
 import Logo from '../assets/Logo';
 import { postModalState } from '../recoil/modalAtom';
+import { loginState } from '../recoil/oauthAtom';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   const [isModalOpen, setIsModalOpen] = useRecoilState(postModalState);
+  const [login, setLogin] = useRecoilState(loginState);
 
   const handlePostModal = () => {
     setIsModalOpen(!isModalOpen);
   };
+
+  console.log(login);
 
   return (
     <nav className="flex h-14 w-screen items-center justify-between border-b-[1px] border-b-underbarGray bg-white px-3 tablet:px-6 desktop:px-12">
@@ -65,20 +70,26 @@ const Navbar = () => {
 
         {/* User Profile */}
         {/* 프로필이미지 클릭 시 마이페이지 컴포넌트로 변경 */}
-        <button type="button">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="#818181"
-            className="w-8 h-8"
-          >
-            <path
-              fillRule="evenodd"
-              d="M18.685 19.097A9.723 9.723 0 0021.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 003.065 7.097A9.716 9.716 0 0012 21.75a9.716 9.716 0 006.685-2.653zm-12.54-1.285A7.486 7.486 0 0112 15a7.486 7.486 0 015.855 2.812A8.224 8.224 0 0112 20.25a8.224 8.224 0 01-5.855-2.438zM15.75 9a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"
-              clipRule="evenodd"
-            />
-          </svg>
-        </button>
+        {localStorage.getItem('token') ? (
+          <Link to="/mypage">
+            <button type="button" className="w-7 h-7 rounded-full mt-1">
+              <img
+                src={`${localStorage.getItem('profileImage')}`}
+                alt="프로필사진"
+                className="w-full h-full rounded-full"
+              />
+            </button>
+          </Link>
+        ) : (
+          <Link to="/login">
+            <button
+              type="button"
+              className="w-20 h-9 rounded-md bg-postDeepBlue text-sm text-white"
+            >
+              로그인
+            </button>
+          </Link>
+        )}
       </div>
       {/* <input placeholder="검색"></input> */}
     </nav>
