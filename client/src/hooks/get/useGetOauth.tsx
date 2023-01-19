@@ -4,8 +4,6 @@ import { loginState } from '../../recoil/oauthAtom';
 import getOauth from '../../apis/get/getOauth';
 
 const useGetOauth = (permissionCode: string | null) => {
-  const [login, setState] = useRecoilState(loginState);
-
   return useQuery(['get/oauth'], () => getOauth(permissionCode), {
     enabled: false,
     onSuccess: res => {
@@ -16,8 +14,6 @@ const useGetOauth = (permissionCode: string | null) => {
       localStorage.setItem('token', ACCESS_TOKEN);
       localStorage.setItem('userName', USER_NAME);
       localStorage.setItem('profileImage', PROFILE_IMAGE);
-
-      setState(true);
 
       window.location.href = '/';
     },

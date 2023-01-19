@@ -1,21 +1,40 @@
 /* eslint-disable */
 import { useState } from 'react';
 import SearchIcon from '../assets/SearchIcon';
+import usePostReview from '../hooks/review/usePostReview';
 
-const SearchComp = () => {
-  const [isFocus, setIsFocus] = useState<boolean>(false);
+interface Props {
+  postId: number;
+}
+
+const SearchComp = ({ postId }: Props) => {
+  const [isFocus, setIsFocus] = useState<string>('postBlue');
   const [reviewValue, setReviewValue] = useState<string>('');
 
+  const { mutate } = usePostReview();
+
   const handleFocusInput = () => {
-    setIsFocus(true);
+    setIsFocus('postDeepBlue');
   };
 
   const handleBlurInput = () => {
-    setIsFocus(false);
+    setIsFocus('postBlue');
   };
 
   const handleInputChange = (e: any) => {
     setReviewValue(e.target.value);
+  };
+
+  const handleSubmit = () => {
+    if (!localStorage.getItem('token')) {
+      let res = window.confirm('로그인이 필요합니다\n로그인하시겠습니까?');
+      if (res) {
+        window.location.href = '/login';
+      }
+    } else {
+      mutate({ postId, reviewValue });
+      setReviewValue('');
+    }
   };
   return (
     <div className="flex flex-row p-1 w-full h-[50px] border-t-2 mt-2 justify-between items-center">
@@ -29,18 +48,17 @@ const SearchComp = () => {
         onFocus={handleFocusInput}
         onBlur={handleBlurInput}
       />
-      {!isFocus ? (
-        <button type="button" className="w-fit h-fit p-1 text-sm text-postBlue">
-          게시
-        </button>
-      ) : (
-        <button
-          type="button"
-          className="w-fit h-fit p-1 text-sm text-postDeepBlue"
-        >
-          게시
-        </button>
-      )}
+      <button
+        type="button"
+        className={
+          isFocus === 'postBlue'
+            ? `w-fit h-fit p-1 text-sm text-postBlue cursor-default`
+            : `w-fit h-fit p-1 text-sm text-postDeepBlue cursor-default`
+        }
+        onClick={handleSubmit}
+      >
+        게시
+      </button>
     </div>
   );
 };
