@@ -36,8 +36,6 @@ const BoardContainer = ({ postData }: Props) => {
     reviewCount: postData.commentCount,
   };
 
-  console.log(postData);
-
   return (
     <div className="w-full p-2 bg-white h-fit drop-shadow-lg">
       <LikeComp />
