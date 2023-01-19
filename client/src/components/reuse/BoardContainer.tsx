@@ -9,6 +9,8 @@ interface Comment {
   // userName: string;
   commentContent: string;
   createdAt: string;
+  commentId: number;
+  postId: number;
 }
 
 interface Props {
@@ -17,11 +19,11 @@ interface Props {
     postContent: string;
     comments: Array<Comment>;
     commentCount: number;
+    postId: number;
   };
 }
 
 const BoardContainer = ({ postData }: Props) => {
-  // console.log(postData);
   const aboutPost = {
     userName: postData.userName,
     postContent: postData.postContent,
@@ -32,6 +34,8 @@ const BoardContainer = ({ postData }: Props) => {
     reviewCount: postData.commentCount,
   };
 
+  console.log(postData);
+
   return (
     <div className="w-full p-2 bg-white h-fit drop-shadow-lg">
       <LikeComp />
@@ -39,7 +43,7 @@ const BoardContainer = ({ postData }: Props) => {
       <ReviewContainer aboutReview={aboutReview} />
       {/* 게시글 날짜 */}
       <PostDate />
-      <SearchComp />
+      <SearchComp postId={postData.postId} />
     </div>
   );
 };

@@ -14,8 +14,6 @@ import BackwardIcon from '../assets/BackwardIcon';
 
 import MakeMap from './MakeMap';
 
-import MakeMap from './MakeMap';
-
 const PostModal = () => {
   const [isModalOpen, setIsModalOpen] = useRecoilState<boolean>(postModalState);
   const [isClicked, setIsClicked] = useRecoilState<boolean>(clickBackState);
@@ -45,7 +43,7 @@ const PostModal = () => {
     }
   };
 
-  const [post, setPost] = useRecoilState(postArticle);
+  // const [post, setPost] = useRecoilState(postArticle);
 
   const handleBackPost = () => {
     setIsClicked(!isClicked);

@@ -19,6 +19,8 @@ interface Comment {
   // userName: string;
   commentContent: string;
   createdAt: string;
+  commentId: number;
+  postId: number;
 }
 
 interface Props {

@@ -1,19 +1,27 @@
 import { useRecoilState } from 'recoil';
+import { Link } from 'react-router-dom';
 import HomeIcon from '../assets/HomeIcon';
 import Logo from '../assets/Logo';
 import { postModalState } from '../recoil/modalAtom';
 import { loginState } from '../recoil/oauthAtom';
-import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   const [isModalOpen, setIsModalOpen] = useRecoilState(postModalState);
-  const [login, setLogin] = useRecoilState(loginState);
 
   const handlePostModal = () => {
     setIsModalOpen(!isModalOpen);
   };
 
-  console.log(login);
+  const handleClickLogout = () => {
+    const res = window.confirm('정말로 로그아웃하시겠습니까?');
+    if (res) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('userName');
+      localStorage.removeItem('profileImage');
+
+      window.location.reload();
+    }
+  };
 
   return (
     <nav className="flex h-14 w-screen items-center justify-between border-b-[1px] border-b-underbarGray bg-white px-3 tablet:px-6 desktop:px-12">
@@ -71,15 +79,24 @@ const Navbar = () => {
         {/* User Profile */}
         {/* 프로필이미지 클릭 시 마이페이지 컴포넌트로 변경 */}
         {localStorage.getItem('token') ? (
-          <Link to="/mypage">
-            <button type="button" className="w-7 h-7 rounded-full mt-1">
-              <img
-                src={`${localStorage.getItem('profileImage')}`}
-                alt="프로필사진"
-                className="w-full h-full rounded-full"
-              />
+          <div className="w-fit h-fit flex flex-row justify-center items-center">
+            <Link to="/mypage">
+              <button type="button" className="w-7 h-7 rounded-full mt-1">
+                <img
+                  src={`${localStorage.getItem('profileImage')}`}
+                  alt="프로필사진"
+                  className="w-full h-full rounded-full"
+                />
+              </button>
+            </Link>
+            <button
+              type="button"
+              className="w-20 h-9 rounded-md bg-likesRed text-sm text-white ml-5"
+              onClick={handleClickLogout}
+            >
+              로그아웃
             </button>
-          </Link>
+          </div>
         ) : (
           <Link to="/login">
             <button

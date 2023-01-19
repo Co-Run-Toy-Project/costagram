@@ -4,7 +4,9 @@ import Review from './reuse/Review';
 interface Comment {
   // userName: string;
   commentContent: string;
+  commentId: number;
   createdAt: string;
+  postId: number;
 }
 
 interface Props {
@@ -22,8 +24,6 @@ const ReviewContainer = ({ aboutReview }: Props) => {
     setIsViewReview(!isViewReview);
   };
 
-  console.log(aboutReview);
-
   return (
     <div className="flex flex-col items-start justify-center w-full h-fit">
       <button
@@ -35,13 +35,18 @@ const ReviewContainer = ({ aboutReview }: Props) => {
       </button>
 
       {isViewReview ? (
-        <div>
+        <div className="w-full">
           {reviewArr.map(el => {
             // const userName = el.userName;
-            const { commentContent, createdAt } = el;
+            const { commentContent, createdAt, commentId, postId } = el;
 
             return (
-              <Review commentContent={commentContent} createdAt={createdAt} />
+              <Review
+                commentContent={commentContent}
+                createdAt={createdAt}
+                commentId={commentId}
+                postId={postId}
+              />
             );
           })}
         </div>
