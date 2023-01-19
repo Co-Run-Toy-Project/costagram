@@ -101,12 +101,12 @@ const PostModal = () => {
       handleWeather();
 
       if (files !== undefined) {
-        const arrFile = Array.from(files);
+        // const arrFile = Array.from(files);
         mutate({
           postContent: content,
           weather: weather!,
           location: location!,
-          imagePath: arrFile,
+          imagePath: files,
         });
       }
     }
