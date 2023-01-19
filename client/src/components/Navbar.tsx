@@ -1,5 +1,5 @@
-import { useRecoilState } from 'recoil';
 import { Link } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
 import HomeIcon from '../assets/HomeIcon';
 import Logo from '../assets/Logo';
 import { postModalState } from '../recoil/modalAtom';
@@ -101,7 +101,7 @@ const Navbar = () => {
           <Link to="/login">
             <button
               type="button"
-              className="w-20 h-9 rounded-md bg-postDeepBlue text-sm text-white"
+              className="w-20 text-sm text-white rounded-md h-9 bg-postDeepBlue"
             >
               로그인
             </button>

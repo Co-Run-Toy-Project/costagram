@@ -2,10 +2,11 @@ import { useState } from 'react';
 import Review from './reuse/Review';
 
 interface Comment {
-  // userName: string;
+  userName: string;
   commentContent: string;
   commentId: number;
   createdAt: string;
+  profileImage: string;
   postId: number;
 }
 
@@ -13,6 +14,7 @@ interface Props {
   aboutReview: {
     reviewData: Array<Comment>;
     reviewCount: number;
+    reviewUserName: string;
   };
 }
 
@@ -37,13 +39,21 @@ const ReviewContainer = ({ aboutReview }: Props) => {
       {isViewReview ? (
         <div className="w-full">
           {reviewArr.map(el => {
-            // const userName = el.userName;
-            const { commentContent, createdAt, commentId, postId } = el;
+            const {
+              userName,
+              commentContent,
+              createdAt,
+              profileImage,
+              commentId,
+              postId,
+            } = el;
 
             return (
               <Review
                 commentContent={commentContent}
                 createdAt={createdAt}
+                profileImage={profileImage}
+                userName={userName}
                 commentId={commentId}
                 postId={postId}
               />

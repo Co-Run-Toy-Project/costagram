@@ -1,20 +1,20 @@
 import axios from 'axios';
 
 interface Props {
-  postId: number;
+  curPostId: number | null;
   textContent: string;
 }
 
-const patchPost = async ({ postId, textContent }: Props) => {
+const patchPost = async ({ curPostId, textContent }: Props) => {
   const content = {
     postContent: textContent,
   };
 
-  return axios.patch(`post/${postId}`, content, {
+  return axios.patch(`post/${curPostId}`, content, {
     baseURL: process.env.REACT_APP_BASE_URL,
     headers: {
       withCredentials: true,
-      // Authorization: `Bearer ${localStorage.getItem('token')}`,
+      Authorization: `${localStorage.getItem('token')}`,
       'Content-Type': `application/json`,
     },
   });

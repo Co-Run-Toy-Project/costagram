@@ -1,56 +1,56 @@
 import React, { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { clickBackState, modifyModalState } from '../recoil/modalAtom';
-
+import currPostId from '../recoil/postAtom';
 import UploadPhotoIcon from '../assets/UploadPhotoIcon';
 import CancelModal from './reuse/CancelModal';
 import ModalButton from './reuse/ModalButton';
 import BackwardIcon from '../assets/BackwardIcon';
 import usePatchPost from '../hooks/posts/usePatchPost';
+import useGetPostById from '../hooks/posts/useGetPostById';
 
-interface Props {
-  selectedData: {
-    userName: string;
-    postContent: string;
-    postId: number;
-  };
-}
-
-const ModifyModal = ({ selectedData }: Props) => {
+const ModifyModal = () => {
   const [isClicked, setIsClicked] = useRecoilState<boolean>(clickBackState);
   const [isModifyOpen, setIsModifyOpen] =
     useRecoilState<boolean>(modifyModalState);
-  const [textContent, setTextContent] = useState(selectedData.postContent);
+  const [curPostId, setCurPostId] = useRecoilState<number | null>(currPostId);
+  const [textContent, setTextContent] = useState('');
+
+  //  특정 게시물 정보 요청
+  const {
+    data,
+    refetch: refetchByPostId,
+    isSuccess: successedByPostId,
+  } = useGetPostById({ curPostId });
 
   useEffect(() => {
-    setTextContent(selectedData.postContent);
-  }, []);
+    refetchByPostId();
+  }, [curPostId]);
 
-  const { postId } = selectedData;
+  const selectedData = data?.data;
 
-  const { mutate } = usePatchPost({ postId, textContent });
+  const { mutate, isSuccess: modifySuccessed } = usePatchPost({
+    curPostId,
+    textContent,
+  });
 
   const handleModifyPost = () => {
     mutate();
-    setIsModifyOpen(!isModifyOpen);
+
+    if (modifySuccessed) {
+      setIsModifyOpen(!isModifyOpen);
+    }
   };
 
   const handleBackPost = () => {
     setIsClicked(!isClicked);
   };
 
-  /* eslint-disable no-param-reassign */
-  const handleClearContent = (event: React.FocusEvent<HTMLTextAreaElement>) => {
-    // const tempValue = event.target.value;
-    event.target.value = '';
-    // event.target.value = tempValue;
-  };
-
   const handleChangeContent = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setTextContent(e.target.value);
   };
 
-  return (
+  return successedByPostId ? (
     <div className="flex fixed top-0 left-0 z-50 h-full w-full items-center justify-center bg-[rgba(0,0,0,0.6)]">
       <CancelModal />
       <form className="top-1/4 flex h-[60%] w-[70%] flex-col bg-white tablet:flex-row tablet:min-w-mobile">
@@ -96,11 +96,10 @@ const ModifyModal = ({ selectedData }: Props) => {
 
           <div className="h-1/3">
             <textarea
-              placeholder="  내용을 입력하세요"
+              placeholder={selectedData.postContent}
               maxLength={2000}
               className="w-full outline-none resize-none"
               value={textContent}
-              onFocus={handleClearContent}
               onChange={handleChangeContent}
             />
           </div>
@@ -108,11 +107,11 @@ const ModifyModal = ({ selectedData }: Props) => {
           {/* map api 위치 */}
           <div className="h-1/2 bg-inputGray">수정 모달</div>
 
-          <ModalButton onClick={handleModifyPost}>저장</ModalButton>
+          <ModalButton onClick={() => handleModifyPost()}>저장</ModalButton>
         </div>
       </form>
     </div>
-  );
+  ) : null;
 };
 
 export default ModifyModal;
