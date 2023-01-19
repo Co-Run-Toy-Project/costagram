@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const getCurrWeather = async () => {
+const getCurrWeather = async (lat: number, lon: number) => {
   const weatherAPIKey = process.env.REACT_APP_WEATHER_API_KEY;
 
   return axios
