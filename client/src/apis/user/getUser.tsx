@@ -7,6 +7,7 @@ const getUser = async () => {
       headers: {
         withCredentials: true,
         'Content-Type': `application/json`,
+        Authorization: `${localStorage.getItem('token')}`,
       },
     })
     .catch(err => console.log(err));
