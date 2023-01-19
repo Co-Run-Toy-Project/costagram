@@ -33,6 +33,7 @@ const SearchComp = ({ postId }: Props) => {
       }
     } else {
       mutate({ postId, reviewValue });
+      setReviewValue('');
     }
   };
   return (

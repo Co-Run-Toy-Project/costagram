@@ -69,13 +69,15 @@ const Review = ({
           {`${date} ${meridium} ${reviewHour}시 ${minute}분`}
         </span>
       </div>
-      <button
-        type="button"
-        className="text-sm text-likesRed cursor-pointer right-0"
-        onClick={handleDeleteBtn}
-      >
-        삭제
-      </button>
+      {userName === localStorage.getItem('userName') ? (
+        <button
+          type="button"
+          className="text-sm text-likesRed cursor-pointer right-0"
+          onClick={handleDeleteBtn}
+        >
+          삭제
+        </button>
+      ) : null}
     </div>
   );
 };
