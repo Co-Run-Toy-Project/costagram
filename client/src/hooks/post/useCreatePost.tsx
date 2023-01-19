@@ -17,6 +17,7 @@ const apis = {
         baseURL: process.env.REACT_APP_BASE_URL,
         headers: {
           Authorization: `${localStorage.getItem('token')}`,
+
         },
       })
       .catch(err => console.log(err));

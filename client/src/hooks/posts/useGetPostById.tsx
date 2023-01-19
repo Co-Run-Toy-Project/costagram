@@ -1,19 +1,15 @@
 import { useQuery } from '@tanstack/react-query';
 import getPostById from '../../apis/posts/getPostById';
 
-type Props = {
-  selectedId: number | null;
-};
+interface Props {
+  curPostId: number | null;
+}
 
-const useGetPostById = ({ selectedId }: Props) => {
-  return useQuery(
-    [`get/post${selectedId}`],
-    () => getPostById({ selectedId }),
-    {
-      // enabled: false,
-      staleTime: 1000 * 60,
-    },
-  );
+const useGetPostById = ({ curPostId }: Props) => {
+  return useQuery([`get/post${curPostId}`], () => getPostById({ curPostId }), {
+    enabled: !!curPostId, // curPostId가 있는 경우에만 실행
+    staleTime: 1000 * 60 * 5,
+  });
 };
 
 export default useGetPostById;

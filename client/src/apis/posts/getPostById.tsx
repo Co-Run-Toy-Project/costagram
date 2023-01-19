@@ -1,16 +1,16 @@
 import axios from 'axios';
 
 type Props = {
-  selectedId: number | null;
+  curPostId: number | null;
 };
 
-const getPostById = async ({ selectedId }: Props) => {
+const getPostById = async ({ curPostId }: Props) => {
   return axios
-    .get(`/post/${selectedId}`, {
+    .get(`/post/${curPostId}`, {
       baseURL: process.env.REACT_APP_BASE_URL,
       headers: {
         withCredentials: true,
-        // Authorization: `Bearer ${localStorage.getItem('token')}`,
+        Authorization: `${localStorage.getItem('token')}`,
         'Content-Type': `application/json`,
       },
     })
