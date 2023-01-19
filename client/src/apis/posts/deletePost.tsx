@@ -10,7 +10,7 @@ const deletePost = async ({ postId }: Props) => {
       baseURL: process.env.REACT_APP_BASE_URL,
       headers: {
         withCredentials: true,
-        // Authorization: `Bearer ${localStorage.getItem('token')}`,
+        Authorization: `${localStorage.getItem('token')}`,
         'Content-Type': `application/json`,
       },
     })

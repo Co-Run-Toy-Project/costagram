@@ -6,9 +6,10 @@ import SearchComp from '../SearchComp';
 import PostDate from './PostDate';
 
 interface Comment {
-  // userName: string;
+  userName: string;
   commentContent: string;
   createdAt: string;
+  profileImage: string;
 }
 
 interface Props {
@@ -21,13 +22,13 @@ interface Props {
 }
 
 const BoardContainer = ({ postData }: Props) => {
-  // console.log(postData);
   const aboutPost = {
     userName: postData.userName,
     postContent: postData.postContent,
   };
 
   const aboutReview = {
+    reviewUserName: postData.userName,
     reviewData: postData.comments,
     reviewCount: postData.commentCount,
   };

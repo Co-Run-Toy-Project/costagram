@@ -1,5 +1,4 @@
 import { useRecoilState } from 'recoil';
-import { useState } from 'react';
 import {
   CloudyIcon,
   SunnyIcon,
@@ -12,13 +11,13 @@ import useDeletePost from '../../hooks/posts/useDeletePost';
 import Carousel from '../Carousel';
 import BoardContainer from './BoardContainer';
 import { modifyModalState } from '../../recoil/modalAtom';
-import useGetPostById from '../../hooks/posts/useGetPostById';
-import ModifyModal from '../ModifyModal';
+import currPostId from '../../recoil/postAtom';
 
 interface Comment {
-  // userName: string;
+  userName: string;
   commentContent: string;
   createdAt: string;
+  profileImage: string;
 }
 
 interface Props {
@@ -29,22 +28,15 @@ interface Props {
     comments: Array<Comment>;
     commentCount: number;
     weather: string;
+    profileImage: string;
   };
 }
 
 const PostBox = ({ data }: Props) => {
   const [isModifyOpen, setIsModifyOpen] =
     useRecoilState<boolean>(modifyModalState);
+  const [curPostId, setCurPostId] = useRecoilState<number | null>(currPostId);
   const selectedId: number = data.postId;
-
-  // 특정 게시물 정보 요청
-  const {
-    data: selectedData,
-    refetch: refetchByPostId,
-    isSuccess: successedByPostId,
-  } = useGetPostById({ selectedId });
-
-  const dataByPostId = selectedData?.data;
 
   const { mutate } = useDeletePost();
 
@@ -79,11 +71,8 @@ const PostBox = ({ data }: Props) => {
   };
 
   const handleModifyPost = () => {
-    refetchByPostId();
-
-    if (successedByPostId) {
-      setIsModifyOpen(!isModifyOpen);
-    }
+    setIsModifyOpen(!isModifyOpen);
+    setCurPostId(selectedId);
   };
 
   const handleDeletePost = (postId: number) => {
@@ -91,46 +80,41 @@ const PostBox = ({ data }: Props) => {
   };
 
   return (
-    <>
-      {successedByPostId && isModifyOpen ? (
-        <ModifyModal selectedData={dataByPostId} />
-      ) : null}
-      <div className="w-full max-w-[470px] min-w-[300px] tablet:w-[470px] h-full flex flex-col border-2 border-underbarGray rounded-lg">
-        {/* 게시물 헤더 */}
-        <div className="h-[56px] w-full flex justify-between">
-          <div className="flex">
-            {/* 프로필 사진 이미지 */}
-            <img
-              alt="profile"
-              src="https://images.unsplash.com/photo-1506477331477-33d5d8b3dc85?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=734&q=80"
-              className="w-10 h-10 m-2 rounded-full"
-            />
+    <div className="w-full max-w-[470px] min-w-[300px] tablet:w-[470px] h-full flex flex-col border-2 border-underbarGray rounded-lg">
+      {/* 게시물 헤더 */}
+      <div className="h-[56px] w-full flex justify-between">
+        <div className="flex">
+          {/* 프로필 사진 이미지 */}
+          <img
+            alt="profile"
+            src={data.profileImage}
+            className="w-10 h-10 m-2 rounded-full"
+          />
 
-            <div className="flex flex-col m-1">
-              <p className="text-[16px] pl-1">{data.userName}</p>
-              <div className="flex">
-                {handleCheckWeather()}
-                <p>경기도 고양시</p>
-              </div>
+          <div className="flex flex-col m-1">
+            <p className="text-[16px] pl-1">{data.userName}</p>
+            <div className="flex">
+              {handleCheckWeather()}
+              <p>경기도 고양시</p>
             </div>
           </div>
-          <div className="flex items-center mr-3">
-            {/* 수정 버튼 */}
-            <button type="button" onClick={handleModifyPost}>
-              <PenIcon />
-            </button>
-
-            {/* 삭제 버튼 */}
-            <button type="button" onClick={() => handleDeletePost(data.postId)}>
-              <DeleteIcon />
-            </button>
-          </div>
         </div>
-        {/* 게시물 사진 */}
-        <Carousel />
-        {successedByPostId ? <BoardContainer postData={data} /> : null}
+        <div className="flex items-center mr-3">
+          {/* 수정 버튼 */}
+          <button type="button" onClick={handleModifyPost}>
+            <PenIcon />
+          </button>
+
+          {/* 삭제 버튼 */}
+          <button type="button" onClick={() => handleDeletePost(data.postId)}>
+            <DeleteIcon />
+          </button>
+        </div>
       </div>
-    </>
+      {/* 게시물 사진 */}
+      <Carousel />
+      <BoardContainer postData={data} />
+    </div>
   );
 };
 

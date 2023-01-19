@@ -2,15 +2,17 @@ import { useState } from 'react';
 import Review from './reuse/Review';
 
 interface Comment {
-  // userName: string;
+  userName: string;
   commentContent: string;
   createdAt: string;
+  profileImage: string;
 }
 
 interface Props {
   aboutReview: {
     reviewData: Array<Comment>;
     reviewCount: number;
+    reviewUserName: string;
   };
 }
 
@@ -21,8 +23,6 @@ const ReviewContainer = ({ aboutReview }: Props) => {
   const handleReviewClick = () => {
     setIsViewReview(!isViewReview);
   };
-
-  console.log(aboutReview);
 
   return (
     <div className="flex flex-col items-start justify-center w-full h-fit">
@@ -37,11 +37,15 @@ const ReviewContainer = ({ aboutReview }: Props) => {
       {isViewReview ? (
         <div>
           {reviewArr.map(el => {
-            // const userName = el.userName;
-            const { commentContent, createdAt } = el;
+            const { userName, commentContent, createdAt, profileImage } = el;
 
             return (
-              <Review commentContent={commentContent} createdAt={createdAt} />
+              <Review
+                commentContent={commentContent}
+                createdAt={createdAt}
+                profileImage={profileImage}
+                userName={userName}
+              />
             );
           })}
         </div>
