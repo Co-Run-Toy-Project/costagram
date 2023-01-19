@@ -15,11 +15,9 @@ const apis = {
     return await axios
       .post(`/post`, data, {
         baseURL: process.env.REACT_APP_BASE_URL,
-        timeout: 5000,
         headers: {
-          withCredentials: true,
           Authorization: `${localStorage.getItem('token')}`,
-          'Content-Type': 'multipart/form-data',
+
         },
       })
       .catch(err => console.log(err));
