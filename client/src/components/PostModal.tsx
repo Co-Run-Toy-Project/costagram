@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { useRecoilValue, useRecoilState } from 'recoil';
 import {
   postModalState,
@@ -12,16 +12,18 @@ import CancelModal from './reuse/CancelModal';
 import ModalButton from './reuse/ModalButton';
 import useGetWeather from '../hooks/weather/useGetWeather';
 import BackwardIcon from '../assets/BackwardIcon';
-
+import BasicUserImage from '../assets/BasicUserImage';
 import MakeMap from './MakeMap';
 import useCreatePost from '../hooks/post/useCreatePost';
-
 import PostCarousel from './PostCarousel';
 
 const PostModal = () => {
   const [isModalOpen, setIsModalOpen] = useRecoilState<boolean>(postModalState);
   const [isClicked, setIsClicked] = useRecoilState<boolean>(clickBackState);
   const [post, setPost] = useRecoilState(postArticle);
+
+  const userName = `${localStorage.getItem('userName')}`;
+  const userProfile = `${localStorage.getItem('profileImage')}`;
 
   const { lat, lon, weather, location, content } = useRecoilValue(postArticle);
 
@@ -45,10 +47,6 @@ const PostModal = () => {
   } = useGetWeather(lat, lon);
 
   const todayWeather = weatherData?.data.weather[0].main;
-
-  // useEffect(() => {
-  //   weatherRefetch();
-  // }, []);
 
   // 현재 날씨 요청 함수
   const handleWeather = () => {
@@ -107,7 +105,6 @@ const PostModal = () => {
           weather: weather!,
           location: location!,
           imagePath: files,
-
         });
       }
     }
@@ -173,23 +170,16 @@ const PostModal = () => {
         <div className="flex flex-col p-3 space-y-3 h-1/2 tablet:h-full tablet:w-1/2">
           {/* simple user info */}
           <div className="flex flex-row items-center">
-            {/* user profile 임시icon 지정 */}
-            <div>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="#818181"
-                className="w-8 h-8"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M18.685 19.097A9.723 9.723 0 0021.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 003.065 7.097A9.716 9.716 0 0012 21.75a9.716 9.716 0 006.685-2.653zm-12.54-1.285A7.486 7.486 0 0112 15a7.486 7.486 0 015.855 2.812A8.224 8.224 0 0112 20.25a8.224 8.224 0 01-5.855-2.438zM15.75 9a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </div>
-
-            <span className="pl-2 font-">yw1010</span>
+            {userProfile ? (
+              <img
+                src={userProfile}
+                alt="프로필사진"
+                className="w-8 h-8 rounded-full"
+              />
+            ) : (
+              <BasicUserImage />
+            )}
+            <strong className="pl-2">{userName}</strong>
           </div>
 
           <div className="h-1/3">

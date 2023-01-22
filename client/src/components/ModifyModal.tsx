@@ -29,13 +29,13 @@ const ModifyModal = () => {
 
   const selectedData = data?.data;
 
-  const { mutate, isSuccess: modifySuccessed } = usePatchPost({
-    curPostId,
-    textContent,
-  });
+  const { mutate, isSuccess: modifySuccessed } = usePatchPost();
 
   const handleModifyPost = () => {
-    mutate();
+    mutate({
+      curPostId,
+      textContent,
+    });
 
     if (modifySuccessed) {
       setIsModifyOpen(!isModifyOpen);
