@@ -22,8 +22,16 @@ exports.createPost = async (req, res) => {
     profileImage: userCheck.profileImage,
   });
 
-  await newPost
-    .save()
+  // 새 포스트 저장하기 그리고 유저 게시물에도 추가하기
+
+  await newPost.save();
+  await User.findOneAndUpdate(
+    // 이름이 토큰인 사람 찾아서
+    { userName: req.tokenInfo },
+    // 게시물 등록 시 유저 게시물에 추가하고, 유저 게시물 개수 추가
+    // { $push: { userPosts: newPost }, userPostsCount: length + 1 },
+    { $push: { userPosts: newPost } },
+  )
     .then(() => {
       res.status(200).json({ message: '게시글 등록 success', data: newPost });
     })
