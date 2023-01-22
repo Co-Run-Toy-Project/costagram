@@ -13,15 +13,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    // 댓글
-    comments: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Comment',
-      },
-    ],
-    // 사진은 지금 안 오는 듯
-    // 잠시 required 해제
+    // 프로필 사진
     profileImage: {
       type: String,
       default: '',

@@ -11,14 +11,14 @@ const postSchema = new mongoose.Schema(
       unique: true,
       default: 0,
     },
-    user: {
+    creator: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
     },
     // 사용자 이름
     userName: {
       type: String,
-      ref: 'User',
+      // ref: 'User',
     },
     profileImage: {
       type: String,
