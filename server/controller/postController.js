@@ -27,8 +27,19 @@ exports.getOnePost = async (req, res, next) => {
 
 // 게시물 전체 조회
 exports.getAllPost = async (req, res, next) => {
+  // 페이지네이션 변수
+  // 안 보낼 경우 현재 페이지 1, 기본 불러오기 10으로 처리
+  const page = req.query.page || 1; // 현재 페이지
+  const perPage = req.query.perPage || 10; // 페이지 당 글 게시글 수
+  const total = await Post.countDocuments({}); // 총 게시글 수
+  // 최대 페이지 개수
+  const totalPage = Math.ceil(total / perPage); // 올림
+
   // find가 없으면 모든 데이터 조회
   Post.find({})
+    .sort({ createdAt: -1 }) // 최신 순 정렬
+    .skip(perPage * (page - 1))
+    .limit(perPage) // 검색 결과 수 제한
     // 👇 comments와 연결된 댓글들 내용까지 같이 불러오기!
     // 댓글 생성될 때 Comments의 post에 Post ObjectId를 같이 저장시켜줘야 가능함.
     .populate('comments')
