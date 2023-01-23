@@ -32,13 +32,11 @@ const postSchema = new mongoose.Schema(
     // 위도, 경도
     location: {
       type: String,
-      required: true,
       default: {},
     },
     // 날씨
     weather: {
       type: String,
-      required: true,
       default: '',
     },
     // 이미지 경로
@@ -61,13 +59,11 @@ const postSchema = new mongoose.Schema(
     // 댓글 개수
     commentCount: {
       type: Number,
-      required: true,
       default: 0,
     },
     // 생성 시간
     createdAt: {
       type: Date,
-      required: true,
       default: Date.now,
     },
   },
