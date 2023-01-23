@@ -6,6 +6,42 @@ const User = require('../models/schema/user');
 // 토큰 검증 위한 컨트롤러 불러오기
 const authController = require('./authController');
 
+// 게시물 개별 조회
+exports.getOnePost = async (req, res, next) => {
+  const { postId } = req.params;
+
+  // postId에 해당하는 데이터 1개 찾기
+  Post.findOne({ postId })
+    // 👇 comments와 연결된 댓글들 내용까지 같이 불러오기!
+    // 댓글 생성될 때 Comments의 post에 Post ObjectId를 같이 저장시켜줘야 가능함.
+    .populate('comments')
+    .then(posts => {
+      // 클라이언트로 전송
+      res.status(200).send(posts);
+    })
+    .catch(err => {
+      // 실패 시 에러 전달
+      res.status(500).send(err);
+    });
+};
+
+// 게시물 전체 조회
+exports.getAllPost = async (req, res, next) => {
+  // find가 없으면 모든 데이터 조회
+  Post.find({})
+    // 👇 comments와 연결된 댓글들 내용까지 같이 불러오기!
+    // 댓글 생성될 때 Comments의 post에 Post ObjectId를 같이 저장시켜줘야 가능함.
+    .populate('comments')
+    .then(posts => {
+      // 모든 데이터 찾아 클라이언트로 전송
+      res.status(200).send(posts);
+    })
+    .catch(err => {
+      // 실패 시 에러 전달
+      res.status(500).send(err);
+    });
+};
+
 // 게시물 등록
 exports.createPost = async (req, res) => {
   // 복호화한 토큰으로 유저 확인
@@ -74,42 +110,6 @@ exports.updatePost = async (req, res) => {
   } else {
     res.status(403).send({ message: '존재하지 않는 게시물입니다' });
   }
-};
-
-// 게시물 개별 조회
-exports.getOnePost = async (req, res, next) => {
-  const { postId } = req.params;
-
-  // postId에 해당하는 데이터 1개 찾기
-  Post.findOne({ postId })
-    // 👇 comments와 연결된 댓글들 내용까지 같이 불러오기!
-    // 댓글 생성될 때 Comments의 post에 Post ObjectId를 같이 저장시켜줘야 가능함.
-    .populate('comments')
-    .then(posts => {
-      // 클라이언트로 전송
-      res.status(200).send(posts);
-    })
-    .catch(err => {
-      // 실패 시 에러 전달
-      res.status(500).send(err);
-    });
-};
-
-// 게시물 전체 조회
-exports.getAllPost = async (req, res, next) => {
-  // find가 없으면 모든 데이터 조회
-  Post.find({})
-    // 👇 comments와 연결된 댓글들 내용까지 같이 불러오기!
-    // 댓글 생성될 때 Comments의 post에 Post ObjectId를 같이 저장시켜줘야 가능함.
-    .populate('comments')
-    .then(posts => {
-      // 모든 데이터 찾아 클라이언트로 전송
-      res.status(200).send(posts);
-    })
-    .catch(err => {
-      // 실패 시 에러 전달
-      res.status(500).send(err);
-    });
 };
 
 // 게시물 삭제
