@@ -101,7 +101,6 @@ exports.deleteComment = async (req, res) => {
       postId: postId,
       userName: userCheck.userName,
     }).then(co => co);
-    console.log(deleteComment);
     await Post.findOneAndUpdate(
       { postId },
       // 일치하는 댓글 삭제 후 댓글 개수 줄이기
