@@ -3,16 +3,12 @@ const mongoose = require('mongoose');
 const autoIndex = require('../../utils/autoIndex');
 
 const commentSchema = new mongoose.Schema({
-  // 댓글 게시자
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-  },
   // 사용자 이름
   userName: {
     type: String,
     ref: 'User',
   },
+  // 프로필 사진
   profileImage: {
     type: String,
   },
