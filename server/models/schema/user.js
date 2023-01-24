@@ -13,20 +13,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    // 게시물 연결
-    posts: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Post',
-    },
-    // 댓글
-    comments: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Comment',
-      },
-    ],
-    // 사진은 지금 안 오는 듯
-    // 잠시 required 해제
+    // 프로필 사진
     profileImage: {
       type: String,
       default: '',
@@ -38,10 +25,15 @@ const userSchema = new mongoose.Schema(
       default: '소개입니다',
     },
     // 사용자가 올린 게시물
-    userPosts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }],
+    userPosts: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Post',
+        required: true,
+      },
+    ],
     userPostsCount: {
       type: Number,
-      required: true,
       default: 0,
     },
     userToken: {
