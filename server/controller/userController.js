@@ -8,6 +8,7 @@ exports.getUser = async (req, res, next) => {
 
   // 토큰에 해당하는 유저 정보 찾기
   User.findOne({ userName: userCheck.userName })
+    .populate('userPosts')
     .then(posts => {
       // 클라이언트로 전송
       res.status(200).json(posts);

@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import useGetOauth from '../hooks/get/useGetOauth';
 
 const OauthRedirectHandler = () => {
-  let code = new URL(window.location.href).searchParams.get('code');
+  const code = new URL(window.location.href).searchParams.get('code');
   const { refetch } = useGetOauth(code);
   useEffect(() => {
     if (code) {
@@ -11,11 +11,9 @@ const OauthRedirectHandler = () => {
     }
   }, []);
   return (
-    <>
-      <div className="w-screen h-screen flex flex-row justify-center items-center">
-        <SyncLoader color="#36d7b7" />
-      </div>
-    </>
+    <div className="w-screen h-screen flex flex-row justify-center items-center">
+      <SyncLoader color="#36d7b7" />
+    </div>
   );
 };
 

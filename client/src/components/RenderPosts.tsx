@@ -17,8 +17,6 @@ const RenderPosts = () => {
       const scrollable =
         document.documentElement.scrollHeight - window.innerHeight + 25;
       const scrolled = Math.ceil(window.pageYOffset);
-      console.log(scrollable);
-      console.log(scrolled);
       if (scrolled === scrollable) {
         setIsNextPage(true);
       } else if (scrolled !== scrollable) {

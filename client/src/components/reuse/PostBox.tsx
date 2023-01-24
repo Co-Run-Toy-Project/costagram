@@ -18,6 +18,8 @@ interface Comment {
   commentContent: string;
   createdAt: string;
   profileImage: string;
+  commentId: number;
+  postId: number;
 }
 
 interface Props {

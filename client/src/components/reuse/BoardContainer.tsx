@@ -10,6 +10,8 @@ interface Comment {
   commentContent: string;
   createdAt: string;
   profileImage: string;
+  commentId: number;
+  postId: number;
 }
 
 interface Props {
@@ -18,6 +20,7 @@ interface Props {
     postContent: string;
     comments: Array<Comment>;
     commentCount: number;
+    postId: number;
   };
 }
 
@@ -40,7 +43,7 @@ const BoardContainer = ({ postData }: Props) => {
       <ReviewContainer aboutReview={aboutReview} />
       {/* 게시글 날짜 */}
       <PostDate />
-      <SearchComp />
+      <SearchComp postId={postData.postId} />
     </div>
   );
 };
