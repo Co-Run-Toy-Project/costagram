@@ -1,10 +1,11 @@
+// eslint-disable-next-line global-require
 interface Props {
   onClick: () => void;
 }
 
 const HeartOn = ({ onClick }: Props) => {
   return (
-    <div className="cursor-pointer w-fit h-fit" onClick={onClick}>
+    <div className="cursor-pointer w-fit h-fit">
       <svg
         width="20"
         height="20"
