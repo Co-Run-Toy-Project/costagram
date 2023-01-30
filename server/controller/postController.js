@@ -90,6 +90,7 @@ exports.createPost = async (req, res) => {
 // 게시물 수정
 exports.updatePost = async (req, res) => {
   const { postId } = req.params;
+
   const post = await Post.findOne({ postId }).then(po => po);
 
   if (post) {
@@ -107,17 +108,18 @@ exports.updatePost = async (req, res) => {
       commentCount: length,
     };
 
-    const message = { message: '수정이 완료되었습니다!' };
-    await Post.findOneAndUpdate(
-      ({ postId }, { userName: userCheck.userName }),
+    const editPost = await Post.findOneAndUpdate(
+      // 입력한 게시물이 존재하면서, 주인이 토큰 본인일 때
+      { postId, userName: userCheck.userName },
       update,
-    )
-      .then(() => {
-        res.status(200).send(message);
-      })
-      .catch(err => {
-        res.status(500).send(err);
-      });
+    ).then(edit => edit);
+
+    if (editPost) {
+      res.status(200).send({ message: '수정이 완료되었습니다!' });
+    } else {
+      // 게시물은 존재하지만 다른 사람 토큰일 경우
+      res.status(401).send({ message: '본인만 수정할 수 있습니다.' });
+    }
   } else {
     res.status(403).send({ message: '존재하지 않는 게시물입니다' });
   }
