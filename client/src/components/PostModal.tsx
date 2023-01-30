@@ -107,7 +107,6 @@ const PostModal = () => {
           weather: weather!,
           location: location!,
           imagePath: files,
-
         });
       }
     }

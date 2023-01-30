@@ -1,3 +1,4 @@
+// eslint-disable-next-line global-require
 interface Props {
   onClick: () => void;
 }
