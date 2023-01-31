@@ -37,9 +37,12 @@ const ModifyModal = () => {
       textContent,
     });
 
-    if (modifySuccessed) {
-      setIsModifyOpen(!isModifyOpen);
-    }
+    setIsModifyOpen(!isModifyOpen);
+
+    // 버튼을 두번 눌러야 수정요청이 이루어지는 오류가 있었음
+    // if (modifySuccessed) {
+    //   setIsModifyOpen(!isModifyOpen);
+    // }
   };
 
   const handleBackPost = () => {

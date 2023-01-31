@@ -1,5 +1,5 @@
-import { useRef, useState } from 'react';
-import { useRecoilValue, useRecoilState } from 'recoil';
+import { useEffect, useRef, useState } from 'react';
+import { useRecoilValue, useRecoilState, useResetRecoilState } from 'recoil';
 import {
   postModalState,
   clickBackState,
@@ -26,6 +26,11 @@ const PostModal = () => {
   const userProfile = `${localStorage.getItem('profileImage')}`;
 
   const { lat, lon, weather, location, content } = useRecoilValue(postArticle);
+  const handleResetVals = useResetRecoilState(postArticle);
+
+  // useEffect(() => {
+  //   handleResetVals();
+  // }, [isModalOpen]);
 
   const [picture, setPicture] = useState<any>([]);
   // const [sendPic, setSendPic] = useState<any>([]);
@@ -106,6 +111,10 @@ const PostModal = () => {
           location: location!,
           imagePath: files,
         });
+
+        handleResetVals();
+        console.log(content);
+        setIsModalOpen(!isModalOpen);
       }
     }
   };
