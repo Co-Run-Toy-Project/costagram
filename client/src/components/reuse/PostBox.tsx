@@ -39,6 +39,7 @@ const PostBox = ({ data }: Props) => {
     useRecoilState<boolean>(modifyModalState);
   const [curPostId, setCurPostId] = useRecoilState<number | null>(currPostId);
   const selectedId: number = data.postId;
+  const myName = localStorage.getItem('userName');
 
   const { mutate } = useDeletePost();
 
@@ -47,7 +48,7 @@ const PostBox = ({ data }: Props) => {
     const weather = data.weather.toLowerCase();
 
     switch (true) {
-      case ['sky is clear'].includes(weather):
+      case ['sky is clear', 'sunny'].includes(weather):
         return <SunnyIcon />;
       case [
         'few clouds',
@@ -94,23 +95,31 @@ const PostBox = ({ data }: Props) => {
           />
 
           <div className="flex flex-col m-1">
-            <p className="text-[16px] pl-1">{data.userName}</p>
+            <strong className="text-[16px] pl-1">{data.userName}</strong>
             <div className="flex">
               {handleCheckWeather()}
-              <p>경기도 고양시</p>
+              <p className="ml-1">경기도 고양시</p>
             </div>
           </div>
         </div>
         <div className="flex items-center mr-3">
           {/* 수정 버튼 */}
-          <button type="button" onClick={handleModifyPost}>
-            <PenIcon />
-          </button>
+          {data.userName === myName ? (
+            <button type="button" onClick={handleModifyPost}>
+              <PenIcon width={6} height={6} />
+            </button>
+          ) : null}
 
           {/* 삭제 버튼 */}
-          <button type="button" onClick={() => handleDeletePost(data.postId)}>
-            <DeleteIcon />
-          </button>
+          {data.userName === myName ? (
+            <button
+              className="ml-1"
+              type="button"
+              onClick={() => handleDeletePost(data.postId)}
+            >
+              <DeleteIcon />
+            </button>
+          ) : null}
         </div>
       </div>
       {/* 게시물 사진 */}
