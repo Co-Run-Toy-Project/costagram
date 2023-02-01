@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
-import { useRecoilValue, useRecoilState, useResetRecoilState } from 'recoil';
+import { useRef, useState } from 'react';
+import { useRecoilValue, useRecoilState } from 'recoil';
 import {
   postModalState,
   clickBackState,
@@ -22,15 +22,12 @@ const PostModal = () => {
   const [isClicked, setIsClicked] = useRecoilState<boolean>(clickBackState);
   const [post, setPost] = useRecoilState(postArticle);
 
+  // 유저 정보
   const userName = `${localStorage.getItem('userName')}`;
   const userProfile = `${localStorage.getItem('profileImage')}`;
 
+  // 게시글 값 불러오기
   const { lat, lon, weather, location, content } = useRecoilValue(postArticle);
-  const handleResetVals = useResetRecoilState(postArticle);
-
-  // useEffect(() => {
-  //   handleResetVals();
-  // }, [isModalOpen]);
 
   const [picture, setPicture] = useState<any>([]);
   // const [sendPic, setSendPic] = useState<any>([]);
@@ -112,9 +109,9 @@ const PostModal = () => {
           imagePath: files,
         });
 
-        handleResetVals();
-        console.log(content);
         setIsModalOpen(!isModalOpen);
+        // 게시 후 리프레쉬 ->  수정 필요
+        window.location.reload();
       }
     }
   };
