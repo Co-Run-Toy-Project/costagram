@@ -1,15 +1,10 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import patchPost from '../../apis/posts/patchPost';
 
-interface Props {
-  curPostId: number | null;
-  textContent: string;
-}
-
-const usePatchPost = ({ curPostId, textContent }: Props) => {
+const usePatchPost = () => {
   const queryClient = useQueryClient();
 
-  return useMutation(() => patchPost({ curPostId, textContent }), {
+  return useMutation(patchPost, {
     onSuccess: () => {
       queryClient.invalidateQueries(['get/post']);
     },
