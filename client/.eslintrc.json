@@ -27,7 +27,8 @@
     ],
     "no-unused-vars":"off",
     "no-undef": "off",
-    "jsx-a11y/no-autofocus": "off"
+    "jsx-a11y/no-autofocus": "off",
+    "react/require-default-props": 0
   },
   "settings": {
     "import/resolver": {
