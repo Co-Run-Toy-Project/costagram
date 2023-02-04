@@ -1,8 +1,9 @@
 interface Props {
   width: number;
   height: number;
+  onClick?: () => void;
 }
-const PenIcon = ({ width, height }: Props) => {
+const PenIcon = ({ width, height, onClick }: Props) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -11,6 +12,7 @@ const PenIcon = ({ width, height }: Props) => {
       strokeWidth="1.5"
       stroke="currentColor"
       className={`w-${width} h-${height} hover:cursor-pointer`}
+      onClick={onClick}
     >
       <path
         strokeLinecap="round"
