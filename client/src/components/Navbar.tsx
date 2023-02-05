@@ -28,7 +28,9 @@ const Navbar = () => {
   return (
     <nav className="flex h-14 w-screen items-center justify-between border-b-[1px] border-b-underbarGray bg-white px-3 tablet:px-6 desktop:px-12">
       {/* logo img */}
-      <Logo />
+      <Link to="/">
+        <Logo />
+      </Link>
 
       {/* 검색 인풋 */}
       <div className="flex items-center w-40 h-8 px-2 py-1 rounded-md bg-inputGray tablet:w-72 desktop:w-80">
