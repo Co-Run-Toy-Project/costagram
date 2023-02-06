@@ -1,10 +1,9 @@
 import { useRef, useState } from 'react';
-import { useRecoilValue, useRecoilState } from 'recoil';
+import { useRecoilValue, useRecoilState, useResetRecoilState } from 'recoil';
 import {
   postModalState,
   clickBackState,
   postArticle,
-  Form,
 } from '../recoil/modalAtom';
 
 import UploadPhotoIcon from '../assets/UploadPhotoIcon';
@@ -21,6 +20,7 @@ const PostModal = () => {
   const [isModalOpen, setIsModalOpen] = useRecoilState<boolean>(postModalState);
   const [isClicked, setIsClicked] = useRecoilState<boolean>(clickBackState);
   const [post, setPost] = useRecoilState(postArticle);
+  const resetValue = useResetRecoilState(postArticle);
 
   // 유저 정보
   const userName = `${localStorage.getItem('userName')}`;
@@ -111,7 +111,8 @@ const PostModal = () => {
 
         setIsModalOpen(!isModalOpen);
         // 게시 후 리프레쉬 ->  수정 필요
-        window.location.reload();
+        resetValue();
+        setPicture([]);
       }
     }
   };
@@ -194,6 +195,7 @@ const PostModal = () => {
               maxLength={2000}
               className="w-full outline-none resize-none"
               onChange={e => setPost({ ...post, content: e.target.value })}
+              value={content}
             />
           </div>
 
