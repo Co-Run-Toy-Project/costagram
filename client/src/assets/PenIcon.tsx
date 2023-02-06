@@ -8,10 +8,12 @@ const PenIcon = ({ width, height, onClick }: Props) => {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
+      width={width}
+      height={height}
       viewBox="0 0 24 24"
       strokeWidth="1.5"
       stroke="currentColor"
-      className={`w-${width} h-${height} hover:cursor-pointer`}
+      className="hover:cursor-pointer"
       onClick={onClick}
     >
       <path
