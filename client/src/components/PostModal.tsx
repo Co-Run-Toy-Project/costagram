@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useRecoilValue, useRecoilState, useResetRecoilState } from 'recoil';
 import {
   postModalState,
@@ -38,6 +38,11 @@ const PostModal = () => {
   >(null);
 
   const { mutate } = useCreatePost();
+
+  useEffect(() => {
+    setPost({ ...post, content: '' });
+    setPicture([]);
+  }, [isModalOpen]);
 
   // 날씨 타입
   const weatherType = useRef(null);
