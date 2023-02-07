@@ -31,6 +31,7 @@ interface Props {
     commentCount: number;
     weather: string;
     profileImage: string;
+    location: string;
   };
 }
 
@@ -86,7 +87,7 @@ const PostBox = ({ data }: Props) => {
     <div className="w-full max-w-[470px] min-w-[300px] tablet:w-[470px] h-full flex flex-col border-2 border-underbarGray rounded-lg">
       {/* 게시물 헤더 */}
       <div className="h-[56px] w-full flex justify-between">
-        <div className="flex">
+        <div className="flex flex-row ml-2">
           {/* 프로필 사진 이미지 */}
           <img
             alt="profile"
@@ -95,18 +96,19 @@ const PostBox = ({ data }: Props) => {
           />
 
           <div className="flex flex-col m-1">
-            <strong className="text-[16px] pl-1">{data.userName}</strong>
-            <div className="flex">
+            <strong className="text-[18px] pl-1">{data.userName}</strong>
+            <div className="flex flex-row items-center text-sm">
               {handleCheckWeather()}
-              <p className="ml-1">경기도 고양시</p>
+              <p className="ml-1">{data.location}</p>
             </div>
           </div>
         </div>
+
         <div className="flex items-center mr-3">
           {/* 수정 버튼 */}
           {data.userName === myName ? (
             <button type="button" onClick={handleModifyPost}>
-              <PenIcon width={6} height={6} />
+              <PenIcon width={24} height={24} />
             </button>
           ) : null}
 
