@@ -32,6 +32,7 @@ interface Props {
     weather: string;
     profileImage: string;
     location: string;
+    createdAt: string;
   };
 }
 

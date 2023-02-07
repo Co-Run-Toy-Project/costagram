@@ -21,6 +21,7 @@ interface Props {
     comments: Array<Comment>;
     commentCount: number;
     postId: number;
+    createdAt: string;
   };
 }
 
@@ -42,7 +43,7 @@ const BoardContainer = ({ postData }: Props) => {
       <BoardContent postData={aboutPost} />
       <ReviewContainer aboutReview={aboutReview} />
       {/* 게시글 날짜 */}
-      <PostDate />
+      <PostDate createdAt={postData.createdAt} />
       <SearchComp postId={postData.postId} />
     </div>
   );
