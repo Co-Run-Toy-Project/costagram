@@ -96,12 +96,18 @@ const PostBox = ({ data }: Props) => {
             className="w-10 h-10 m-2 rounded-full"
           />
 
-          <div className="flex flex-col m-1">
-            <strong className="text-[18px] pl-1">{data.userName}</strong>
-            <div className="flex flex-row items-center text-sm">
-              {handleCheckWeather()}
-              <p className="ml-1">{data.location}</p>
-            </div>
+          <div
+            className={`flex flex-col m-1 ${
+              data.location ? null : 'justify-center'
+            }`}
+          >
+            <strong className="text-[18px] pl-x1">{data.userName}</strong>
+            {data.location ? (
+              <div className="flex flex-row items-center text-sm">
+                {handleCheckWeather()}
+                <p className="ml-1">{data.location}</p>
+              </div>
+            ) : null}
           </div>
         </div>
 
