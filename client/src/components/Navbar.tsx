@@ -33,14 +33,20 @@ const Navbar = () => {
       </Link>
 
       {/* 검색 인풋 */}
-      <div className="flex items-center w-40 h-8 px-2 py-1 rounded-md bg-inputGray tablet:w-72 desktop:w-80">
-        {/* 돋보기 아이콘 */}
-        <div className="pr-2">
+      <form>
+        <label htmlFor="searchBox" className="hidden">
+          검색
+        </label>
+        <div className="flex items-center w-40 h-8 px-2 py-1 rounded-md bg-inputGray tablet:w-72 desktop:w-80">
+          {/* 돋보기 아이콘 */}
           <MagnifyIcon />
+          <input
+            id="searchBox"
+            placeholder="검색"
+            className="pl-1 ml-2 outline-none bg-inputGray"
+          />
         </div>
-
-        <span className="text-fontGray">검색</span>
-      </div>
+      </form>
 
       {/* 우측 아이콘들 */}
       {/* Home Button */}
