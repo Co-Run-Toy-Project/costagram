@@ -49,9 +49,12 @@ const MyProfilePic = () => {
   return (
     <div className="flex flex-wrap justify-center w-full">
       {resData !== undefined ? (
-        <div className="grid grid-flow-row grid-cols-3 grid-rows-2 gap-8 mt-8">
+        <div className="grid grid-flow-row grid-cols-2 grid-rows-2 gap-8 mt-8 tablet:grid-cols-3">
           {resData.userPosts.map((el: any) => (
-            <div className="relative w-60 h-60 bg-slate-200" key={el.postId}>
+            <div
+              className="relative w-40 h-40 tablet:w-60 tablet:h-60 bg-slate-200"
+              key={el.postId}
+            >
               <div className="absolute z-20 flex flex-row flex-wrap content-center justify-center w-full h-full opacity-0 cursor-pointer bg-slate-700 hover:opacity-60">
                 <div className="flex flex-row flex-wrap content-center justify-between w-20 text-white h-fit">
                   <HeartIcon />
