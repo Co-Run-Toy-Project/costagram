@@ -25,11 +25,11 @@ const MyPageProfile = () => {
   };
 
   return (
-    <div className="flex flex-col w-full">
+    <div className="flex flex-col flex-wrap w-full">
       {/* user Info */}
       {data && resData !== undefined ? (
-        <div className="flex flex-wrap content-center w-full pb-20 pl-80 h-72 min-h-max">
-          <div className="w-40 h-40 rounded-full bg-slate-200 ">
+        <div className="flex flex-wrap content-center w-full pb-20 mobile:pl-8 tablet:pl-16 desktop:pl-32 h-72 min-h-max ">
+          <div className="w-32 h-32 rounded-full desktop:w-40 desktop:h-40 bg-slate-200 ">
             <img
               className="inset-0 object-cover w-full h-full rounded-full"
               alt="profile"
@@ -46,7 +46,7 @@ const MyPageProfile = () => {
               {clicked ? (
                 <textarea
                   className="p-2 rounded outline-none resize-none bg-inputGray"
-                  placeholder={introduce}
+                  placeholder={resData.introduce}
                   maxLength={300}
                   autoFocus
                   onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
@@ -56,15 +56,15 @@ const MyPageProfile = () => {
                   // value={textContent}
                 />
               ) : (
-                <>
+                <div className="flex flex-row items-center">
                   <p className="mr-2 text-base">{resData.introduce}</p>
                   {/* <p className="mr-2 text-base">{introduce}</p> */}
                   <PenIcon
-                    width={4}
-                    height={4}
+                    width={20}
+                    height={20}
                     onClick={() => setClicked(!clicked)}
                   />
-                </>
+                </div>
               )}
             </div>
           </div>
