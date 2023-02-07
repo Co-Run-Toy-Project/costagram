@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Loading from './Loading';
 import useGetPosts from '../hooks/posts/useGetPost';
@@ -7,6 +7,7 @@ import PostBox from './reuse/PostBox';
 const RenderPosts = () => {
   const { data, error, refetch, status } = useGetPosts();
   const [isNextPage, setIsNextPage] = useState(false);
+
   useEffect(() => {
     refetch();
   }, []);

@@ -1,13 +1,20 @@
-/* eslint-disabled */
-const PenIcon = () => {
+interface Props {
+  width: number;
+  height: number;
+  onClick?: () => void;
+}
+const PenIcon = ({ width, height, onClick }: Props) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
+      width={width}
+      height={height}
       viewBox="0 0 24 24"
       strokeWidth="1.5"
       stroke="currentColor"
-      className="w-6 h-6 mr-3"
+      className="hover:cursor-pointer"
+      onClick={onClick}
     >
       <path
         strokeLinecap="round"
