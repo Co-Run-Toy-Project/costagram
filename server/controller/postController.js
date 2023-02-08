@@ -53,6 +53,29 @@ exports.getAllPost = async (req, res, next) => {
     });
 };
 
+exports.searchPost = async (req, res, next) => {
+  let { userName } = req.body;
+
+  User.findOne({ userName })
+    .then(user => {
+      // 유저 없으면 없다고 보내기
+      if (!user) return res.status(404).send('User not found');
+
+      // 해당하는 유저 게시물 보내기
+      Post.find({ userName })
+        .populate('comments')
+        .then(posts => {
+          res.status(200).send(posts);
+        })
+        .catch(err => {
+          res.status(500).send(err);
+        });
+    })
+    .catch(err => {
+      res.status(500).send(err);
+    });
+};
+
 // 게시물 등록
 exports.createPost = async (req, res) => {
   // 복호화한 토큰으로 유저 확인
