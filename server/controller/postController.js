@@ -63,6 +63,7 @@ exports.searchPost = async (req, res, next) => {
 
       // 해당하는 유저 게시물 보내기
       Post.find({ userName })
+        .sort({ createdAt: -1 }) // 최신 순 정렬
         .populate('comments')
         .then(posts => {
           res.status(200).send(posts);
