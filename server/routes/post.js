@@ -14,6 +14,9 @@ router.get('/', postController.getAllPost);
 // 게시글 1개 조회
 router.get('/:postId', postController.getOnePost);
 
+// 게시글 검색
+router.post('/search', postController.searchPost);
+
 // 게시글 등록
 router.post('/', JwtMiddleware.verifyToken, postController.createPost);
 
