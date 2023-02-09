@@ -30,7 +30,7 @@ const Review = ({
   });
 
   const hour: number = Number(createdTime.slice(0, 2));
-  const minute: number = Number(createdTime.slice(4));
+  const minute: number = Number(createdTime.slice(3));
 
   const [reviewHour, setReviewHour] = useState<number>(hour);
 
@@ -72,7 +72,7 @@ const Review = ({
       {userName === localStorage.getItem('userName') ? (
         <button
           type="button"
-          className="text-sm text-likesRed cursor-pointer right-0"
+          className="right-0 text-sm cursor-pointer text-likesRed"
           onClick={handleDeleteBtn}
         >
           삭제
