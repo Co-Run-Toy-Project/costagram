@@ -13,7 +13,7 @@ import useGetWeather from '../hooks/weather/useGetWeather';
 import BackwardIcon from '../assets/BackwardIcon';
 import BasicUserImage from '../assets/BasicUserImage';
 import MakeMap from './MakeMap';
-import useCreatePost from '../hooks/post/useCreatePost';
+import useCreatePost from '../hooks/posts/useCreatePost';
 import PostCarousel from './PostCarousel';
 
 const PostModal = () => {
