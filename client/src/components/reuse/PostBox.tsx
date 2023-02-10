@@ -12,6 +12,7 @@ import Carousel from '../Carousel';
 import BoardContainer from './BoardContainer';
 import { modifyModalState } from '../../recoil/modalAtom';
 import currPostId from '../../recoil/postAtom';
+import BasicUserImage from '../../assets/BasicUserImage';
 
 interface Comment {
   userName: string;
@@ -88,14 +89,17 @@ const PostBox = ({ data }: Props) => {
     <div className="w-full max-w-[470px] min-w-[300px] tablet:w-[470px] h-full flex flex-col border-2 border-underbarGray rounded-lg">
       {/* 게시물 헤더 */}
       <div className="h-[56px] w-full flex justify-between">
-        <div className="flex flex-row ml-2">
+        <div className="flex flex-row items-center ml-2">
           {/* 프로필 사진 이미지 */}
-          <img
-            alt="profile"
-            src={data.profileImage}
-            className="w-10 h-10 m-2 rounded-full"
-          />
-
+          {data.profileImage !== '' ? (
+            <img
+              alt="profile"
+              src={data.profileImage}
+              className="w-10 h-10 m-2 rounded-full"
+            />
+          ) : (
+            <BasicUserImage width={40} height={40} />
+          )}
           <div
             className={`flex flex-col m-1 ${
               data.location ? null : 'justify-center'

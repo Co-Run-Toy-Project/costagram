@@ -189,7 +189,7 @@ const PostModal = () => {
                 className="w-8 h-8 rounded-full"
               />
             ) : (
-              <BasicUserImage />
+              <BasicUserImage width={33} height={33} />
             )}
             <strong className="pl-2">{userName}</strong>
           </div>

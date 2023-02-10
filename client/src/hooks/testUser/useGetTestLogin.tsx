@@ -6,8 +6,8 @@ interface response {
     user: {
       userName: string;
       profileImage: string;
-      // userToken: string;
     };
+    jwt: string;
   };
 }
 
@@ -15,17 +15,15 @@ const useGetTestLogin = () => {
   return useQuery(['get/testUser'], () => getTestLogin(), {
     enabled: false,
     onSuccess: (res: response) => {
-      // const ACCESS_TOKEN = res.data.userToken;
+      const ACCESS_TOKEN = res.data.jwt;
       const USER_NAME = res.data.user.userName;
       const PROFILE_IMAGE = res.data.user.profileImage;
 
-      // localStorage.setItem('token', ACCESS_TOKEN);
+      localStorage.setItem('token', ACCESS_TOKEN);
       localStorage.setItem('userName', USER_NAME);
       localStorage.setItem('profileImage', PROFILE_IMAGE);
 
-      console.log(res);
-
-      // window.location.href = '/';
+      window.location.href = '/';
     },
     onError: error => {
       console.log(error);

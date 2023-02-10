@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const getTestLogin = async () => {
   return axios
-    .get('demo/login', {
+    .get(`/demo/login`, {
       baseURL: process.env.REACT_APP_BASE_URL,
       headers: {
         withCredentials: true,

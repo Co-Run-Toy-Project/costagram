@@ -1,11 +1,17 @@
-const BasicUserImage = () => {
+interface Props {
+  width: number;
+  height: number;
+}
+
+const BasicUserImage = ({ width, height }: Props) => {
   return (
     <div>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
         fill="#818181"
-        className="w-8 h-8"
+        width={width}
+        height={height}
       >
         <path
           fillRule="evenodd"

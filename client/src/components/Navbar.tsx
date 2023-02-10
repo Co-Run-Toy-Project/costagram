@@ -4,11 +4,13 @@ import AddIcon from '../assets/AddIcon';
 import HomeIcon from '../assets/HomeIcon';
 import Logo from '../assets/Logo';
 import MagnifyIcon from '../assets/MagnifyIcon';
+import BasicUserImage from '../assets/BasicUserImage';
 import { postModalState } from '../recoil/modalAtom';
 import { loginState } from '../recoil/oauthAtom';
 
 const Navbar = () => {
   const [isModalOpen, setIsModalOpen] = useRecoilState(postModalState);
+  const userProfileImg = localStorage.getItem('profileImage');
 
   const handlePostModal = () => {
     setIsModalOpen(!isModalOpen);
@@ -68,12 +70,16 @@ const Navbar = () => {
         {/* 로그인 여부에 따라 마이페이지 다르게 보이도록 */}
         {localStorage.getItem('token') ? (
           <div className="flex flex-row items-center justify-center w-fit h-fit">
-            <Link to="/mypage" className="w-8 h-8 mt-1 rounded-full">
-              <img
-                src={`${localStorage.getItem('profileImage')}`}
-                alt="프로필사진"
-                className="w-full h-full rounded-full"
-              />
+            <Link to="/mypage" className="w-8 h-8 rounded-full">
+              {userProfileImg !== '' ? (
+                <img
+                  src={`${localStorage.getItem('profileImage')}`}
+                  alt="프로필사진"
+                  className="w-full h-full rounded-full"
+                />
+              ) : (
+                <BasicUserImage width={33} height={33} />
+              )}
             </Link>
             <button
               type="button"
