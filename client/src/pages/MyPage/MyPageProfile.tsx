@@ -28,7 +28,7 @@ const MyPageProfile = () => {
     <div className="flex flex-col flex-wrap w-full">
       {/* user Info */}
       {data && resData !== undefined ? (
-        <div className="flex flex-wrap content-center w-full pb-20 mobile:pl-8 tablet:pl-16 desktop:pl-32 h-72 min-h-max ">
+        <div className="flex flex-wrap content-center w-full pb-20 mobile:pl-8 tablet:pl-16 desktop:pl-80 h-72 min-h-max ">
           <div className="w-32 h-32 rounded-full desktop:w-40 desktop:h-40 bg-slate-200 ">
             <img
               className="inset-0 object-cover w-full h-full rounded-full"
