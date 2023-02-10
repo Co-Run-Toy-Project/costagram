@@ -32,6 +32,8 @@ const userRouter = require('./routes/user');
 app.use('/user', userRouter);
 const authRouter = require('./routes/auth');
 app.use('/oauth', authRouter);
+const demoRouter = require('./routes/demo');
+app.use('/demo', demoRouter);
 
 const port = 8080;
 app.listen(port, () => {

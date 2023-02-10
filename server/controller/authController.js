@@ -88,3 +88,17 @@ exports.isAuthorization = async (req, res, next) => {
 
   return userCheck;
 };
+
+// 데모 계정 로그인
+exports.demoLogin = async (req, res, next) => {
+  // 데모 토큰 받아와서 로그인하기
+  let userCheck = await User.findOne({
+    userName: 'TEST유저',
+  });
+
+  res.status(200).json({
+    user: userCheck,
+    message: 'TEST 유저 정보 보내드립니다',
+    jwt: userCheck.userToken,
+  });
+};
