@@ -12,3 +12,9 @@ Kakao Oauth를 통해 받은 Access Token과 함께 댓글 내용을 Body에 담
 
 #### 댓글 삭제
 Kakao Oauth를 통해 받은 LocalStorage의 name값과 해당 댓글의 작성자 이름을 비교하여, 같은 경우에만 삭제버튼이 활성화되게 구현하였습니다.
+
+### 사진 업로드 및 캐러셀
+![사진업로드](https://user-images.githubusercontent.com/103915161/218027772-c5f9d521-2866-4a33-9c42-a38c60a0b974.gif)
+
+### kakao 지도 API, 포스팅 
+![지도와 글쓰기](https://user-images.githubusercontent.com/103915161/218027787-77007cbf-0cfd-4128-af84-2238cc721823.gif)
