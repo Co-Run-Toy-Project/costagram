@@ -99,6 +99,6 @@ exports.demoLogin = async (req, res, next) => {
   res.status(200).json({
     user: userCheck,
     message: 'TEST 유저 정보 보내드립니다',
-    jwt: userCheck.token,
+    jwt: userCheck.userToken,
   });
 };
