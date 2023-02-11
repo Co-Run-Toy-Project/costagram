@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { useRecoilValue } from 'recoil';
+import { sortedData } from '../recoil/postAtom';
 import Loading from './Loading';
 import useGetPosts from '../hooks/posts/useGetPost';
 import PostBox from './reuse/PostBox';
@@ -7,6 +9,7 @@ import PostBox from './reuse/PostBox';
 const RenderPosts = () => {
   const { data, error, refetch, status } = useGetPosts();
   const [isNextPage, setIsNextPage] = useState(false);
+  const getSortedData = useRecoilValue(sortedData);
 
   useEffect(() => {
     refetch();
@@ -52,15 +55,22 @@ const RenderPosts = () => {
         dataLength={resData ? resData.length : 0}
       >
         <div>
-          {/* post map으로 나열되는 부분 */}
-          {resData &&
-            resData.map((el: any) => {
-              return (
-                <div key={el.postId} className="flex justify-center mt-10">
-                  <PostBox key={el.postId} data={el} />
-                </div>
-              );
-            })}
+          {/* posts 렌더링  */}
+          {getSortedData.length > 0
+            ? getSortedData.map(el => {
+                return (
+                  <div key={el.postId} className="flex justify-center mt-10">
+                    <PostBox key={el.postId} data={el} />
+                  </div>
+                );
+              })
+            : resData.map((el: any) => {
+                return (
+                  <div key={el.postId} className="flex justify-center mt-10">
+                    <PostBox key={el.postId} data={el} />
+                  </div>
+                );
+              })}
         </div>
       </InfiniteScroll>
     </div>

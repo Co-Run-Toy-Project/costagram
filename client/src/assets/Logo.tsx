@@ -1,4 +1,8 @@
-const Logo = () => {
+interface Props {
+  onClick?: () => void;
+}
+
+const Logo = ({ onClick }: Props) => {
   return (
     <svg
       version="1.1"
@@ -7,6 +11,7 @@ const Logo = () => {
       y="0px"
       viewBox="0 0 453.47 172.49"
       className="h-7 tablet:h-12"
+      onClick={onClick}
     >
       <g>
         <path

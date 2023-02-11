@@ -11,7 +11,7 @@ import useDeletePost from '../../hooks/posts/useDeletePost';
 import Carousel from '../Carousel';
 import BoardContainer from './BoardContainer';
 import { modifyModalState } from '../../recoil/modalAtom';
-import currPostId from '../../recoil/postAtom';
+import { currPostId } from '../../recoil/postAtom';
 import BasicUserImage from '../../assets/BasicUserImage';
 
 interface Comment {
