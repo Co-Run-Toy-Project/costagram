@@ -9,7 +9,6 @@ const getCurrWeather = async (lat: number, lon: number) => {
     .get(`/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${weatherAPIKey}`, {
       headers: {
         withCredentials: true,
-        // Authorization: `Bearer ${localStorage.getItem('token')}`,
         'Content-Type': `application/json`,
       },
     })

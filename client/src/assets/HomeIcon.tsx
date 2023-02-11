@@ -1,10 +1,15 @@
-const HomeIcon = () => {
+interface Props {
+  onClick?: () => void;
+}
+
+const HomeIcon = ({ onClick }: Props) => {
   return (
     <svg
       viewBox="0 0 35 35"
       fill="none"
       className="w-6 h-6"
       xmlns="http://www.w3.org/2000/svg"
+      onClick={onClick}
     >
       <g clipPath="url(#clip0_157_11)">
         <path

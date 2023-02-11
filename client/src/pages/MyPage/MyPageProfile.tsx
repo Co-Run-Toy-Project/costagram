@@ -2,12 +2,14 @@ import { useState } from 'react';
 import useGetUser from '../../hooks/user/useGetUser';
 import PenIcon from '../../assets/PenIcon';
 import usePatchDes from '../../hooks/user/usePatchDes';
+import BasicUserImage from '../../assets/BasicUserImage';
 
 const MyPageProfile = () => {
   const { data } = useGetUser();
   const resData = data?.data;
   const [clicked, setClicked] = useState<boolean>(false);
   const [introduce, setIntroduce] = useState<string>('');
+  const userProfileImg = localStorage.getItem('profileImage');
 
   const { mutate } = usePatchDes();
 
@@ -29,13 +31,17 @@ const MyPageProfile = () => {
       {/* user Info */}
       {data && resData !== undefined ? (
         <div className="flex flex-wrap content-center w-full pb-20 mobile:pl-8 tablet:pl-16 desktop:pl-80 h-72 min-h-max ">
-          <div className="w-32 h-32 rounded-full desktop:w-40 desktop:h-40 bg-slate-200 ">
-            <img
-              className="inset-0 object-cover w-full h-full rounded-full"
-              alt="profile"
-              src={resData.profileImage}
-            />
-          </div>
+          {userProfileImg !== '' ? (
+            <div className="w-32 h-32 rounded-full desktop:w-40 desktop:h-40 bg-slate-200 ">
+              <img
+                className="inset-0 object-cover w-full h-full rounded-full"
+                alt="profile"
+                src={resData.profileImage}
+              />
+            </div>
+          ) : (
+            <BasicUserImage width={150} height={150} />
+          )}
           <div className="flex flex-col pt-4 ml-8">
             <strong className="mb-8 text-3xl">{resData.userName}</strong>
             <span className="mb-4 text-base">

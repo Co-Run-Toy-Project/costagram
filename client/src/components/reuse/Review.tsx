@@ -1,6 +1,7 @@
 import * as dateFns from 'date-fns';
 import { ko } from 'date-fns/locale';
 import { useEffect, useState } from 'react';
+import BasicUserImage from '../../assets/BasicUserImage';
 import useDeleteReview from '../../hooks/review/useDeleteReview';
 
 interface Props {
@@ -34,6 +35,9 @@ const Review = ({
 
   const [reviewHour, setReviewHour] = useState<number>(hour);
 
+  const userProfile = `${localStorage.getItem('profileImage')}`;
+  const myName = `${localStorage.getItem('userName')}`;
+
   const { mutate } = useDeleteReview();
 
   const handleDeleteBtn = () => {
@@ -55,11 +59,17 @@ const Review = ({
 
   return (
     <div className="flex flex-row items-center w-full mt-3 h-fit">
-      <img
-        src={profileImage}
-        alt="프로필 사진"
-        className="w-10 h-10 mr-3 rounded-3xl"
-      />
+      {userName !== 'TEST유저' ? (
+        <img
+          src={profileImage}
+          alt="프로필 사진"
+          className="w-10 h-10 mr-3 rounded-3xl"
+        />
+      ) : (
+        <div className="ml-[-1px] mr-2">
+          <BasicUserImage width={44} height={44} />
+        </div>
+      )}
       <div className="w-[80%]">
         <div className="flex flex-row items-center">
           <strong className="mr-2 text-sm">{userName}</strong>

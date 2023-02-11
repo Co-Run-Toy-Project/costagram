@@ -13,7 +13,7 @@ import useGetWeather from '../hooks/weather/useGetWeather';
 import BackwardIcon from '../assets/BackwardIcon';
 import BasicUserImage from '../assets/BasicUserImage';
 import MakeMap from './MakeMap';
-import useCreatePost from '../hooks/post/useCreatePost';
+import useCreatePost from '../hooks/posts/useCreatePost';
 import PostCarousel from './PostCarousel';
 
 const PostModal = () => {
@@ -189,7 +189,7 @@ const PostModal = () => {
                 className="w-8 h-8 rounded-full"
               />
             ) : (
-              <BasicUserImage />
+              <BasicUserImage width={33} height={33} />
             )}
             <strong className="pl-2">{userName}</strong>
           </div>

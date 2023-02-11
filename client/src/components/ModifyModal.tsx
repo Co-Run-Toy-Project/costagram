@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { clickBackState, modifyModalState } from '../recoil/modalAtom';
-import currPostId from '../recoil/postAtom';
+import { currPostId } from '../recoil/postAtom';
 import UploadPhotoIcon from '../assets/UploadPhotoIcon';
 import CancelModal from './reuse/CancelModal';
 import ModalButton from './reuse/ModalButton';
