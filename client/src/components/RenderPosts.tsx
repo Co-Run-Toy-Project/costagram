@@ -1,78 +1,77 @@
-import { useEffect, useState } from 'react';
-import InfiniteScroll from 'react-infinite-scroll-component';
-import { useRecoilValue } from 'recoil';
-import { sortedData } from '../recoil/postAtom';
-import Loading from './Loading';
-import useGetPosts from '../hooks/posts/useGetPost';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import axios from 'axios';
 import PostBox from './reuse/PostBox';
 
-const RenderPosts = () => {
-  const { data, error, refetch, status } = useGetPosts();
-  const [isNextPage, setIsNextPage] = useState(false);
-  const getSortedData = useRecoilValue(sortedData);
+interface Post {
+  userId: number;
+  id: number;
+  title: string;
+  body: string;
+}
 
-  useEffect(() => {
-    refetch();
+const RenderPosts = () => {
+  // 기존 데이터
+  const [posts, setPosts] = useState<Post[]>([]);
+  // 다음 데이터 요청 여부
+  const [hasNextPage, setHasNextPage] = useState<boolean>(true);
+  // 첫 페이지 시작
+  const page = useRef<number>(1);
+  // observerTargetEl 마지막 게시물 감지
+  const observerTargetEl = useRef<HTMLDivElement>(null);
+
+  const baseURL = process.env.REACT_APP_BASE_URL;
+  //  LIMIT 한 페이지에서 불러올 게시물 개수
+  const LIMIT = 2;
+
+  const fetch = useCallback(async () => {
+    try {
+      const { data } = await axios.get<Post[]>(
+        `${baseURL}/post?_page=${page.current}&perPage=${LIMIT}`,
+      );
+      setPosts(prevPosts => [...prevPosts, ...data]);
+      setHasNextPage(data.length === LIMIT);
+      if (data.length) {
+        page.current += 1;
+      }
+    } catch (err) {
+      console.error(err);
+    }
   }, []);
 
-  // 스크롤을 감지하여 다음 데이터를 불러오는 boolean값을 설정
   useEffect(() => {
-    window.addEventListener('scroll', () => {
-      const scrollable =
-        document.documentElement.scrollHeight - window.innerHeight + 25;
-      const scrolled = Math.ceil(window.pageYOffset);
-      if (scrolled === scrollable) {
-        setIsNextPage(true);
-      } else if (scrolled !== scrollable) {
-        setIsNextPage(false);
+    if (!observerTargetEl.current || !hasNextPage) {
+      return;
+    }
+    const io = new IntersectionObserver((entries, observer) => {
+      if (entries[0].isIntersecting) {
+        fetch();
       }
     });
-  });
-  // 데이터로드 되기 전의 로딩 스피너
-  if (status === 'loading') return <Loading />;
 
-  // 데이터가 정상적으로 로드 되지 않았을 경우 보이는 문구
-  if (status === 'error')
-    return (
-      <div className="flex items-center justify-center text-lg text-center">
-        피드를 불러올 수 없습니다. <br />
-        {`${error}` as string}
-      </div>
-    );
-  const resData = data?.data;
+    io.observe(observerTargetEl.current);
+
+    // return () => {
+    //   io.disconnect();
+    // };
+  }, [fetch, hasNextPage]);
+
+  // console.log(posts);
+  // 페이지 수 정상적으로 입력 됨
+  // console.log(page.current);
 
   return (
     <div className="overflow-y-auto h-fit">
-      <InfiniteScroll
-        className="overflow-y-auto h-fit"
-        // 데이터를 불러오는 함수
-        next={() => refetch()}
-        // 다음 페이지를 불러오는가를 정하는 boolean값 true:요청O false:요청X
-        hasMore={isNextPage}
-        // 로딩 문구&스피너
-        loader={<Loading />}
-        // 몇 개의 데이터를 나열 할 것인가
-        dataLength={resData ? resData.length : 0}
-      >
-        <div>
-          {/* posts 렌더링  */}
-          {getSortedData.length > 0
-            ? getSortedData.map(el => {
-                return (
-                  <div key={el.postId} className="flex justify-center mt-10">
-                    <PostBox key={el.postId} data={el} />
-                  </div>
-                );
-              })
-            : resData.map((el: any) => {
-                return (
-                  <div key={el.postId} className="flex justify-center mt-10">
-                    <PostBox key={el.postId} data={el} />
-                  </div>
-                );
-              })}
-        </div>
-      </InfiniteScroll>
+      <div>
+        {posts &&
+          posts.map((el: any, idx: number) => {
+            return (
+              <div key={el.postId} className="flex justify-center mt-10">
+                <PostBox data={el} />
+              </div>
+            );
+          })}
+        <div ref={observerTargetEl} />
+      </div>
     </div>
   );
 };
