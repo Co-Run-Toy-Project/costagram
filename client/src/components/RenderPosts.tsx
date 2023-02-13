@@ -26,7 +26,7 @@ const RenderPosts = () => {
   const fetch = useCallback(async () => {
     try {
       const { data } = await axios.get<Post[]>(
-        `${baseURL}/post?_page=${page.current}&perPage=${LIMIT}`,
+        `${baseURL}/post?page=${page.current}&perPage=${LIMIT}`,
       );
       setPosts(prevPosts => [...prevPosts, ...data]);
       setHasNextPage(data.length === LIMIT);
