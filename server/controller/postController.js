@@ -1,4 +1,3 @@
-// 스키마 불러오기
 const Post = require('../models/schema/post');
 const Comment = require('../models/schema/comment');
 const User = require('../models/schema/user');
@@ -101,7 +100,7 @@ exports.createPost = async (req, res) => {
     postContent: req.body.postContent,
     location: req.body.location,
     weather: req.body.weather,
-    imagePath: req.body.imagePath,
+    imagePath: req.imagePaths, // S3 업로드 후 반환 링크 배열
     userName: userCheck.userName,
     profileImage: userCheck.profileImage,
   });

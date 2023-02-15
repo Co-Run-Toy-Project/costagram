@@ -2,6 +2,8 @@
 const express = require('express');
 const router = express.Router();
 const JwtMiddleware = require('../utils/JwtMiddleware');
+const multer = require('multer');
+const UploadS3 = require('../utils/UploadS3');
 
 // 컨트롤러 불러오기
 const postController = require('../controller/postController');
@@ -17,8 +19,22 @@ router.get('/:postId', postController.getOnePost);
 // 게시글 검색
 router.post('/search', postController.searchPost);
 
+// multer 설정하기
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage }).fields([
+  { name: 'postContent' },
+  { name: 'location' },
+  { name: 'weather' },
+  { name: 'imagePath', maxCount: 10 },
+]);
 // 게시글 등록
-router.post('/', JwtMiddleware.verifyToken, postController.createPost);
+router.post(
+  '/',
+  JwtMiddleware.verifyToken,
+  upload,
+  UploadS3,
+  postController.createPost,
+);
 
 // 게시글 수정
 router.patch('/:postId', JwtMiddleware.verifyToken, postController.updatePost);
