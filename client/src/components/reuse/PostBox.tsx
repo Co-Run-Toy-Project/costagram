@@ -34,6 +34,7 @@ interface Props {
     profileImage: string;
     location: string;
     createdAt: string;
+    imagePath: Array<string>;
   };
 }
 
@@ -136,7 +137,7 @@ const PostBox = ({ data }: Props) => {
         </div>
       </div>
       {/* 게시물 사진 */}
-      <Carousel />
+      <Carousel data={data} />
       <BoardContainer postData={data} />
     </div>
   );
