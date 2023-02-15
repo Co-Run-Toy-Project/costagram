@@ -34,6 +34,7 @@ interface Props {
     profileImage: string;
     location: string;
     createdAt: string;
+    likes?: [];
   };
 }
 
