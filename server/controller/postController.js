@@ -171,20 +171,20 @@ exports.deletePost = async (req, res) => {
       userName: req.tokenInfo,
     });
 
-    const length = userCheck.userPostsCount;
-
     // 게시물 작성자 본인이면 삭제 가능
     // 삭제되면 ObjectId가 사라져서 참조관계에서도 알아서 사라지는 듯.
     await Post.findOneAndDelete({ postId, userName: userCheck.userName })
-      .then(() => {
+      .then(async () => {
         // 게시물에 딸려있는 댓글 삭제
-        Comment.deleteMany({ postId });
+        await Comment.deleteMany({ postId });
         // 유저 게시물에서 삭제 후, 개수 감소
-        // 얘를 find로 찾은 다음에 _id를 삭제해야겠네
-        // userPosts에 있는 거 삭제 해야 하긴 함.
-        User.findOneAndUpdate(
+        // 얘를 find로 찾은 다음에 _id를 삭제한다
+        await User.findOneAndUpdate(
           { userName: userCheck.userName },
-          { $pull: { userPosts: post._id }, userPostsCount: length - 1 },
+          {
+            $pull: { userPosts: post._id.toString() },
+            $inc: { userPostsCount: -1 },
+          },
         );
         res.status(200).send(message);
       })
