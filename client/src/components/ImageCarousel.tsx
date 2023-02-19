@@ -19,15 +19,15 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({ imagePath }) => {
 
   const imageWidth = 470; // change this value to adjust the width of each image
   const carouselWidth = imagePath.length * imageWidth;
-  const offset = -currentIndex * imageWidth;
+  const offset = currentIndex * -imageWidth;
 
   return (
     <div className="relative overflow-hidden h-[470px]">
-      <div className="absolute top-0 left-0 w-full">
-        <div
-          className="flex h-[470px]"
-          style={{ width: carouselWidth, transform: `translateX(${offset}px)` }}
-        >
+      <div
+        className="absolute top-0 left-0 w-full"
+        style={{ transform: `translateX(${offset}px)` }}
+      >
+        <div className="flex h-[470px]" style={{ width: carouselWidth }}>
           {imagePath.map(image => (
             <img
               key={image}
