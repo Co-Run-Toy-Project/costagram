@@ -64,9 +64,9 @@ const MyProfilePic = () => {
                 </div>
               </div>
               <img
-                src={el.imagePath}
+                src={el.imagePath[0]}
                 alt="firstImage"
-                className="absolute z-10 object-cover cursor-pointer"
+                className="absolute z-10 w-full h-full object-cover object-center cursor-pointer"
               />
             </div>
           ))}
