@@ -11,13 +11,13 @@ const Carousel = ({ data }: Props) => {
     <div>
       {/* 이미지 배열이 하나일 경우 버튼 보이지 않게 하는 삼항연산자 */}
       {/* 이미지 없을 경우 조건 추가 */}
-      {imageArr.length === 1 && imageArr[0] ? (
+      {imageArr.length === 0 ? (
         <div className="carousel h-[470px] w-full">
           <div className="carousel-item relative w-full">이미지가없습니다</div>
         </div>
       ) : (
         <div>
-          {imageArr.length === 1 && imageArr[1] ? (
+          {imageArr.length === 1 ? (
             <div className="carousel h-[470px] w-full">
               <div className="carousel-item relative w-full">
                 <img
