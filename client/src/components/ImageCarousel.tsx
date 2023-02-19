@@ -10,24 +10,30 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({ imagePath }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const handlePrevClick = () => {
-    setCurrentIndex((currentIndex - 1 + imagePath.length) % imagePath.length);
+    const prevIndex = (currentIndex - 1 + imagePath.length) % imagePath.length;
+    setCurrentIndex(prevIndex);
   };
 
   const handleNextClick = () => {
-    setCurrentIndex((currentIndex + 1) % imagePath.length);
+    const nextIndex = (currentIndex + 1) % imagePath.length;
+    setCurrentIndex(nextIndex);
   };
 
   const imageWidth = 470; // change this value to adjust the width of each image
   const carouselWidth = imagePath.length * imageWidth;
-  const offset = currentIndex * -imageWidth;
+  const offset = -currentIndex * imageWidth;
 
+  const imageContainerStyle = {
+    display: 'flex',
+    height: '470px',
+    width: `${carouselWidth}px`,
+    transform: `translateX(${offset}px)`,
+    transition: 'transform 0.5s ease',
+  };
   return (
     <div className="relative overflow-hidden h-[470px]">
-      <div
-        className="absolute top-0 left-0 w-full"
-        style={{ transform: `translateX(${offset}px)` }}
-      >
-        <div className="flex h-[470px]" style={{ width: carouselWidth }}>
+      <div className="absolute top-0 left-0 w-full">
+        <div style={imageContainerStyle}>
           {imagePath.map(image => (
             <img
               key={image}
