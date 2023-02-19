@@ -8,20 +8,23 @@ interface ImageCarouselProps {
 
 const ImageCarousel: React.FC<ImageCarouselProps> = ({ imagePath }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [offset, setOffset] = useState(0);
+  const imageWidth = 470;
+  const carouselWidth = imagePath.length * imageWidth;
 
   const handlePrevClick = () => {
-    const prevIndex = (currentIndex - 1 + imagePath.length) % imagePath.length;
-    setCurrentIndex(prevIndex);
+    const newIndex = (currentIndex - 1 + imagePath.length) % imagePath.length;
+    const newOffset = offset + imageWidth;
+    setCurrentIndex(newIndex);
+    setOffset(newOffset);
   };
 
   const handleNextClick = () => {
-    const nextIndex = (currentIndex + 1) % imagePath.length;
-    setCurrentIndex(nextIndex);
+    const newIndex = (currentIndex + 1) % imagePath.length;
+    const newOffset = offset - imageWidth;
+    setCurrentIndex(newIndex);
+    setOffset(newOffset);
   };
-
-  const imageWidth = 470; // change this value to adjust the width of each image
-  const carouselWidth = imagePath.length * imageWidth;
-  const offset = -currentIndex * imageWidth;
 
   const imageContainerStyle = {
     display: 'flex',
