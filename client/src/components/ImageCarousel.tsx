@@ -25,7 +25,7 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({ imagePath }) => {
     <div className="relative overflow-hidden h-[470px]">
       <div className="absolute top-0 left-0 w-full">
         <div
-          className="flex"
+          className="flex h-[470px]"
           style={{ width: carouselWidth, transform: `translateX(${offset}px)` }}
         >
           {imagePath.map(image => (
@@ -34,7 +34,7 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({ imagePath }) => {
               src={image}
               alt="carousel"
               width={imageWidth}
-              className="object-cover object-center"
+              className="object-cover object-center h-full"
             />
           ))}
         </div>
