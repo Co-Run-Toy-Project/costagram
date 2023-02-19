@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import LeftIcon from '../assets/LeftIcon';
+import RightIcon from '../assets/RightIcon';
 
 interface ImageCarouselProps {
   imagePath: string[];
@@ -26,31 +28,33 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({ imagePath }) => {
           className="flex"
           style={{ width: carouselWidth, transform: `translateX(${offset}px)` }}
         >
-          {imagePath.map((image, index) => (
+          {imagePath.map(image => (
             <img
-              key={index}
+              key={image}
               src={image}
               alt="carousel"
               width={imageWidth}
-              className="mr-4"
+              className="object-cover object-center"
             />
           ))}
         </div>
       </div>
-      <button
-        className="absolute top-1/2 left-0 transform -translate-y-1/2 px-4 py-2 bg-black text-white rounded-r-md"
-        onClick={handlePrevClick}
-        type="button"
-      >
-        Prev
-      </button>
-      <button
-        className="absolute top-1/2 right-0 transform -translate-y-1/2 px-4 py-2 bg-black text-white rounded-l-md"
-        onClick={handleNextClick}
-        type="button"
-      >
-        Next
-      </button>
+      <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
+        <button
+          className="btn-circle inline-flex shrink-0 cursor-pointer select-none flex-wrap	items-center justify-center border-transparent text-center transition-colors	bg-white/20"
+          type="button"
+          onClick={handlePrevClick}
+        >
+          <LeftIcon />
+        </button>
+        <button
+          className="btn-circle inline-flex shrink-0 cursor-pointer select-none flex-wrap	items-center justify-center border-transparent text-center transition-colors	bg-white/20"
+          type="button"
+          onClick={handleNextClick}
+        >
+          <RightIcon />
+        </button>
+      </div>
     </div>
   );
 };
