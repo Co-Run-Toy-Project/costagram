@@ -34,7 +34,7 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({ imagePath }) => {
               src={image}
               alt="carousel"
               width={imageWidth}
-              className="object-cover object-center h-full"
+              className="object-cover object-center"
             />
           ))}
         </div>
@@ -43,14 +43,14 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({ imagePath }) => {
       {imagePath.length > 1 && (
         <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
           <button
-            className="btn-circle inline-flex shrink-0 cursor-pointer select-none flex-wrap	items-center justify-center border-transparent text-center transition-colors	bg-white/20"
+            className="bg-white/20 rounded-full p-2 focus:outline-none"
             type="button"
             onClick={handlePrevClick}
           >
             <LeftIcon />
           </button>
           <button
-            className="btn-circle inline-flex shrink-0 cursor-pointer select-none flex-wrap	items-center justify-center border-transparent text-center transition-colors bg-white/20"
+            className="bg-white/20 rounded-full p-2 focus:outline-none"
             type="button"
             onClick={handleNextClick}
           >
