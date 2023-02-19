@@ -15,15 +15,25 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({ imagePath }) => {
   const handlePrevClick = () => {
     const newIndex = (currentIndex - 1 + imagePath.length) % imagePath.length;
     const newOffset = offset + imageWidth;
-    setCurrentIndex(newIndex);
-    setOffset(newOffset);
+    if (newIndex === imagePath.length - 1) {
+      setCurrentIndex(imagePath.length - 1);
+      setOffset(-imageWidth * (imagePath.length - 1));
+    } else {
+      setCurrentIndex(newIndex);
+      setOffset(newOffset);
+    }
   };
 
   const handleNextClick = () => {
     const newIndex = (currentIndex + 1) % imagePath.length;
     const newOffset = offset - imageWidth;
-    setCurrentIndex(newIndex);
-    setOffset(newOffset);
+    if (newIndex === 0) {
+      setCurrentIndex(0);
+      setOffset(0);
+    } else {
+      setCurrentIndex(newIndex);
+      setOffset(newOffset);
+    }
   };
 
   const imageContainerStyle = {
