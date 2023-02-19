@@ -21,19 +21,21 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({ imagePath }) => {
 
   return (
     <div className="relative overflow-hidden h-[470px]">
-      <div
-        className="absolute top-0 left-0 w-full transition-transform duration-500"
-        style={{ transform: `translateX(${offset}px)` }}
-      >
-        {imagePath.map((image, index) => (
-          <img
-            key={index}
-            className="inline-block"
-            src={image}
-            alt="carousel"
-            width={imageWidth}
-          />
-        ))}
+      <div className="absolute top-0 left-0 w-full">
+        <div
+          className="flex"
+          style={{ width: carouselWidth, transform: `translateX(${offset}px)` }}
+        >
+          {imagePath.map((image, index) => (
+            <img
+              key={index}
+              src={image}
+              alt="carousel"
+              width={imageWidth}
+              className="mr-4"
+            />
+          ))}
+        </div>
       </div>
       <button
         className="absolute top-1/2 left-0 transform -translate-y-1/2 px-4 py-2 bg-black text-white rounded-r-md"
