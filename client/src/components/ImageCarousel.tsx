@@ -39,22 +39,25 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({ imagePath }) => {
           ))}
         </div>
       </div>
-      <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
-        <button
-          className="btn-circle inline-flex shrink-0 cursor-pointer select-none flex-wrap	items-center justify-center border-transparent text-center transition-colors	bg-white/20"
-          type="button"
-          onClick={handlePrevClick}
-        >
-          <LeftIcon />
-        </button>
-        <button
-          className="btn-circle inline-flex shrink-0 cursor-pointer select-none flex-wrap	items-center justify-center border-transparent text-center transition-colors	bg-white/20"
-          type="button"
-          onClick={handleNextClick}
-        >
-          <RightIcon />
-        </button>
-      </div>
+      {/* 이미지가 1개 이상일 경우만 보이도록 수정 */}
+      {imagePath.length > 1 && (
+        <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
+          <button
+            className="btn-circle inline-flex shrink-0 cursor-pointer select-none flex-wrap	items-center justify-center border-transparent text-center transition-colors	bg-white/20"
+            type="button"
+            onClick={handlePrevClick}
+          >
+            <LeftIcon />
+          </button>
+          <button
+            className="btn-circle inline-flex shrink-0 cursor-pointer select-none flex-wrap	items-center justify-center border-transparent text-center transition-colors bg-white/20"
+            type="button"
+            onClick={handleNextClick}
+          >
+            <RightIcon />
+          </button>
+        </div>
+      )}
     </div>
   );
 };
