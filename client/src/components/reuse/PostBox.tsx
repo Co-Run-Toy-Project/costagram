@@ -8,11 +8,11 @@ import {
 import PenIcon from '../../assets/PenIcon';
 import DeleteIcon from '../../assets/DeleteIcon';
 import useDeletePost from '../../hooks/posts/useDeletePost';
-import Carousel from '../Carousel';
 import BoardContainer from './BoardContainer';
 import { modifyModalState } from '../../recoil/modalAtom';
 import { currPostId } from '../../recoil/postAtom';
 import BasicUserImage from '../../assets/BasicUserImage';
+import ImageCarousel from '../ImageCarousel';
 
 interface Comment {
   userName: string;
@@ -138,7 +138,7 @@ const PostBox = ({ data }: Props) => {
         </div>
       </div>
       {/* 게시물 사진 */}
-      <Carousel data={data} />
+      <ImageCarousel imagePath={data.imagePath} />
       <BoardContainer postData={data} />
     </div>
   );

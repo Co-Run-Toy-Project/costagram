@@ -50,14 +50,11 @@ const RenderPosts = () => {
 
     io.observe(observerTargetEl.current);
 
-    // return () => {
-    //   io.disconnect();
-    // };
+    // eslint-disable-next-line
+    return () => {
+      io.disconnect();
+    };
   }, [fetch, hasNextPage]);
-
-  // console.log(posts);
-  // 페이지 수 정상적으로 입력 됨
-  // console.log(page.current);
 
   return (
     <div className="overflow-y-auto h-fit">
