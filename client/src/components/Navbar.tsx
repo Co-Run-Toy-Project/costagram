@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import AddIcon from '../assets/AddIcon';
@@ -44,9 +44,11 @@ const Navbar = () => {
     setSortedData(data.data);
   }
 
-  if (!searchName) {
-    setSortedData([]);
-  }
+  useEffect(() => {
+    if (!searchName) {
+      setSortedData([]);
+    }
+  }, [searchName]);
 
   return (
     <nav className="flex h-14 w-screen items-center justify-between border-b-[1px] border-b-underbarGray bg-white px-3 tablet:px-6 desktop:px-12">

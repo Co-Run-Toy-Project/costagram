@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 interface Props {
   postData: {
     userName: string;
@@ -6,16 +8,30 @@ interface Props {
 }
 
 const BoardContent = ({ postData }: Props) => {
+  const [showMore, setShowMore] = useState<Boolean>(false);
+
+  const content = postData.postContent;
+  const maxLength = 26;
+
   return (
-    <div className="flex flex-row items-center justify-start w-full h-full mt-1">
-      <div className="text-sm w-fit h-fit text-fontGray">
+    <div className="flex flex-row justify-start w-full h-full mt-1">
+      <div className="flex-shrink-0 text-sm font-bold w-fit h-fit">
         {postData.userName}
       </div>
       <div className="pl-2 text-sm text-black w-fit h-fit">
-        {postData.postContent}
-      </div>
-      <div className="pl-2 text-sm cursor-pointer w-fit h-fit text-fontGray">
-        더보기
+        {showMore
+          ? content
+          : `${content.slice(0, maxLength)}${
+              content.length > maxLength ? '...' : ''
+            }`}
+        {content.length > maxLength && !showMore && (
+          <span
+            className="pl-2 text-sm cursor-pointer w-fit h-fit text-fontGray"
+            onClick={() => setShowMore(true)}
+          >
+            더 보기
+          </span>
+        )}
       </div>
     </div>
   );
