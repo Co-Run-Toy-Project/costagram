@@ -29,7 +29,7 @@ const LikeComp = ({ postId, likes }: likesProp) => {
             <HeartOff onClick={handleHeartClick} />
           )}
         </div>
-        <div className="pt-2 text-sm text-black">{`좋아요 ${likes}개`}</div>
+        <div className="pt-2 text-sm font-bold text-black">좋아요 10개</div>
       </div>
     </>
   );

@@ -15,7 +15,7 @@ const BoardContent = ({ postData }: Props) => {
 
   return (
     <div className="flex flex-row justify-start w-full h-full mt-1">
-      <div className="flex-shrink-0 text-sm font-bold w-fit h-fit">
+      <div className="text-sm font-bold w-fit h-fit flex-shrink-0">
         {postData.userName}
       </div>
       <div className="pl-2 text-sm text-black w-fit h-fit">
