@@ -71,7 +71,7 @@ const PostModal = () => {
 
   const addImage = (e: any) => {
     const nowSelect = e.target.files;
-    const nowPictures = [...picture];
+    const nowPictures = [];
 
     for (let i = 0; i < nowSelect.length; i += 1) {
       const nowPicUrl = URL.createObjectURL(nowSelect[i]);
