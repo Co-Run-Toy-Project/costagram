@@ -8,31 +8,31 @@ interface Props {
 }
 
 const BoardContent = ({ postData }: Props) => {
-  const [clicked, setClicked] = useState<boolean>(false);
-  const contentLength = postData.postContent.length;
+  const [showMore, setShowMore] = useState<Boolean>(false);
+
+  const content = postData.postContent;
+  const maxLength = 26;
 
   return (
-    <div className="flex flex-row items-center justify-start w-full h-full mt-1">
-      <div className="text-sm w-fit h-fit text-fontGray">
+    <div className="flex flex-row justify-start w-full h-full mt-1">
+      <div className="flex-shrink-0 text-sm font-bold w-fit h-fit">
         {postData.userName}
       </div>
-      {clicked ? (
-        <div className="pl-2 text-sm text-black w-[22rem] h-fit">
-          {postData.postContent}
-        </div>
-      ) : (
-        <div className="pl-2 text-sm text-black w-52 h-fit">
-          {postData.postContent}
-        </div>
-      )}
-      {/* {!clicked &&(contentLength > 23) ? <button type="button">더보기</button> : null} */}
-
-      <button
-        type="button"
-        className="pl-2 text-sm cursor-pointer text-fontGray"
-      >
-        더보기
-      </button>
+      <div className="pl-2 text-sm text-black w-fit h-fit">
+        {showMore
+          ? content
+          : `${content.slice(0, maxLength)}${
+              content.length > maxLength ? '...' : ''
+            }`}
+        {content.length > maxLength && !showMore && (
+          <span
+            className="pl-2 text-sm cursor-pointer w-fit h-fit text-fontGray"
+            onClick={() => setShowMore(true)}
+          >
+            더 보기
+          </span>
+        )}
+      </div>
     </div>
   );
 };
