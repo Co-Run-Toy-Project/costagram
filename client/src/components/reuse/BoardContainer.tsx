@@ -38,7 +38,7 @@ const BoardContainer = ({ postData }: Props) => {
   };
 
   return (
-    <div className="w-full p-2 bg-white h-fit drop-shadow-lg">
+    <div className="w-full p-2 bg-white h-fit drop-shadow-lg rounded-lg">
       <LikeComp />
       <BoardContent postData={aboutPost} />
       <ReviewContainer aboutReview={aboutReview} />
