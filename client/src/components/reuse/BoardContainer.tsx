@@ -22,6 +22,7 @@ interface Props {
     commentCount: number;
     postId: number;
     createdAt: string;
+    likes?: [];
   };
 }
 
@@ -38,8 +39,8 @@ const BoardContainer = ({ postData }: Props) => {
   };
 
   return (
-    <div className="w-full p-2 bg-white h-fit drop-shadow-lg rounded-lg">
-      <LikeComp />
+    <div className="w-full p-2 bg-white h-fit drop-shadow-lg">
+      <LikeComp postId={postData.postId} likes={postData.likes?.length} />
       <BoardContent postData={aboutPost} />
       <ReviewContainer aboutReview={aboutReview} />
       {/* 게시글 날짜 */}
