@@ -18,7 +18,6 @@ const postSchema = new mongoose.Schema(
     // 사용자 이름
     userName: {
       type: String,
-      // ref: 'User',
     },
     profileImage: {
       type: String,
@@ -29,10 +28,10 @@ const postSchema = new mongoose.Schema(
       required: true,
       default: '',
     },
-    // 위도, 경도
+    // 위치
     location: {
       type: String,
-      default: {},
+      default: 'null',
     },
     // 날씨
     weather: {
