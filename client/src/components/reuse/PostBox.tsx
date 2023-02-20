@@ -104,7 +104,7 @@ const PostBox = ({ data }: Props) => {
           )}
           <div
             className={`flex flex-col m-1 ${
-              data.location ? null : 'justify-center'
+              data.location ? '' : 'justify-center'
             }`}
           >
             <strong className="text-[18px] pl-x1">{data.userName}</strong>
