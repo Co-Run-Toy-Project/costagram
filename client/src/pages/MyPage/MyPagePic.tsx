@@ -1,5 +1,3 @@
-/* eslint-disabled */
-import HeartOn from '../../assets/HeartOn';
 import useGetUser from '../../hooks/user/useGetUser';
 import HeartIcon from '../../assets/HeartIcon';
 import SearchIcon from '../../assets/SearchIcon';
