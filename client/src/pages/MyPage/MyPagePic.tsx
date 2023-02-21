@@ -51,9 +51,12 @@ const MyProfilePic = () => {
       {resData && (
         <div className="grid grid-flow-row grid-cols-2 grid-rows-2 gap-8 mt-8 tablet:grid-cols-3">
           {resData.userPosts.map((el: any) => (
-            <div className="relative bg-slate-200 w-60 h-60" key={el.postId}>
-              <div className="absolute z-10 flex items-center justify-center w-full h-full p-4 cursor-pointer text-white hover:bg-black hover:bg-opacity-20">
-                <div className="w-20 flex items-center justify-between">
+            <div
+              className="relative bg-slate-200 w-60 h-60 group"
+              key={el.postId}
+            >
+              <div className="absolute z-10 flex items-center justify-center w-full h-full p-4 cursor-pointer opacity-0 hover:bg-black hover:bg-opacity-60 group-hover:opacity-100">
+                <div className="w-20 flex items-center justify-between text-white">
                   <HeartIcon />
                   <p>{el.likeCount}</p>
                   <SearchIcon />
