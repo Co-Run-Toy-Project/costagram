@@ -4,7 +4,7 @@ const AWS = require('aws-sdk');
 AWS.config.update({
   accessKeyId: process.env.S3_ACCESS_KEY,
   secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
-  region: 'ap-northeast-1',
+  region: 'ap-northeast-2',
 });
 
 const s3 = new AWS.S3();
@@ -12,7 +12,7 @@ const s3 = new AWS.S3();
 const uploadToS3 = file => {
   // S3 업로드 파라미터 설정
   const params = {
-    Bucket: 'costaimg-bucket', // 버킷 이름
+    Bucket: 'costaimgage', // 버킷 이름
     Key: file.originalname, // 파일 이름 - 꼭 필요함.
     Body: file.buffer, // 파일 데이터 - 꼭 필요함.
     ContentType: file.mimetype, // 파일 타입
