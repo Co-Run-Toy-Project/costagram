@@ -5,6 +5,7 @@ interface Props {
 
 const HeartOn = ({ onClick }: Props) => {
   return (
+    // eslint-disable-next-line
     <div className="cursor-pointer w-fit h-fit" onClick={onClick}>
       <svg
         width="20"
