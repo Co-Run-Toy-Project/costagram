@@ -48,30 +48,27 @@ const MyProfilePic = () => {
   const resData = data?.data;
   return (
     <div className="flex flex-wrap justify-center w-full">
-      {resData !== undefined ? (
+      {resData && (
         <div className="grid grid-flow-row grid-cols-2 grid-rows-2 gap-8 mt-8 tablet:grid-cols-3">
           {resData.userPosts.map((el: any) => (
-            <div
-              className="relative w-40 h-40 tablet:w-60 tablet:h-60 bg-slate-200"
-              key={el.postId}
-            >
-              <div className="absolute z-20 flex flex-row flex-wrap content-center justify-center w-full h-full opacity-0 cursor-pointer bg-slate-700 hover:opacity-60">
-                <div className="flex flex-row flex-wrap content-center justify-between w-20 text-white h-fit">
+            <div className="relative bg-slate-200 w-60 h-60" key={el.postId}>
+              <div className="absolute z-10 flex items-center justify-center w-full h-full p-4 cursor-pointer text-white hover:bg-black hover:bg-opacity-20">
+                <div className="w-20 flex items-center justify-between">
                   <HeartIcon />
-                  {el.likeCount}
+                  <p>{el.likeCount}</p>
                   <SearchIcon />
-                  {el.commentCount}
+                  <p>{el.commentCount}</p>
                 </div>
               </div>
               <img
                 src={el.imagePath[0]}
                 alt="firstImage"
-                className="absolute z-10 w-full h-full object-cover object-center cursor-pointer"
+                className="absolute object-cover object-center w-full h-full cursor-pointer"
               />
             </div>
           ))}
         </div>
-      ) : null}
+      )}
       {data && resData.userPosts.length === 0 ? (
         <div>올린 게시글이 없습니다</div>
       ) : null}
