@@ -31,7 +31,7 @@ jobs:
 
       - name: Build
         working-directory: client # 클라이언트 폴더
-        run: yarn build
+        run: yarn run build
         env: # 배포 시 환경변수 추가
           REACT_APP_BASE_URL: ${{ secrets.REACT_APP_BASE_URL }}
           REACT_APP_CLIENT_ID: ${{ secrets.REACT_APP_CLIENT_ID }}
