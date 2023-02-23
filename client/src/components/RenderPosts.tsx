@@ -1,73 +1,44 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
-import axios from 'axios';
+import { useCallback, createRef } from 'react';
 import PostBox from './reuse/PostBox';
-
-interface Post {
-  userId: number;
-  id: number;
-  title: string;
-  body: string;
-}
+import useGetPosts from '../hooks/posts/useGetPost';
+import useIntersectionObserver from '../hooks/posts/useIntersectionObserver';
 
 const RenderPosts = () => {
-  // 기존 데이터
-  const [posts, setPosts] = useState<Post[]>([]);
-  // 다음 데이터 요청 여부
-  const [hasNextPage, setHasNextPage] = useState<boolean>(true);
-  // 첫 페이지 시작
-  const page = useRef<number>(1);
-  // observerTargetEl 마지막 게시물 감지
-  const observerTargetEl = useRef<HTMLDivElement>(null);
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useGetPosts();
 
-  const baseURL = process.env.REACT_APP_BASE_URL;
-  //  LIMIT 한 페이지에서 불러올 게시물 개수
-  const LIMIT = 2;
+  const posts = data?.pages.flatMap(page => page.data) || [];
 
-  const fetch = useCallback(async () => {
-    try {
-      const { data } = await axios.get<Post[]>(
-        `${baseURL}/post?page=${page.current}&perPage=${LIMIT}`,
-      );
-      setPosts(prevPosts => [...prevPosts, ...data]);
-      setHasNextPage(data.length === LIMIT);
-      if (data.length) {
-        page.current += 1;
-      }
-    } catch (err) {
-      console.error(err);
+  const target = createRef<HTMLDivElement>();
+
+  const fetchMore = useCallback(() => {
+    if (!isFetchingNextPage && hasNextPage) {
+      fetchNextPage();
     }
-  }, []);
+  }, [isFetchingNextPage, hasNextPage, fetchNextPage]);
 
-  useEffect(() => {
-    if (!observerTargetEl.current || !hasNextPage) {
-      return;
-    }
-    const io = new IntersectionObserver((entries, observer) => {
-      if (entries[0].isIntersecting) {
-        fetch();
-      }
-    });
-
-    io.observe(observerTargetEl.current);
-
-    // eslint-disable-next-line
-    return () => {
-      io.disconnect();
-    };
-  }, [fetch, hasNextPage]);
+  useIntersectionObserver({
+    target,
+    onIntersect: fetchMore,
+    enabled: hasNextPage,
+    rootMargin: '0px 0px 40px 0px',
+  });
 
   return (
     <div className="overflow-y-auto h-fit">
       <div>
-        {posts &&
-          posts.map((el: any, idx: number) => {
-            return (
-              <div key={el.postId} className="flex justify-center mt-10">
-                <PostBox data={el} />
-              </div>
-            );
-          })}
-        <div ref={observerTargetEl} />
+        {posts.map((el: any) => {
+          return (
+            <div key={el.postId} className="flex justify-center mt-10">
+              <PostBox data={el} />
+            </div>
+          );
+        })}
+        {hasNextPage && (
+          <div ref={target}>
+            {isFetchingNextPage ? 'Loading more...' : 'Load more'}
+          </div>
+        )}
       </div>
     </div>
   );
