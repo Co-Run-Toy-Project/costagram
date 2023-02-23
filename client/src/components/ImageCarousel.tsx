@@ -72,14 +72,14 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({ imagePath }) => {
       {imagePath.length > 1 && (
         <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
           <button
-            className="bg-white/20 rounded-full p-2 focus:outline-none"
+            className="bg-white/50 rounded-full p-2 focus:outline-none"
             type="button"
             onClick={handlePrevClick}
           >
             <LeftIcon />
           </button>
           <button
-            className="bg-white/20 rounded-full p-2 focus:outline-none"
+            className="bg-white/50 rounded-full p-2 focus:outline-none"
             type="button"
             onClick={handleNextClick}
           >
