@@ -25,6 +25,7 @@ const BoardContent = ({ postData }: Props) => {
               content.length > maxLength ? '...' : ''
             }`}
         {content.length > maxLength && !showMore && (
+
           <span
             className="pl-2 text-sm cursor-pointer w-fit h-fit text-fontGray"
             onClick={() => setShowMore(true)}

@@ -5,7 +5,7 @@ interface Props {
 }
 
 const putLikes = async ({ postId }: Props) => {
-  await axios
+  return axios
     .put(
       `post/${postId}/like`,
       {},
