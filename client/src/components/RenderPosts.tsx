@@ -1,7 +1,6 @@
-import { useInfiniteQuery } from '@tanstack/react-query';
-import axios from 'axios';
 import { useEffect, useRef } from 'react';
 import PostBox from './reuse/PostBox';
+import useGetPosts from '../hooks/posts/useGetPost';
 
 interface Post {
   userId: number;
@@ -10,29 +9,9 @@ interface Post {
   body: string;
 }
 
-const LIMIT = 2;
-
 const RenderPosts = () => {
-  const fetchPosts = async ({ pageParam = 1 }) => {
-    const { data } = await axios.get(`/post`, {
-      baseURL: process.env.REACT_APP_BASE_URL,
-      headers: {
-        withCredentials: true,
-        Authorization: `${localStorage.getItem('token')}`,
-        'Content-Type': `application/json`,
-      },
-      params: {
-        page: pageParam,
-        perPage: LIMIT,
-      },
-    });
-    return { data, nextPage: data.length === LIMIT ? pageParam + 1 : null };
-  };
-
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useInfiniteQuery(['get/post'], fetchPosts, {
-      getNextPageParam: lastPage => lastPage.nextPage,
-    });
+    useGetPosts();
 
   const posts = data?.pages.flatMap(page => page.data) || [];
 
