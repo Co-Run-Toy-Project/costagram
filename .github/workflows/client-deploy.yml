@@ -33,6 +33,7 @@ jobs:
         working-directory: costagram/client # 클라이언트 폴더
         run: yarn run build
         env: # 배포 시 환경변수 추가
+          CI: false # CI 환경 변수를 false로 변경
           REACT_APP_BASE_URL: ${{ secrets.REACT_APP_BASE_URL }}
           REACT_APP_CLIENT_ID: ${{ secrets.REACT_APP_CLIENT_ID }}
           REACT_APP_REDIRECT_URI: ${{ secrets.REACT_APP_REDIRECT_URI }}
