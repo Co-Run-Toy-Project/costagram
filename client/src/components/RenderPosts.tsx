@@ -1,6 +1,7 @@
-import { useEffect, useRef } from 'react';
+import { useCallback, createRef } from 'react';
 import PostBox from './reuse/PostBox';
 import useGetPosts from '../hooks/posts/useGetPost';
+import useIntersectionObserver from '../hooks/posts/useIntersectionObserver';
 
 const RenderPosts = () => {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
@@ -8,26 +9,20 @@ const RenderPosts = () => {
 
   const posts = data?.pages.flatMap(page => page.data) || [];
 
-  const observerTargetEl = useRef<HTMLDivElement>(null);
+  const target = createRef<HTMLDivElement>();
 
-  useEffect(() => {
-    if (!observerTargetEl.current || !hasNextPage || isFetchingNextPage) {
-      return;
+  const fetchMore = useCallback(() => {
+    if (!isFetchingNextPage && hasNextPage) {
+      fetchNextPage();
     }
+  }, [isFetchingNextPage, hasNextPage, fetchNextPage]);
 
-    const observer = new IntersectionObserver(
-      entries => {
-        if (entries[0].isIntersecting) {
-          fetchNextPage();
-        }
-      },
-      {
-        rootMargin: '0px 0px 100% 0px',
-      },
-    );
-
-    observer.observe(observerTargetEl.current);
-  }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
+  useIntersectionObserver({
+    target,
+    onIntersect: fetchMore,
+    enabled: hasNextPage,
+    rootMargin: '0px 0px 100% 0px',
+  });
 
   return (
     <div className="overflow-y-auto h-fit">
@@ -40,7 +35,7 @@ const RenderPosts = () => {
           );
         })}
         {hasNextPage && (
-          <div ref={observerTargetEl}>
+          <div ref={target}>
             {isFetchingNextPage ? 'Loading more...' : 'Load more'}
           </div>
         )}
