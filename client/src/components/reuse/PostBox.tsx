@@ -90,7 +90,7 @@ const PostBox = ({ data }: Props) => {
   return (
     <div className="w-full max-w-[470px] min-w-[300px] tablet:w-[470px] h-full flex flex-col border-2 border-underbarGray rounded-lg">
       {/* 게시물 헤더 */}
-      <div className="h-[56px] w-full flex justify-between">
+      <div className="h-[56px] w-full flex justify-between py-8">
         <div className="flex flex-row items-center ml-2">
           {/* 프로필 사진 이미지 */}
           {data.profileImage !== '' ? (
