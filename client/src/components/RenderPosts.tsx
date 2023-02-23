@@ -21,7 +21,7 @@ const RenderPosts = () => {
     target,
     onIntersect: fetchMore,
     enabled: hasNextPage,
-    rootMargin: '0px 0px 100% 0px',
+    rootMargin: '0px 0px 40px 0px',
   });
 
   return (
