@@ -2,13 +2,6 @@ import { useEffect, useRef } from 'react';
 import PostBox from './reuse/PostBox';
 import useGetPosts from '../hooks/posts/useGetPost';
 
-interface Post {
-  userId: number;
-  id: number;
-  title: string;
-  body: string;
-}
-
 const RenderPosts = () => {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useGetPosts();
