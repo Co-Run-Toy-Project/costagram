@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const LIMIT = 2;
+const LIMIT = 4;
 
 const getPosts = async ({ pageParam = 1 }) => {
   const { data } = await axios.get(`/post`, {
