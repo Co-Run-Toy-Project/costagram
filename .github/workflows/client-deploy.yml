@@ -26,11 +26,11 @@ jobs:
             ${{ runner.OS }}-
 
       - name: Install Dependencies
-        working-directory: client # 클라이언트 폴더
+        working-directory: ./client # 클라이언트 폴더
         run: yarn install
 
       - name: Build
-        working-directory: client # 클라이언트 폴더
+        working-directory: ./client # 클라이언트 폴더
         run: yarn run build
         env: # 배포 시 환경변수 추가
           REACT_APP_BASE_URL: ${{ secrets.REACT_APP_BASE_URL }}
