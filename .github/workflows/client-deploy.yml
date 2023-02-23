@@ -11,21 +11,26 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
       - name: Checkout source code
-        uses: actions/checkout@master
+        uses: actions/checkout@v2
+        with:
+          ref: main
+          path: client # client 폴더를 빌드하기 위해서
 
       - name: Cache node modules  # node modules 캐싱 => 실행 속도 빠르게
-        uses: actions/cache@v1
+        uses: actions/cache@v2
         with:
-          path: node_modules
+          path: client/node_modules # 클라이언트 폴더의 node_modules
           key: ${{ runner.OS }}-master-build-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.OS }}-build-
             ${{ runner.OS }}-
 
       - name: Install Dependencies
-        run: yarn
+        working-directory: client # 클라이언트 폴더
+        run: yarn install
 
       - name: Build
+        working-directory: client # 클라이언트 폴더
         run: yarn build
         env: # 배포 시 환경변수 추가
           REACT_APP_BASE_URL: ${{ secrets.REACT_APP_BASE_URL }}
