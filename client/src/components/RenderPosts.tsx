@@ -30,7 +30,7 @@ const RenderPosts = () => {
   };
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useInfiniteQuery<Post[]>(['get/post'], fetchPosts, {
+    useInfiniteQuery(['get/post'], fetchPosts, {
       getNextPageParam: lastPage => lastPage.nextPage,
     });
 
