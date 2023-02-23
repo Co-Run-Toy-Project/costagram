@@ -55,10 +55,6 @@ const RenderPosts = () => {
     );
 
     observer.observe(observerTargetEl.current);
-
-    return () => {
-      observer.disconnect();
-    };
   }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
   return (
