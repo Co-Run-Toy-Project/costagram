@@ -1,5 +1,6 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import axios from 'axios';
+import { useEffect, useRef } from 'react';
 import PostBox from './reuse/PostBox';
 
 interface Post {
@@ -9,65 +10,72 @@ interface Post {
   body: string;
 }
 
+const LIMIT = 2;
+
 const RenderPosts = () => {
-  // 기존 데이터
-  const [posts, setPosts] = useState<Post[]>([]);
-  // 다음 데이터 요청 여부
-  const [hasNextPage, setHasNextPage] = useState<boolean>(true);
-  // 첫 페이지 시작
-  const page = useRef<number>(1);
-  // observerTargetEl 마지막 게시물 감지
-  const observerTargetEl = useRef<HTMLDivElement>(null);
+  const fetchPosts = async ({ pageParam = 1 }) => {
+    const { data } = await axios.get(`/post`, {
+      baseURL: process.env.REACT_APP_BASE_URL,
+      headers: {
+        withCredentials: true,
+        Authorization: `${localStorage.getItem('token')}`,
+        'Content-Type': `application/json`,
+      },
+      params: {
+        page: pageParam,
+        perPage: LIMIT,
+      },
+    });
+    return { data, nextPage: data.length === LIMIT ? pageParam + 1 : null };
+  };
 
-  const baseURL = process.env.REACT_APP_BASE_URL;
-  //  LIMIT 한 페이지에서 불러올 게시물 개수
-  const LIMIT = 2;
-
-  const fetch = useCallback(async () => {
-    try {
-      const { data } = await axios.get<Post[]>(
-        `${baseURL}/post?page=${page.current}&perPage=${LIMIT}`,
-      );
-      setPosts(prevPosts => [...prevPosts, ...data]);
-      setHasNextPage(data.length === LIMIT);
-      if (data.length) {
-        page.current += 1;
-      }
-    } catch (err) {
-      console.error(err);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (!observerTargetEl.current || !hasNextPage) {
-      return;
-    }
-    const io = new IntersectionObserver((entries, observer) => {
-      if (entries[0].isIntersecting) {
-        fetch();
-      }
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useInfiniteQuery<Post[]>(['get/post'], fetchPosts, {
+      getNextPageParam: lastPage => lastPage.nextPage,
     });
 
-    io.observe(observerTargetEl.current);
+  const posts = data?.pages.flatMap(page => page.data) || [];
 
-    // eslint-disable-next-line
+  const observerTargetEl = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!observerTargetEl.current || !hasNextPage || isFetchingNextPage) {
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      entries => {
+        if (entries[0].isIntersecting) {
+          fetchNextPage();
+        }
+      },
+      {
+        rootMargin: '0px 0px 100% 0px',
+      },
+    );
+
+    observer.observe(observerTargetEl.current);
+
     return () => {
-      io.disconnect();
+      observer.disconnect();
     };
-  }, [fetch, hasNextPage]);
+  }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
   return (
     <div className="overflow-y-auto h-fit">
       <div>
-        {posts &&
-          posts.map((el: any, idx: number) => {
-            return (
-              <div key={el.postId} className="flex justify-center mt-10">
-                <PostBox data={el} />
-              </div>
-            );
-          })}
-        <div ref={observerTargetEl} />
+        {posts.map((el: any) => {
+          return (
+            <div key={el.postId} className="flex justify-center mt-10">
+              <PostBox data={el} />
+            </div>
+          );
+        })}
+        {hasNextPage && (
+          <div ref={observerTargetEl}>
+            {isFetchingNextPage ? 'Loading more...' : 'Load more'}
+          </div>
+        )}
       </div>
     </div>
   );
