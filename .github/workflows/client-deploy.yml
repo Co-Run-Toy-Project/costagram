@@ -1,0 +1,51 @@
+# client-deploy.yml
+name: main
+
+on:
+  push:
+    branches:
+      - main    # main 브랜치에서 push 이벤트가 일어났을 때 실행
+
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v2
+        with:
+          ref: main
+          path: costagram # costagram 폴더를 빌드하기 위해서
+
+      - name: Cache node modules  # node modules 캐싱 => 실행 속도 빠르게
+        uses: actions/cache@v2
+        with:
+          path: costagram/client/node_modules # 클라이언트 폴더의 node_modules
+          key: ${{ runner.OS }}-master-build-${{ hashFiles('costagram/client/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.OS }}-build-
+            ${{ runner.OS }}-
+
+      - name: Install Dependencies
+        working-directory: costagram/client # 클라이언트 폴더
+        run: yarn install
+
+      - name: Build
+        working-directory: costagram/client # 클라이언트 폴더
+        run: yarn run build
+        env: # 배포 시 환경변수 추가
+          CI: false # CI 환경 변수를 false로 변경
+          REACT_APP_BASE_URL: ${{ secrets.REACT_APP_BASE_URL }}
+          REACT_APP_CLIENT_ID: ${{ secrets.REACT_APP_CLIENT_ID }}
+          REACT_APP_REDIRECT_URI: ${{ secrets.REACT_APP_REDIRECT_URI }}
+          REACT_APP_WEATHER_API_KEY: ${{ secrets.REACT_APP_WEATHER_API_KEY }}
+          
+
+      - name: Deploy
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: |
+          aws s3 sync \
+            --delete \
+            --region ap-northeast-2 \
+            costagram/client/build/ s3://costa-client/
