@@ -50,6 +50,7 @@ const ReviewContainer = ({ aboutReview }: Props) => {
 
             return (
               <Review
+                key={postId}
                 commentContent={commentContent}
                 createdAt={createdAt}
                 profileImage={profileImage}

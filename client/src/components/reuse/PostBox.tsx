@@ -104,11 +104,11 @@ const PostBox = ({ data }: Props) => {
           )}
           <div
             className={`flex flex-col m-1 ${
-              data.location ? '' : 'justify-center'
+              data.location !== 'null' ? '' : 'justify-center'
             }`}
           >
             <strong className="text-[18px] pl-x1">{data.userName}</strong>
-            {data.location ? (
+            {data.location !== 'null' ? (
               <div className="flex flex-row items-center text-sm">
                 {handleCheckWeather()}
                 <p className="ml-1">{data.location}</p>
