@@ -1,7 +1,7 @@
 /* eslint-disable */
-import { useState } from 'react';
-import SearchIcon from '../assets/SearchIcon';
+import { ReactElement, useState } from 'react';
 import usePostReview from '../hooks/review/usePostReview';
+import BasicUserImage from '../assets/BasicUserImage';
 
 interface Props {
   postId: number;
@@ -10,6 +10,8 @@ interface Props {
 const SearchComp = ({ postId }: Props) => {
   const [isFocus, setIsFocus] = useState<string>('postBlue');
   const [reviewValue, setReviewValue] = useState<string>('');
+
+  const userProfileImg = localStorage.getItem('profileImage');
 
   const { mutate } = usePostReview();
 
@@ -36,24 +38,35 @@ const SearchComp = ({ postId }: Props) => {
       setReviewValue('');
     }
   };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      handleSubmit();
+    }
+  };
   return (
-    <div className="flex flex-row p-1 w-full h-[50px] border-t-2 mt-2 justify-between items-center">
-      <SearchIcon />
+    <div className="flex flex-row py-1 w-full h-[50px] border-t-2 mt-2 justify-between items-center">
+      {userProfileImg ? (
+        <img src={userProfileImg} className="w-10 h-10 rounded-3xl" />
+      ) : (
+        <BasicUserImage width={40} height={40} />
+      )}
       <input
         type="text"
         placeholder="내용을 입력하세요"
-        className="ml-2 text-sm w-5/6 outline-none"
+        className="w-[80%] ml-1 text-sm outline-none"
         value={reviewValue}
         onChange={handleInputChange}
         onFocus={handleFocusInput}
         onBlur={handleBlurInput}
+        onKeyDown={handleKeyDown}
       />
       <button
         type="button"
         className={
           isFocus === 'postBlue'
-            ? `w-fit h-fit p-1 text-sm text-postBlue cursor-default`
-            : `w-fit h-fit p-1 text-sm text-postDeepBlue cursor-default`
+            ? `w-fit h-fit text-sm text-postBlue cursor-default px-2`
+            : `w-fit h-fit text-sm text-postDeepBlue cursor-default px-2`
         }
         onClick={handleSubmit}
       >
