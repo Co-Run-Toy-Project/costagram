@@ -68,5 +68,5 @@
     "prettier": "^2.8.1",
     "tailwindcss": "^3.2.4"
   },
-  "proxy": "https://api.openweathermap.org"
+  "proxy" :"https://api.openweathermap.org"
 }
