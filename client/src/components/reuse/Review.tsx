@@ -66,8 +66,8 @@ const Review = ({
           className="w-10 h-10 mr-3 rounded-3xl"
         />
       ) : (
-        <div className="ml-[-1px] mr-2">
-          <BasicUserImage width={44} height={44} />
+        <div className="ml-[-2px] mr-2">
+          <BasicUserImage width={46} height={46} />
         </div>
       )}
       <div className="w-[80%]">

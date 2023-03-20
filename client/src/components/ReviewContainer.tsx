@@ -28,13 +28,17 @@ const ReviewContainer = ({ aboutReview }: Props) => {
 
   return (
     <div className="flex flex-col items-start justify-center w-full h-fit">
-      <button
-        type="button"
-        className="mt-3 text-sm cursor-pointer w-fit h-fit text-fontGray"
-        onClick={handleReviewClick}
-      >
-        댓글 {aboutReview.reviewCount}개 모두보기
-      </button>
+      {aboutReview.reviewCount ? (
+        <button
+          type="button"
+          className="mt-3 text-sm cursor-pointer w-fit h-fit text-fontGray"
+          onClick={handleReviewClick}
+        >
+          댓글 {aboutReview.reviewCount}개 모두보기
+        </button>
+      ) : (
+        <span className="mt-3 text-sm w-fit h-fit text-fontGray">댓글 0개</span>
+      )}
 
       {isViewReview ? (
         <div className="w-full">
@@ -50,6 +54,7 @@ const ReviewContainer = ({ aboutReview }: Props) => {
 
             return (
               <Review
+                key={postId}
                 commentContent={commentContent}
                 createdAt={createdAt}
                 profileImage={profileImage}

@@ -45,7 +45,9 @@ const useCreatePost = () => {
     ['post/post'],
     (formdata: FormData) => apis.postImageAndContent(formdata),
     {
-      onSuccess: () => queryClient.invalidateQueries(['get/post']),
+      onSuccess: () => {
+        queryClient.invalidateQueries(['get/post']);
+      },
     },
   );
 
