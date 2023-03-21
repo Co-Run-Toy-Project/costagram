@@ -8,6 +8,7 @@ import { sortedData } from '../recoil/postAtom';
 const RenderPosts = () => {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useGetPosts();
+
   const getSortedData = useRecoilValue(sortedData);
   const posts = data?.pages.flatMap(page => page.data) || [];
 
