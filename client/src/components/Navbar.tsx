@@ -40,15 +40,15 @@ const Navbar = () => {
     mutate({ searchName });
   };
 
-  if (isSuccess) {
-    setSortedData(data.data);
-  }
-
   useEffect(() => {
     if (!searchName) {
       setSortedData([]);
     }
-  }, [searchName]);
+
+    if (isSuccess) {
+      setSortedData(data.data);
+    }
+  }, [searchName, isSuccess]);
 
   return (
     <nav className="flex h-14 w-screen items-center justify-between border-b-[1px] border-b-underbarGray bg-white px-3 tablet:px-6 desktop:px-12">

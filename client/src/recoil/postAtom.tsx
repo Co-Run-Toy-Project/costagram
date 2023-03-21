@@ -24,6 +24,7 @@ interface SortedData {
   profileImage: string;
   location: string;
   createdAt: string;
+  imagePath: Array<string>;
 }
 
 export const sortedData = atom<SortedData[]>({
