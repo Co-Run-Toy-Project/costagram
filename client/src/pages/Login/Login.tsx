@@ -10,8 +10,8 @@ const Login = () => {
   return (
     <div className="flex flex-col h-screen">
       <div className="h-screen min-w-[300px] flex justify-center items-center ">
-        <div className="hidden tablet:flex tablet:h-[500px] w-[380px] bg-red-200" />
-        <div className="w-[350px] h-3/6 mx-3 space-y-3 flex flex-col justify-center items-center border-2 border-gray-200">
+        {/* <div className="hidden tablet:flex tablet:h-[500px] w-[380px] bg-red-200" /> */}
+        <div className="w-[350px] h-3/6 mx-3 space-y-3 flex flex-col justify-center items-center border-2 border-red-200">
           <img className="w-10 h-10" src={LogoIcon} alt="logo" />
           <Logo />
           <a
@@ -23,7 +23,7 @@ const Login = () => {
           </a>
           <button
             type="button"
-            className="h-10 font-medium text-black rounded w-[11.4rem] bg-likesGray hover:text-white"
+            className="h-10 font-medium text-white rounded w-[11.4rem] bg-red-300 hover:bg-likesGray"
             onClick={() => refetch()}
           >
             TEST 로그인

@@ -40,15 +40,15 @@ const Navbar = () => {
     mutate({ searchName });
   };
 
-  if (isSuccess) {
-    setSortedData(data.data);
-  }
-
   useEffect(() => {
     if (!searchName) {
       setSortedData([]);
     }
-  }, [searchName]);
+
+    if (isSuccess) {
+      setSortedData(data.data);
+    }
+  }, [searchName, isSuccess]);
 
   return (
     <nav className="flex h-14 w-screen items-center justify-between border-b-[1px] border-b-underbarGray bg-white px-3 tablet:px-6 desktop:px-12">
@@ -62,14 +62,14 @@ const Navbar = () => {
         <label htmlFor="searchBox" className="hidden">
           검색
         </label>
-        <div className="flex items-center w-40 h-8 px-2 py-1 rounded-md bg-inputGray tablet:w-72 desktop:w-80">
+        <div className="flex items-center h-8 px-2 py-1 rounded-md max-w-40 bg-inputGray tablet:w-72 desktop:w-80">
           {/* 돋보기 아이콘 */}
           <MagnifyIcon />
           <input
             type="text"
             id="searchBox"
             placeholder="검색"
-            className="pl-1 ml-2 outline-none bg-inputGray"
+            className="pl-1 ml-2 outline-none min-w-24 bg-inputGray"
             onChange={e => {
               setSearchName(e.target.value);
             }}
