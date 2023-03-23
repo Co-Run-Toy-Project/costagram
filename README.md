@@ -45,6 +45,7 @@ Instagram 을 레퍼런스로하여 CRUD 기능을 이용해 구현해보는 토
 ## 💡 구현 기능
 
 ### 로그인 / 회원가입 (Kakao Oauth)
+<img src="https://user-images.githubusercontent.com/71588080/227251263-ec7a9129-ea0b-4054-810e-30b8c4d52646.gif" style="width:500px" alt="로그인 기능 시연"/>
 
 ### 게시글 CRUD
 - 게시글 등록 / 삭제 
