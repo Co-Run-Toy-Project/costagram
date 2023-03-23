@@ -21,7 +21,7 @@ Instagram 을 레퍼런스로하여 CRUD 기능을 이용해 구현해보는 토
 <table>
   <tbody>
     <tr>
-      <td align="center"><a href="https://github.com/rachelyu1025"><img src="https://user-images.githubusercontent.com/71588080/211711078-f5129efb-5881-46d8-b8cf-8e660ec2b898.jpeg" width="100px;" alt=""/><br /><sub><b>유은비</b></sub></a><br /><sub><b>팀장</b></sub></td><td align="center"><a href="https://github.com/hun0613"><img src="https://user-images.githubusercontent.com/106587166/212325647-ef800e42-424e-40a3-97ef-d9a374c02594.jpg" width="100px;" height="67px" alt=""/><br /><sub><b>박성훈</b></sub></a><br /><sub><b>FE</b></sub></td><td align="center"><a href="https://github.com/yeowool1010"><img src="https://user-images.githubusercontent.com/99955022/211785785-85896f74-f4fc-45ff-ab34-083217dec997.jpg" width="100px;" height="68px" alt=""/><br /><sub><b>박여울</b></sub></a><br /><sub><b>FE</b></sub></td><td align="center"><a href="https://github.com/Inside-eun"><img src="https://postfiles.pstatic.net/MjAyMzAxMTVfMTgy/MDAxNjczNzU3OTM1MDYx.kq6YePg9-s64_h1Mc2pSgCy-Rcj95s8os6pDnkmgFhMg.ElveKfV7ShIQmGWaLcs7g5BCIBQV4OxX9M8oOB-WHsUg.JPEG.cdam97/%EC%B5%9C%EB%8B%B4%EC%9D%80%EB%8B%98_%EB%A6%AC%ED%84%B0%EC%B9%98_012.jpg?type=w966" width="100px;" height="68px" alt=""/><br /><sub><b>최담은</b></sub></a><br /><sub><b>FE</b></sub></td><td align="center"><a href="https://github.com/dorrion"><img src="https://user-images.githubusercontent.com/100553086/211719857-81b3238d-fee0-44e1-b7f7-0e13484c5623.jpg" width="100px;" height="68px" alt=""/><br /><sub><b>김오은</b></sub></a><br /><sub><b>BE</b></sub></td>
+      <td align="center"><a href="https://github.com/rachelyu1025"><img src="https://user-images.githubusercontent.com/71588080/211711078-f5129efb-5881-46d8-b8cf-8e660ec2b898.jpeg" width="100px;" alt=""/><br /><sub><b>유은비</b></sub></a><br /><sub><b>팀장</b></sub></td><td align="center"><a href="https://github.com/hun0613"><img src="https://user-images.githubusercontent.com/106587166/212325647-ef800e42-424e-40a3-97ef-d9a374c02594.jpg" width="100px;" alt=""/><br /><sub><b>박성훈</b></sub></a><br /><sub><b>FE</b></sub></td><td align="center"><a href="https://github.com/yeowool1010"><br /><img src="https://user-images.githubusercontent.com/99955022/211785785-85896f74-f4fc-45ff-ab34-083217dec997.jpg" width="100px;"  alt=""/><br /><sub><b>박여울</b></sub></a><br /><sub><b>FE</b></sub></td><td align="center"><a href="https://github.com/Inside-eun"><img src="https://postfiles.pstatic.net/MjAyMzAxMTVfMTgy/MDAxNjczNzU3OTM1MDYx.kq6YePg9-s64_h1Mc2pSgCy-Rcj95s8os6pDnkmgFhMg.ElveKfV7ShIQmGWaLcs7g5BCIBQV4OxX9M8oOB-WHsUg.JPEG.cdam97/%EC%B5%9C%EB%8B%B4%EC%9D%80%EB%8B%98_%EB%A6%AC%ED%84%B0%EC%B9%98_012.jpg?type=w966" width="100px;" alt=""/><br /><sub><b>최담은</b></sub></a><br /><sub><b>FE</b></sub></td><td align="center"><a href="https://github.com/dorrion"><img src="https://user-images.githubusercontent.com/100553086/211719857-81b3238d-fee0-44e1-b7f7-0e13484c5623.jpg" width="100px;" alt=""/><br /><sub><b>김오은</b></sub></a><br /><sub><b>BE</b></sub></td>
     </tr>
   </tbody>
 </table>
@@ -47,15 +47,21 @@ Instagram 을 레퍼런스로하여 CRUD 기능을 이용해 구현해보는 토
 ### 로그인 / 회원가입 (Kakao Oauth)
 
 ### 게시글 CRUD
+- 게시글 등록 / 삭제 
+<img src="https://user-images.githubusercontent.com/71588080/227241177-5c14175e-4a1b-47f8-8a16-be7b311b922e.gif" style="width:500px" alt="게시글 등록/삭제 시연"/>
+
+- 게시글 수정
+- 무한스크롤 
+<img src="https://user-images.githubusercontent.com/99955022/218416581-3ecb6838-747f-4c4c-91c8-452b281baaf3.gif" style="width:500px" alt="무한스크롤 시연"/>
 
 ### 좋아요 기능
+<img src="https://user-images.githubusercontent.com/71588080/227244896-72212e4b-2bf5-4fa9-bd67-c9d6b52b62d2.gif" style="width:500px" alt="좋아요 기능 시연"/>
 
 ### 댓글 등록 / 삭제
-
-### 무한스크롤
-
-![무한스크롤 최종](https://user-images.githubusercontent.com/99955022/218416581-3ecb6838-747f-4c4c-91c8-452b281baaf3.gif)
+<img src="https://user-images.githubusercontent.com/71588080/227244935-d8b2ea98-c369-46b2-9105-868e65a3fb1d.gif" style="width:500px" alt="댓글 기능 시연"/>
 
 ### 검색기능
+<img src="https://user-images.githubusercontent.com/71588080/227245502-e3b5d716-8ed9-4fce-8a38-4a4b0296f565.gif" style="width:500px" alt="검색 기능 시연"/>
 
 ### 마이페이지
+<img src="https://user-images.githubusercontent.com/71588080/227244913-d346e200-8312-4c31-9805-044116d09062.gif" style="width:500px" alt="마이페이지 시연"/>
